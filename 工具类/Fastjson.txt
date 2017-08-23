@@ -1,0 +1,38 @@
+Fastjson是一个Java语言编写的高性能功能完善的JSON库。它采用一种“假定有序快速匹配”的算法，把JSON Parse的性能提升到极致，是目前Java语言中最快的JSON库。Fastjson接口简单易用，已经被广泛使用在缓存序列化、协议交互、Web输出、Android客户端等多种应用场景。
+
+Fastjson是java库，可以用来转换成java对象的JSON表示。它也可以用来转换为等效的java对象的JSON字符串。Fastjson可以任意的java对象包括预先存在的对象，你没有源代码的工作。
+
+Fastjson目标
+
+在服务器端和Android客户端提供最佳性能
+
+提供简单的tojsonstring()和parseobject()方法将java对象的JSON
+
+允许存在不可修改的对象被转换为从JSON
+
+java泛型的广泛支持
+
+允许对象的自定义表示
+
+支持任意复杂对象（具有深继承层次结构和泛型类型的广泛使用）
+
+gson是一个java库，可以用来转换成java对象的JSON表示。它也可以用来转换为等效的java对象的JSON字符串。gson可以任意的java对象包括预先存在的对象，你没有源代码的工作。
+有几个开源项目，可以将java对象的JSON。然而，他们最需要你的地方你的java注释类的东西，你可以不做；如果你没有访问源代码。大多数还不完全支持java泛型的使用。考虑这些gson作为十分重要的设计目标。
+
+gson目标
+
+提供简单的tojson()和fromjson()方法将java对象的JSON
+
+允许存在不可修改的对象被转换为从JSON
+
+java泛型的广泛支持
+
+允许对象的自定义表示
+支
+持任意复杂对象（具有深继承层次结构和泛型类型的广泛使用）
+
+
+Jackson原名为java标准JSON库（或JVM平台一般），或者，对于java的“最好的JSON解析器”简称“JSON的java”。
+更重要的是，Jackson是java的一套数据处理工具（和Java虚拟机平台），包括旗舰流的JSON解析器/发电机库，匹配的数据绑定库（POJOs to and from JSON）和附加模块在Avro, BSON, CBOR, CSV, Smile, (Java) Properties, Protobuf, XML or YAML；甚至大数据集的格式模块支持的数据类型的广泛使用的数据类型如Guava、Joda,、pcollections和很多。
+
+而实际的核心部件过他们自己的项目--包括三核心包（streaming, databind, annotations; data format libraries; data type libraries; JAX-RS provider;；和杂项组其它扩展模块——这个项目作为中心枢纽，连接所有的碎片。

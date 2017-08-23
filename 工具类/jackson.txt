@@ -1,0 +1,32 @@
+概述
+Jackson框架是基于Java平台的一套数据处理工具，被称为“最好的Java Json解析器”。 
+Jackson框架包含了3个核心库：streaming,databind,annotations.Jackson还包含了其它数据处理类库，此外不作说明。
+Jackson版本： 1.x (目前版本从1.1~1.9)与2.x。1.x与2.x从包的命名上可以看出来，1.x的类库中，包命名以：org.codehaus.jackson.xxx开头，而2.x类库中包命令：com.fastxml.jackson.xxx开头
+
+Jackson Home Page：https://github.com/FasterXML/jackson
+Jackson Wiki：http://wiki.fasterxml.com/JacksonHome
+Jackson doc: https://github.com/FasterXML/jackson-docs
+Jackson Download Page：http://wiki.fasterxml.com/JacksonDownload
+
+本文所有程序都基于JDK1.7,依赖jackon的三个核心类库：
+jackson-core-2.5.3.jar
+jackson-annotations-2.5.3.jar
+jackson-databind-2.5.3.jar
+
+Jackson处理Json
+Jackson提供了三种可选的Json处理方法：
+流式API(Streaming API) 、
+树模型(Tree Model)、
+数据绑定(Data Binding)。
+从使用角度来看，比较一下这三种处理Json的方式的特性：
+
+Streaming API：是效率最高的处理方式(开销低、读写速度快，但程序编写复杂度高)
+Tree Model：是最灵活的处理方式
+Data Binding：是最常用的处理方式
+下面我们通过例子程序分别使用DataBinding,TreeModel,Streaming的方式来创建和解析Json字符串
+
+
+Stream API方式是开销最低、效率最高，但编写代码复杂度也最高，在生成Json时，需要逐步编写符号和字段拼接json,在解析Json时，需要根据token指向也查找json值，生成和解析json都不是很方便，代码可读性也很低。
+Databinding处理Json是最常用的json处理方式，生成json时，创建相关的java对象，并根据json内容结构把java对象组装起来，最后调用writeValue方法即可生成json,
+解析时，就更简单了，直接把json映射到相关的java对象，然后就可以遍历java对象来获取值了。
+TreeModel处理Json，是以树型结构来生成和解析json，生成json时，根据json内容结构，我们创建不同类型的节点对象，组装这些节点生成json。解析json时，它不需要绑定json到java bean，根据json结构，使用path或get方法轻松查找内容。
