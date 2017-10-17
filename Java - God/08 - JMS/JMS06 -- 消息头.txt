@@ -1,0 +1,44 @@
+    一个消息对象分为三部分：消息头(Headers)，属性（Properties）和消息体（Payload）。
+	对于StreamMessage和MapMessage，消息本身就有特定的结构，而对于TextMessage，ObjectMessage和BytesMessage是无结构的。
+	一个消息可以包含一些重要的数据或者仅仅是一个事件的通知。
+	
+    消息的Headers部分通常包含一些消息的描述信息，它们都是标准的描述信息。包含下面一些值：
+	
+　　JMSDestination
+       消息的目的地，Topic或者是Queue。
+　　JMSDeliveryMode
+       消息的发送模式：persistent或nonpersistent。
+	   前者表示消息在被消费之前，如果JMS提供者DOWN了，重新启动后消息仍然存在。
+	   后者在这种情况下表示消息会被丢失。可以通过下面的方式设置：
+			Producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
+    JMSTimestamp
+       当调用send()方法的时候，JMSTimestamp会被自动设置为当前事件。可以通过下面方式得到这个值：
+       long timestamp = message.getJMSTimestamp();
+　　JMSExpiration 
+       表示一个消息的有效期。只有在这个有效期内，消息消费者才可以消费这个消息。默认值为0，表示消息永不过期。可以通过下面的方式设置：
+       producer.setTimeToLive(3600000); //有效期1小时 （1000毫秒 * 60秒 * 60分）
+
+　　JMSPriority 
+       消息的优先级。0-4为正常的优先级，5-9为高优先级。可以通过下面方式设置：
+       producer.setPriority(9);
+
+　　JMSMessageID 
+       一个字符串用来唯一标示一个消息。
+
+　　JMSReplyTo 
+       有时消息生产者希望消费者回复一个消息，JMSReplyTo为一个Destination，表示需要回复的目的地。当然消费者可以不理会它。
+
+　　JMSCorrelationID 
+       通常用来关联多个Message。例如需要回复一个消息，可以把JMSCorrelationID设置为所收到的消息的JMSMessageID。
+
+　　JMSType 
+       表示消息体的结构，和JMS提供者有关。
+
+　　JMSRedelivered 
+       如果这个值为true，表示消息是被重新发送了。因为有时消费者没有确认他已经收到消息或者JMS提供者不确定消费者是否已经收到。
+
+    除了Header，消息发送者可以添加一些属性(Properties)。这些属性可以是应用自定义的属性，JMS定义的属性和JMS提供者定义的属性。我们通常只适用自定义的属性。
+
+    后面会讲到这些Header和属性的用法。
+	
+http://blog.itpub.net/10742815/viewspace-580326/

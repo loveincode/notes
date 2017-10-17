@@ -1,0 +1,74 @@
+前一讲简单的介绍了一下JMS的基本概念, 这一讲结合一个例子让大家深入理解前一讲的基本概念. 
+首先需要做的是选择一个JMS提供者, 如果在JavaEE环境中可以不用考虑这些. 我们选择ActiveMQ, 
+官方地址: http://activemq.apache.org/. 网上有很多介绍ActiveMQ的文档, 所以在这里就不介绍了.
+
+按照上一讲的这个简图, 
+  ConnectionFactory ---->Connection--->Session--->Message
+  Destination + Session------------------------------------>Producer
+  Destination + Session------------------------------------>MessageConsumer
+  
+  1 首先需要得到 ConnectionFactory 和 Destination ，这里创建一个一对一的 Queue 作为 Destination 。
+  ConnectionFactory factory = new ActiveMQConnectionFactory("vm://localhost");
+  Queue queue = new ActiveMQQueue("testQueue");
+  
+  2 然后又ConnectionFactory创建一个Connection, 再启动这个Connection: 
+  Connection connection = factory.createConnection();
+  connection.start();
+  
+  3 接下来需要由Connection创建一个Session:
+  Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE) 现在暂且不用管参数的含义, 以后会详细讲到.
+  
+  4 下面就可以创建Message了,这里创建一个TextMessage。
+  Message message = session.createTextMessage("Hello JMS!");
+  
+  5 要想把刚才创建的消息发送出去，需要由Session和Destination创建一个消息生产者：
+  MessageProducer producer = session.createProducer(queue);
+  
+  6 下面就可以发送刚才创建的消息了：
+  producer.send(message);
+  
+  7 消息发送完成之后，我们需要创建一个消息消费者来接收这个消息：
+  MessageConsumer comsumer = session.createConsumer(queue);
+  Message recvMessage = comsumer.receive();
+  
+  8 消息消费者接收到这个消息之后，就可以得到它的内容：
+  System.out.println(((TextMessage)recvMessage).getText());
+  
+  至此，一个简单的JMS例子就完成了。下面是全部源码 ：
+import javax.jms.Connection;
+import javax.jms.Message;
+import javax.jms.MessageConsumer;
+import javax.jms.MessageProducer;
+import javax.jms.Queue;
+import javax.jms.Session;
+import javax.jms.TextMessage;
+
+import org.apache.activemq.ActiveMQConnectionFactory;
+import org.apache.activemq.command.ActiveMQQueue;
+
+public class MessageSendAndReceive {
+
+    public static void main(String[] args) throws Exception {
+        ConnectionFactory factory = new ActiveMQConnectionFactory("vm://localhost");
+    
+        Connection connection = factory.createConnection();
+        connection.start();
+        
+        Queue queue = new ActiveMQQueue("testQueue");
+        
+        final Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+        Message message = session.createTextMessage("Hello JMS!");
+        
+        MessageProducer producer = session.createProducer(queue);
+        producer.send(message);
+    
+        System.out.println("Send Message Completed!");
+        
+        MessageConsumer comsumer = session.createConsumer(queue);
+        Message recvMessage = comsumer.receive();
+        System.out.println(((TextMessage)recvMessage).getText());
+    }
+
+}
+
+原文：http://blog.itpub.net/10742815/viewspace-578457/

@@ -1,0 +1,61 @@
+在EJB3中，一个MDB（消息驱动Bean）就是一个实现了MessageListener接口的POJO。下面就是一个简单的MDB。
+
+@MessageDriven(activationConfig={
+        @ActivationConfigProperty(propertyName="destinationType", 
+                propertyValue="javax.jms.Queue"),
+        @ActivationConfigProperty(propertyName="destination", 
+                propertyValue="queue/testQueue")})
+public class SimpleMDB implements MessageListener {
+    
+    public void onMessage(Message message) {
+        try {
+            System.out.println("Receive Message : " + ((TextMessage)message).getText());
+        } catch (JMSException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+它要求必须标注为@MessageDriven。它所监听Destination通过标注属性来注入。
+
+下面是一个发送消息的StatelessBean：
+@Remote
+public interface IMessageSender {
+    public void sendMessage(String content) throws Exception;
+}
+
+
+@Stateless
+@Remote
+public class MessageSender implements IMessageSender {
+    @Resource(mappedName="ConnectionFactory")
+    private ConnectionFactory factory;
+    
+    @Resource(mappedName="queue/testQueue")
+    private Queue queue;
+    
+    
+    public void sendMessage(String content) throws Exception {
+        Connection cn = factory.createConnection();
+        
+        Session session = cn.createSession(false, Session.AUTO_ACKNOWLEDGE);
+        MessageProducer producer = session.createProducer(queue);
+        producer.send(session.createTextMessage(content));
+    }
+}
+这个EJB只有一个方法SendMessage。ConnectionFactory和Queue通过标注注入。
+
+接下来是客户端：
+public class MessageSenderClient {
+    public static void main(String[] args) throws Exception {
+        Properties props = new Properties();
+        props.setProperty(Context.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.NamingContextFactory");
+        props.setProperty(Context.PROVIDER_URL, "localhost:2099");
+        Context context = new InitialContext(props);
+        IMessageSender messageSender = (IMessageSender) context.lookup("MessageSender/remote");
+        messageSender.sendMessage("Hello");
+    }
+}
+它通过JNDI查找到上面的EJB，然后调用sengMessage.
+
+http://blog.itpub.net/10742815/viewspace-590834/

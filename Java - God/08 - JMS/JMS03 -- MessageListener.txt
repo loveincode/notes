@@ -1,0 +1,23 @@
+ 
+ 消息的消费者接收消息可以采用两种方式：
+  1、consumer.receive() 或 consumer.receive(int timeout)；
+  2、注册一个MessageListener。
+  
+  采用第一种方式，消息的接收者会一直等待下去，直到有消息到达，或者超时。
+  
+  后一种方式会注册一个监听器，当有消息到达的时候，会回调它的onMessage()方法。下面举例说明：
+ MessageConsumer comsumer = session.createConsumer(queue);
+ comsumer.setMessageListener(new MessageListener(){
+            @Override
+            public void onMessage(Message m) {
+                TextMessage textMsg = (TextMessage) m;
+                try {
+                    System.out.println(textMsg.getText());
+                } catch (JMSException e) {
+                    e.printStackTrace();
+                }
+            }
+            
+        });
+		
+http://blog.itpub.net/10742815/viewspace-580252/
