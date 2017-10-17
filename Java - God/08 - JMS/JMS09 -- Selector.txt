@@ -1,0 +1,77 @@
+前面的例子中创建一个消息消费者使用的是:
+	sesssion.createConsumer(destination)
+另外，还提供了另一种方式：
+	sesssion.createConsumer(destination, selector)
+	这里selector是一个字符串，用来过滤消息。也就是说，这种方式可以创建一个可以只接收特定消息的一个消费者。
+	Selector的格式是类似于SQL-92的一种语法。可以用来比较消息头信息和属性。
+
+下面的例子中，创建两个消费者，共同监听同一个Queue，但是它们的Selector不同，然后创建一个消息生产者，来发送多个消息。
+
+import javax.jms.Connection;
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.MessageConsumer;
+import javax.jms.MessageListener;
+import javax.jms.MessageProducer;
+import javax.jms.Queue;
+import javax.jms.Session;
+import javax.jms.TextMessage;
+
+import org.apache.activemq.ActiveMQConnectionFactory;
+import org.apache.activemq.command.ActiveMQQueue;
+
+public class JMSSelectorTest {
+
+    public static void main(String[] args) throws Exception {
+        ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory("vm://localhost");
+    
+        Connection connection = factory.createConnection();
+        connection.start();
+        
+        Queue queue = new ActiveMQQueue("testQueue");
+        
+        Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+        
+        MessageConsumer comsumerA = session.createConsumer(queue, "receiver = 'A'");
+        comsumerA.setMessageListener(new MessageListener(){
+            public void onMessage(Message m) {
+                try {
+                    System.out.println("ConsumerA get " + ((TextMessage) m).getText());
+                } catch (JMSException e1) { }
+            }
+        });
+        
+        MessageConsumer comsumerB = session.createConsumer(queue, "receiver = 'B'");
+        comsumerB.setMessageListener(new MessageListener(){
+            public void onMessage(Message m) {
+                try {
+                    System.out.println("ConsumerB get " + ((TextMessage) m).getText());
+                } catch (JMSException e) { }
+            }
+        });
+        
+        MessageProducer producer = session.createProducer(queue);
+        for(int i=0; i<10; i++) {
+            String receiver = (i%3 == 0 ? "A" : "B");
+            TextMessage message = session.createTextMessage("Message" + i + ", receiver:" + receiver);
+            message.setStringProperty("receiver", receiver);
+            producer.send(message );
+        }
+    }
+}
+
+结果如下：
+ConsumerA get Message0, receiver:A
+ConsumerB get Message1, receiver:B
+ConsumerB get Message2, receiver:B
+ConsumerA get Message3, receiver:A
+ConsumerB get Message4, receiver:B
+ConsumerB get Message5, receiver:B
+ConsumerA get Message6, receiver:A
+ConsumerB get Message7, receiver:B
+ConsumerB get Message8, receiver:B
+ConsumerA get Message9, receiver:A
+
+可以看出，消息消费者只会取走它自己感兴趣的消息。
+
+http://blog.itpub.net/10742815/viewspace-584422/
