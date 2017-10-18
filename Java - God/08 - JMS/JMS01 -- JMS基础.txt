@@ -43,6 +43,6 @@
   Destination + Session------------------------------------>MessageConsumer
  
     那么可能有人会问: ConnectionFactory 和 Destination 从哪儿得到?
-    这就和JMS提供者有关了. 如果在一个JavaEE环境中, 可以通过JNDI查找得到, 如果在一个非JavaEE环境中, 那只能通过JMS提供者提供给我们的接口得到了.
+    这就和JMS提供者有关了. 如果在一个JavaEE环境中, 可以通过JNDI(Java命名和目录接口（the Java naming and directory interface，JNDI）是一组在Java应用中访问命名和目录服务的API。)查找得到, 如果在一个非JavaEE环境中, 那只能通过JMS提供者提供给我们的接口得到了.
 
 原文：http://blog.itpub.net/10742815/viewspace-578446/
