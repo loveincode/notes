@@ -57,5 +57,5 @@
 	|	|--- -XX:CompileThreshold=1500  通过JIT编译器，将方法编译成机器码的触发阀值，可以理解为调用方法的次数，例如调1500次，将方法编译为机器码
 	|	|--- -XX:+PrintComplilation 简单的输出一些关于从字节码转化成本地代码的编译过程。
 	|	|--- -XX:CITime JVM关闭时得到各种编译的统计信息。
-	|---预留对象在新生代 ：-XX:+PrintGCDetail -Xms20M -Xms20M -Xmn10M -XX:SurvivorRatio=2 如果SurvivorRatio改大 s0,s1的内存就会变小
+	|---预留对象在新生代 ：-XX:+PrintGCDetail 输出GC日志详情 -Xms20M -Xmn10M -XX:SurvivorRatio=2 如果SurvivorRatio改大 s0,s1的内存就会变小
 	|---堆快照信息导出：-XX：+PrintGCDetail -Xmx10M -XX:HeapDumpPath=D:/m.hprof	
