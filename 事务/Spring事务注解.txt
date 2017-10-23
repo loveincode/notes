@@ -1,0 +1,55 @@
+@transaction
+
+一、Propagation取值：
+
+REQUIRED（默认值）：在有transaction状态下执行；如当前没有transaction，则创建新的transaction；
+
+SUPPORTS：如当前有transaction，则在transaction状态下执行；如果当前没有transaction，在无transaction状态下执行；
+
+MANDATORY：必须在有transaction状态下执行，如果当前没有transaction，则抛出异常IllegalTransactionStateException；
+
+REQUIRES_NEW：创建新的transaction并执行；如果当前已有transaction，则将当前transaction挂起；
+
+NOT_SUPPORTED：在无transaction状态下执行；如果当前已有transaction，则将当前transaction挂起；
+
+NEVER：在无transaction状态下执行；如果当前已有transaction，则抛出异常IllegalTransactionStateException。
+
+
+二、REQUIRED与REQUIRED_NEW
+
+上面描述的6种propagation属性配置中，最难以理解，并且容易在transaction设计时出现问题的是REQUIRED和REQURED_NEW这两者的区别。当程序在某些情况下抛出异常时，如果对于这两者不够了解，就可能很难发现而且解决问题。
+
+
+// 指定回滚
+@Transactional(rollbackFor=Exception.class) 
+
+//指定不回滚
+@Transactional(noRollbackFor=Exception.class)
+
+// 如果有事务,那么加入事务,没有的话新建一个(不写的情况下)
+@Transactional(propagation=Propagation.REQUIRED) 
+	
+// 不管是否存在事务,都创建一个新的事务,原来的挂起,新的执行完毕,继续执行老的事务
+@Transactional(propagation=Propagation.REQUIRES_NEW) 
+
+// 必须在一个已有的事务中执行,否则抛出异常
+@Transactional(propagation=Propagation.MANDATORY)
+	
+// 必须在一个没有的事务中执行,否则抛出异常(与Propagation.MANDATORY相反)
+@Transactional(propagation=Propagation.NEVER) 
+
+// 如果其他bean调用这个方法,在其他bean中声明事务,那就用事务.如果其他bean没有声明事务,那就不用事务.
+@Transactional(propagation=Propagation.SUPPORTS) 
+
+// 容器不为这个方法开启事务
+@Transactional(propagation=Propagation.NOT_SUPPORTED)
+
+// readOnly=true只读,不能更新,删除 
+@Transactional (propagation = Propagation.REQUIRED,readOnly=true) 
+
+// 设置超时时间
+@Transactional (propagation = Propagation.REQUIRED,timeout=30)
+
+// 设置数据库隔离级别
+@Transactional (propagation = Propagation.REQUIRED,isolation=Isolation.DEFAULT)
+

@@ -1,0 +1,41 @@
+
+http://code.google.com/p/thumbnailator
+
+引入jar包
+
+test
+
+/**
+*
+* @author loveincode
+* @data Oct 20, 2017 2:13:49 PM
+*/
+public class Test {
+	
+	public static boolean ThumbnailsCompressPic(String inputFile, String outputFile, int size, double quality) {
+        File input = new File(inputFile);
+        try {
+            Thumbnails.Builder<File> fileBuilder = Thumbnails.of(input).scale(1.0).outputQuality(1.0);
+            BufferedImage src = fileBuilder.asBufferedImage();
+            if(src.getHeight(null) > size || src.getWidth(null) > size) {
+                Thumbnails.Builder<File> builder = Thumbnails.of(input);
+                builder.size(size, size); //取最大的尺寸变成size，然后等比缩放
+                builder.outputQuality(quality).toFile(outputFile);
+            } else {
+                Thumbnails.of(input).scale(1.0).outputQuality(quality).toFile(outputFile);
+            }
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+	public static void main(String[] args) {
+		ThumbnailsCompressPic("longzhu.jpg", "longzhu2.jpg", 1280, 1.0);
+	}
+
+}
+
+
+
