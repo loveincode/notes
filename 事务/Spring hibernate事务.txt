@@ -1,0 +1,11 @@
+http://www.open-open.com/lib/view/open1372570081941.html
+
+Spring中配置Hibernate事务的核心：
+
+         1.配置SessionFactory
+
+         2.配置事务容器
+
+         3.配置事务规则
+
+         4.配置事务入口
