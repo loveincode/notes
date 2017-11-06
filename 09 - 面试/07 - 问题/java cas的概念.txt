@@ -1,0 +1,6 @@
+cas:compare and swap，比较并交换
+
+java的concurrent包中借助cas实现了区别于synchronized同步锁的一种乐观锁。
+
+CAS利用CPU的CAS指令，同时借助JNI来完成java的非阻塞算法，其他的原子操作都是利用类似的特性完成的。
+java的concurrent包相对于使用synchronized性能提升也是主要依赖于它。
