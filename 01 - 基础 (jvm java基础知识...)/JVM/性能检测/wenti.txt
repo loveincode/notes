@@ -1,0 +1,7 @@
+Unable to open socket file: target process not responding or HotSpot VM not loaded
+The -F option can be used when the target process is not responding
+
+
+http://zhangshaoxiong.blog.51cto.com/4408282/1310166
+
+socket file 被删除
