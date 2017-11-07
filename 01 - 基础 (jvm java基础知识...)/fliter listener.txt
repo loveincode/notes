@@ -1,0 +1,16 @@
+web.xml 的加载顺序是：context- param -> listener -> filter -> servlet 
+
+filter
+	实现 Filter接口的三个方法 init() doFilter() destory()
+	
+	启动服务器时加载过滤器的实例，并调用init()方法来初始化实例
+	每次请求时都只调用方法doFilter()进行处理
+	停止服务器时调用destory()方法，销毁实例
+
+listener
+
+	随web应用的启动而启动，只初始化一次，随web应用的停止而销毁。
+	主要作用是： 做一些初始化的内容添加工作、设置一些基本的内容、
+	比如一些参数或者是一些固定的对象等等。
+
+	
