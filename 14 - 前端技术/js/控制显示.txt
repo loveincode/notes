@@ -1,0 +1,22 @@
+
+
+jQuery对css进行编写
+$("#id").css('background-color', '#E3E3E3')	
+
+js 对 display进行操作
+document.getElementById("id").style.display='';
+document.getElementById("id").style.display='none';
+
+对readonly操作 js 和 jQuery
+document.getElementById("id").readOnly=true;
+document.getElementById("id").readOnly=false;
+			
+$("#id").attr('readonly','readonly');		
+
+定时任务 1000 1s一次
+var timetask = setInterval(function(){
+	//定时循环任务体
+}, 1000);	
+
+关闭定时任务
+clearInterval(timetask);
