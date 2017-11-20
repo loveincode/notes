@@ -6,6 +6,7 @@ Redis是远程字典服务器，字典的值所支持的数据类型：
 4. 集合类型
 5. 有序集合类型
 
+[http://www.redis.net.cn/order/](http://www.redis.net.cn/order/)
 ### Redis命令
 
 ```dbsize```：获取redis中键的总数
