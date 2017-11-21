@@ -1,0 +1,7 @@
+Windows安装python 环境
+
+环境变量 Path 编辑 添加 python 安装目录
+
+安装 pip https://pypi.python.org/pypi/pip#downloads 
+python setup.py install
+环境变量 Path 编辑 添加 python 安装目录\Scripts;
