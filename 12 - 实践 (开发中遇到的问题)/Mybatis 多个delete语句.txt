@@ -1,0 +1,1 @@
+jdbc 连接 加上 &allowMultiQueries=true
