@@ -15,3 +15,5 @@ Shard有两种类型：primary和replica，即主shard及副本shard。Primary s
 
 ES集群可由多个节点组成，各Shard分布式地存储于这些节点上。
 ES可自动在节点间按需要移动shard，例如增加节点或节点故障时。简而言之，分片实现了集群的分布式存储，而副本实现了其分布式处理及冗余功能。
+
+可视化插件：head插件

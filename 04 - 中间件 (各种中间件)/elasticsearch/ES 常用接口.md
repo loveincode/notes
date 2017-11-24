@@ -1,3 +1,6 @@
+[elasticsearch官方Api](https://www.elastic.co/guide/en/elasticsearch/reference/current/indices.html?spm=5176.100239.blogcont46639.5.HE1RSU)
+
+[中文博客整理API](http://www.cnblogs.com/yjf512/p/4862992.html)
 
 PUT 创建Index localhost:9200/indexname
 例子：localhost:9200/data
