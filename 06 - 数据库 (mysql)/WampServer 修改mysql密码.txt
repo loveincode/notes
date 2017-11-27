@@ -1,0 +1,50 @@
+WampServer安装后密码是空的，
+
+修改一般有两种方式：
+
+一是通过phpMyAdmin直接修改；
+
+二是使用WAMP的MySql控制台修改。
+
+第一种：
+
+①在phpMyAdmin界面中点击【用户】，将用户概况中的所有用户名为【root】
+
+用户的密码都改为【要修改的密码】。
+
+修改是点击【编辑权限】，设置密码即可。
+
+②在目录wamp\apps下找到phpmyadmin文件夹下的【config.inc.php】文件，
+
+修改【$cfg['Servers'][$i]['password'] = ''】;为【$cfg['Servers'][$i]['password'] = '要修改的密码';】。
+
+重新启动服务即可。
+
+第二种：
+
+①打开WAMP的mysql控制台，提示输入密码，开始密码为空，直接按回车
+
+②输入【use mysql】，控制台提示【Database changed】
+
+③输入【update user set password=PASSWORD('要修改的密码') where user='root';】,
+
+控制台提示【Query OK,XXXXXXXXX】
+
+④最后输入【flush privileges】，提交
+
+⑤输入【quit】，退出。
+
+⑥在目录wamp\apps下找到phpmyadmin文件夹下的【config.inc.php】文件，
+
+修改【$cfg['Servers'][$i]['password'] = ''】;为【$cfg['Servers'][$i]['password'] = '要修改的密码';】。
+
+重新启动服务即可
+
+
+重置密码：
+①在文件【my.ini】的【mysqlId】字段最下面加入【skip-grant-tables】，重启mysql服务
+②再进入mysql控制台按照上面第二种改密码的方式重新修改密码。
+
+③改完密码后将【my.ini】中添加的【skip-grant-tables】删掉。
+
+④重新启动服务
