@@ -1,6 +1,28 @@
 
 http://blog.csdn.net/pipisorry/article/details/42965435
 
+Unsupported major.minor version 52.0 error
+
+在eclipse中开发的项目有个java build path中可以配置的jdk，
+还有个java compiler中可以配置compiler level{eclipse>windows>preferences>java>compiler>compiler compliance level}
+
+
+build path的JDK版本是你开发的时候编译器需要使用到的，在eclipse中开发代码，给提示报错的，编译的过程；
+
+java compiler compliance level中配置的编译版本号，这个编译版本号的作用是，你这个项目将来开发完毕之后，要放到服务器上运行，那个服务器上JDK的运行版本。
+
+build path中配置1.7的JDK，java compiler compliance level中配置的1.7，但是程序运行需要的是1.8的JDK，就报了那个错误
+
+
+build path的JDK版本是你开发的时候编译器需要使用到的，例如用的JDK1.4就不能使用泛型。
+而java compiler compliance level设置的是你写好的JAVA代码按照什么JDK版本级别编译，
+例如：设置的是1.4，编译出来的class文件可以在1.4以上的JRE上运行，如果用的是5.0级别编译，就不能运行在1.4的环境里面。
+
+
+在eclipse中进行开发的时候，build path 中JDK进行类库的编译（就是你使用类在不在这个JDK中),
+java compiler compliance level是对这个项目语法的编译（就是你的项目中语法的正确与否），
+在开发的过程中，这两个地方是都起作用的。所以说，build path 和 java complier compliance level和服务器配置的JDK保持一致，就不会出现任何问题的。
+
 J2SE 8 = 52,
 J2SE 7 = 51,
 J2SE 6.0 = 50,
