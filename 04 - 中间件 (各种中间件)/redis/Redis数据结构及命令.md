@@ -63,6 +63,9 @@ redis提供了多个用来存储数据的字典，一个字典相当于传统数
 
 ```hget```：获取值，比如：hget person name，必须指定hash类型的键名，比如前面的name
 
+	HGET KEY_NAME FIELD_NAME
+ 
+
 ```hmset```：多个字段赋值，比如：hmset person name liu age 10
 
 ```hmget```：获取多个字段的值，比如：hmget person name age
@@ -141,70 +144,59 @@ redis提供了多个用来存储数据的字典，一个字典相当于传统数
 
 ```zadd``` 添加，如果值存在添加，将会重新排序。
 
+	127.0.0.1:6379> ZADD KEY_NAME SCORE1 VALUE1.. SCOREN VALUEN
+
 ```zcard``` 查看zset集合的成员个数。zcard
 
-127.0.0.1:6379>zcard myZSet   ---输出zset的成员个数为3
+	127.0.0.1:6379>zcard myZSet   ---输出zset的成员个数为3
 
-3、查看Zset指定范围的成员，withscores为输出结果带分数。zrange
+```zrange``` 查看Zset指定范围的成员，withscores为输出结果带分数。
 
-127.0.0.1:6379>zrange mZySet 0 -1   ----0为开始，-1为结束，输出顺序结果为： zlh tom jim
+	127.0.0.1:6379>zrange mZySet 0 -1   ----0为开始，-1为结束，输出顺序结果为： zlh tom jim
+	127.0.0.1:6379>zrange mZySet 0 -1 withscores   ---输出带分数的结果为：zlh 1 tom 2 jim 3
 
-127.0.0.1:6379>zrange mZySet 0 -1 withscores   ---输出带分数的结果为：zlh 1 tom 2 jim 3
+```zrank``` 获取zset成员的下标位置，如果值不存在返回null。
 
-4、获取zset成员的下标位置，如果值不存在返回null。zrank
+	127.0.0.1:6379>zrank mZySet Jim    ---Jim的在zset集合中的下标为2
 
-127.0.0.1:6379>zrank mZySet Jim    ---Jim的在zset集合中的下标为2
+```zcount``` 获取zset集合指定分数之间存在的成员个数。
 
-5、获取zset集合指定分数之间存在的成员个数。zcount
+	127.0.0.1:6379>zcount mySet 1 3   ---输出分数>=1 and 分数 <=3的成员个数为3，因为分数是可以重复的，所以这个命令是有道理的。
 
-127.0.0.1:6379>zcount mySet 1 3   ---输出分数>=1 and 分数 <=3的成员个数为3，因为分数是可以重复的，所以这个命令是有道理的。
+```zrem```删除指定的一个成员或多个成员。
 
-6、删除指定的一个成员或多个成员。zrem
+	127.0.0.1:6379>zrem myZSet zlh   --删除值为zlh的zset成员
+	127.0.0.1:6379>zrem myZSet Tom Jim    ---删除值为Tom和Jim的两个zset成员
 
-127.0.0.1:6379>zrem myZSet zlh   --删除值为zlh的zset成员
+```zscore``` 获取指定值的分数。
 
-127.0.0.1:6379>zrem myZSet Tom Jim    ---删除值为Tom和Jim的两个zset成员
+	127.0.0.1:6379>zadd myZset 1 zlh 1 tom 2 jim 3 xdd 4 pmm   ---由于上面的数据被删除完了，这里添加5条示范数据再。
+	127.0.0.1:6379>zscore myZset zlh    ---输出值为zlh的分数为1
 
-7、获取指定值的分数。zscore
+```zincrby```给指定元素的分数进行增减操作，负值为减，正值为加。
 
-127.0.0.1:6379>zadd myZset 1 zlh 1 tom 2 jim 3 xdd 4 pmm   ---由于上面的数据被删除完了，这里添加5条示范数据再。
+	127.0.0.1:6379>zscore myZset tom    ----输出tom的分数为1
+	127.0.0.1:6379>zincrby myZset 4 tom   ---tom的分数值加4，输入分数值为5
+	127.0.0.1:6379>zscore myZset tom    ---输出tom的分数值为5
 
-127.0.0.1:6379>zscore myZset zlh    ---输出值为zlh的分数为1
+```zrangebysocre``` 根据指定分数的范围获取值。
 
-8、给指定元素的分数进行增减操作，负值为减，正值为加。zincrby
+	127.0.0.1:6379>zrangebyscore myZset  1 5   ---输出分数>=1 and <=5的成员值为：zlh jim xdd pmm  tom
+	127.0.0.1:6379>zrangebyscore myZset  (1 5    ----输出分数>1 and <=5的成员值为：jim xdd pmm tom
+	127.0.0.1:6379>zrangebyscore myZset 2 5 limit 1 2    ---检索分数为2到5之间的数据，然后从下标为1的数据开始往后输出2个数据，包含下标为1的数据。结果为：xdd pmm
+	127.0.0.1:6379>zrangebyscore myZset -inf +inf limit 2 3   ----+inf表示最后一个成员，-inf表示第一个成员，意思是：检索所有数据，然后从下标为2的数据开始再往后输出2个数据。结果为：xdd pmm tom
 
-127.0.0.1:6379>zscore myZset tom    ----输出tom的分数为1
+```zrevrange，zrevrangebyscore```倒序，从高到底排序输出指定范围的数据。
 
-127.0.0.1:6379>zincrby myZset 4 tom   ---tom的分数值加4，输入分数值为5
+	127.0.0.1:6379>zrevrange myZset 2 3   ---先倒序排列数据，输出下标为>=2 and <=3的数据为xdd jim，这里注意的是倒序之后下标也反过来了。
+	127.0.0.1:6379>zrevrange myZset 2 4 withscores    ---输出结果为：xdd 3 jim 2 zlh 1
+	127.0.0.1:6379>zrevrangebyscore myZset 5 1 limit  3 2  ----输出结果为：jim zlh 。获取score <=5 and >=1，从下标为为3开始获取2条数据。
+	127.0.0.1:6379>zrevrangebyscore myZset 4 2   ----分数>=2 and <=4 的数据倒序输出：pmm xdd jim
 
-127.0.0.1:6379>zscore myZset tom    ---输出tom的分数值为5
+```zremrangebyscore，zremrangebyrank```根据坐标，分数范围删除数据。
 
-9、根据指定分数的范围获取值。zrangebysocre
 
-127.0.0.1:6379>zrangebyscore myZset  1 5   ---输出分数>=1 and <=5的成员值为：zlh jim xdd pmm  tom
-
-127.0.0.1:6379>zrangebyscore myZset  (1 5    ----输出分数>1 and <=5的成员值为：jim xdd pmm tom
-
-127.0.0.1:6379>zrangebyscore myZset 2 5 limit 1 2    ---检索分数为2到5之间的数据，然后从下标为1的数据开始往后输出2个数据，包含下标为1的数据。结果为：xdd pmm
-
-127.0.0.1:6379>zrangebyscore myZset -inf +inf limit 2 3   ----+inf表示最后一个成员，-inf表示第一个成员，意思是：检索所有数据，然后从下标为2的数据开始再往后输出2个数据。结果为：xdd pmm tom
-
-10、倒序，从高到底排序输出指定范围的数据。zrevrange，zrevrangebyscore
-
-127.0.0.1:6379>zrevrange myZset 2 3   ---先倒序排列数据，输出下标为>=2 and <=3的数据为xdd jim，这里注意的是倒序之后下标也反过来了。
-
-127.0.0.1:6379>zrevrange myZset 2 4 withscores    ---输出结果为：xdd 3 jim 2 zlh 1
-
-127.0.0.1:6379>zrevrangebyscore myZset 5 1 limit  3 2  ----输出结果为：jim zlh 。获取score <=5 and >=1，从下标为为3开始获取2条数据。
-
-127.0.0.1:6379>zrevrangebyscore myZset 4 2   ----分数>=2 and <=4 的数据倒序输出：pmm xdd jim
-
-11、根据坐标，分数范围删除数据。zremrangebyscore，zremrangebyrank
-
-127.0.0.1:6379>zremrangebyscore myZset 1 2   ---删除分数>=1 and <=2的数据
-
-127.0.0.1:6379>zrange myZset 0 -1    ----输出结果为 xdd pmm tom
-
-127.0.0.1:6379>zremrangebyrank myZset 0 2    ---删除下标>=0 and <=2的zset元素
-
-127.0.0.1:6379>zrange myZset 0 -1    --输出结果为：empty list or set 。没数据啦。
+	127.0.0.1:6379>zremrangebyscore myZset 1 2   ---删除分数>=1 and <=2的数据
+	127.0.0.1:6379>zrange myZset 0 -1    ----输出结果为 xdd pmm tom
+	127.0.0.1:6379>zremrangebyrank myZset 0 2    ---删除下标>=0 and <=2的zset元素
+	127.0.0.1:6379>zrange myZset 0 -1    --输出结果为：empty list or set 。没数据啦。
