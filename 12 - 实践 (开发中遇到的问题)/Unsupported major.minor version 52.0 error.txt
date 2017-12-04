@@ -23,6 +23,7 @@ build path的JDK版本是你开发的时候编译器需要使用到的，例如�
 java compiler compliance level是对这个项目语法的编译（就是你的项目中语法的正确与否），
 在开发的过程中，这两个地方是都起作用的。所以说，build path 和 java complier compliance level和服务器配置的JDK保持一致，就不会出现任何问题的。
 
+
 J2SE 8 = 52,
 J2SE 7 = 51,
 J2SE 6.0 = 50,
