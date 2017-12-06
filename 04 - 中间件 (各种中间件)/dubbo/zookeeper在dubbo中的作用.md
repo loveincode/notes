@@ -1,5 +1,5 @@
 zookeeper是dubbo推荐的注册中心。
-图1
+![](https://github.com/loveincode/notes/blob/master/image/04/dubbo/1.jpg)
  1. 服务提供者启动时向/dubbo/com.foo.BarService/providers目录下写入URL
  2. 服务消费者启动时订阅/dubbo/com.foo.BarService/providers目录下的URL向/dubbo/com.foo.BarService/consumers目录下写入自己的URL
  3. 监控中心启动时订阅/dubbo/com.foo.BarService目录下的所有提供者和消费者URL
@@ -21,6 +21,6 @@ dubbo是**动物**..zookeeper是**动物园的管理员**！
 按我的理解，您可以把dubbo服务想象成学校里的一个学生，并且对应有一个学号，zookeeper则是想象成一个教务网管理系统。我们可以通过教务网管理系统，查找到对应的学生。我们首先通过注册入学，将学生和学号对应绑定。          
 
 比方说项目是一个分布式的项目，web层与 service层被拆分了开来， 部署在不同的tomcat中， 我在web层 需要调用 service层的接口，但是两个运行在不同tomcat下的服务无法直接互调接口，那么就可以通过zookeeper和dubbo实现。 我们通过dubbo 建立ItemService这个服务，并且到zookeeper上面注册，填写对应的zookeeper服务所在 的IP及端口号。【按照我上面的比喻就是，学生注册入学（接口是学号，学生本人是impl实现），填写学校教务网网址（就是zookeeper）】
-图2
+![](https://github.com/loveincode/notes/blob/master/image/04/dubbo/2.jpg)
 下面我们的 web层需要来调用 service接口了，由于在不同的工程中，它是无法直接找到service接口的，我们使用dubbo再来引用注册进入的dubbo服务。我们先填写zookeeper服务所在 的IP及端口号，再填写我们需要调用的接口名字。【按照我上面的比喻，就是填写学校的教务网网址，我们在教务网中，通过学号（接口名），查询到对应的学生】
-图3
+![](https://github.com/loveincode/notes/blob/master/image/04/dubbo/3.jpg)
