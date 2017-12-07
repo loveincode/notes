@@ -1,0 +1,98 @@
+
+url : 
+http://localhost:9200/index/_search			get post  可对index查询			替换为对应的名字 indexname
+http://localhost:9200/index/type/_search	get post  可对index type 查询 							typename
+
+json:	
+{
+    "query": {
+        "bool": {
+            "must": [
+                {
+                    "range": {
+                        "age": {
+                            "gt": "10"
+                        }
+                    }
+                },
+                {
+                    "term": {
+                        "age":"20"
+                    }
+                }
+            ],
+            "must_not": [],
+            "should": []
+        }
+    },
+    "from": 0,
+    "size": 1,
+    "sort": {
+        "age": {
+            "order": "desc"
+        }
+    },
+    "aggs": {}
+}
+
+bool查询 
+	bool查询，可以把很多小的查询组成一个更为复杂的查询
+filter查询
+	filter过滤可以嵌套在bool查询内部使用
+
+must：查询结果必须符合该查询条件（列表）。
+should：类似于in的查询条件。如果bool查询中不包含must查询，那么should默认表示必须符合查询列表中的一个或多个查询条件。
+must_not：查询结果必须不符合查询条件（列表）。
+
+from 从第几个开始 index 0
+size 多少个
+
+"sort": { "age": { "order": "asc" }} 根据什么排序？ 正序 反序
+aggs 聚合查询
+
+
+组合查询 and
+or
+
+1 term 精确搜索
+
+"term": {
+	"age": "20"
+}
+
+
+2 range 范围查询
+range
+"range": {
+	"age": {
+		"gt": "10",
+		"lt": "22"
+	}
+}
+gt 大于
+lt 小于 也可只写一个
+
+3 prefix 前缀查询
+"prefix": {
+	"name": "love"
+}
+
+4 Terms 多词语查询
+"terms": {
+	"_id": [
+    "1",
+    "2"
+	]
+}
+
+5 Wildcard  通配符查询
+
+"wildcard": {
+"name": "*"
+}
+
+6 Regexp  正则表达式查询
+
+7 Exists 
+
+8 Missing 
