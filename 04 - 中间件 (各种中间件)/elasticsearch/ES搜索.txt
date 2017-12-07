@@ -3,6 +3,8 @@ url :
 http://localhost:9200/index/_search			get post  可对index查询			替换为对应的名字 indexname
 http://localhost:9200/index/type/_search	get post  可对index type 查询 							typename
 
+拿total 得到总数 根据总数计算页数 	GridData
+
 json:	
 {
     "query": {
