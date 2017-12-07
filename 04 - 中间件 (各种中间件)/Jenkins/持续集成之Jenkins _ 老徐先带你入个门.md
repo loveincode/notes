@@ -28,3 +28,7 @@ java -jar /usr/local/webserver/jenkins.war --httpPort=8080
 8.即构建，构建成功则如下图所示
 
 9.jenkins maven还有很多细节，比如定时构建、触发构建等等，有兴趣自己玩耍，有问题可找老徐交流～
+
+
+启动 net start jenkins
+停止 net stop jenkins
