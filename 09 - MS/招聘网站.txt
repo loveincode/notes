@@ -1,3 +1,6 @@
 社区内退渠道
 
  开源中国招聘 - 首页  https://job.oschina.net/
+ 
+ 
+ 工资：http://www.kanzhun.com/salaryl/search/?q=Java%E5%BC%80%E5%8F%91%E5%B7%A5%E7%A8%8B%E5%B8%88&cityCode=1&industryCode=0&stype=0&ka=select-city-2
