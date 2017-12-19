@@ -1,0 +1,25 @@
+1 mysql -u root -p
+
+2 grant all privileges on *.* to root@'%' identified by 'your root password'; 添加成功之后返回信息：Query OK, 0 rows affected (0.03 sec)
+
+	'all privileges ':所有权限 也可以写成 select ,update等。
+
+	*.* 所有库的所有表 如 databasename.*。
+
+	IP  数据库所在的IP。
+
+	identified by ‘密码’ 表示通过密码连接
+
+３．执行完上述命令后用下面的命令刷新一下权限
+
+	flush privileges;
+	
+4.修改my.conf配置
+
+	[mysqld] ... bind_address=127.0.0.1 # 屏蔽掉该处 ...
+	
+5.重新启动mysql
+
+	启动：输入 net stop mysql
+
+	停止：输入 net start mysql
