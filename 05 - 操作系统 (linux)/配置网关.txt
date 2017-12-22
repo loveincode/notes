@@ -1,0 +1,36 @@
+cat /etc/udev/rules.d/60-net.rules
+
+
+修改主机名
+vim /etc/sysconfig/network
+NETWORKING=yes #使用网络
+NETWORKING_IPV6=no #关闭ipv6
+HOSTNAME=mode #设置主机名字
+
+配置网卡 （网关 IP 掩码）
+vim /etc/sysconfig/network-scripts/ifcfg-eth0
+DEVICE=eth0 #对应第一张网
+BOOTPROTO=none
+BOOTPROTO=none
+HWADDR=00: 		#必须是对应eth0的MAC地址 /etc/udev/rules.d/6
+IPADDE= 	#本机IP地址
+NETMASK=	#指定子网掩码
+GATEWAY= 	#指定网关
+ONBOOT=yes 	#是否启动时运
+TYPE=Ethernet
+USERCTL=no
+IPV6INIT=no
+PEERDNS=yes
+
+重启网络配置
+service network restart
+
+查看当前IP设置
+ifconfig
+
+测试是否连接外网
+ping www.baidu.com
+
+
+
+

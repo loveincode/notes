@@ -1,0 +1,59 @@
+https://www.cnblogs.com/kevingrace/p/6490627.html
+
+路由查看
+route -n
+
+route-eth0;route-eth1;route-eth2
+
+route -p add 10.10.40.0 255.255.255.0 20.20.20.20
+
+route命令
+
+route  [add|del] [-net|-host] target [netmask Nm] [gw Gw] [[dev] If]
+
+参数解释：
+add           添加一条路由规则
+del            删除一条路由规则
+-net          目的地址是一个网络
+-host         目的地址是一个主机
+target        目的网络或主机
+netmask    目的地址的网络掩码
+gw            路由数据包通过的网关
+dev           为路由指定的网络接口
+
+
+添加到主机的路由
+# route add -host 192.168.1.2 dev eth0:0
+# route add -host 10.20.30.148 gw 10.20.30.40
+
+添加到网络的路由
+# route add -net 10.20.30.40 netmask 255.255.255.248 eth0
+# route add -net 10.20.30.48 netmask 255.255.255.248 gw 10.20.30.41
+# route add -net 192.168.1.0/24 eth1
+
+添加默认路由
+# route add default gw 192.168.1.1
+
+删除路由
+# route del -host 192.168.1.2 dev eth0:0
+# route del -host 10.20.30.148 gw 10.20.30.40
+# route del -net 10.20.30.40 netmask 255.255.255.248 eth0
+# route del -net 10.20.30.48 netmask 255.255.255.248 gw 10.20.30.41
+# route del -net 192.168.1.0/24 eth1
+# route del default gw 192.168.1.1                  //route del default   删除所有的默认路由
+ 
+添加一条默认路由
+# route add default gw 10.0.0.1      //默认只在内存中生效
+开机自启动可以追加到/etc/rc.local文件里
+# echo "route add default gw 10.0.0.1" >>/etc/rc.local
+ 
+添加一条静态路由
+# route add -net 192.168.2.0/24 gw 192.168.2.254
+要永久生效的话要这样做：
+# echo "any net 192.168.2.0/24 gw 192.168.2.254" >>/etc/sysconfig/static-routes
+ 
+添加到一台主机的静态路由
+# route add -host 192.168.2.2 gw 192.168.2.254
+要永久生效的话要这样做：
+# echo "any  host 192.168.2.2 gw 192.168.2.254 " >>/etc/sysconfig/static-routes
+注：Linux 默认没有这个文件 ，得手动创建一个
