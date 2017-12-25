@@ -1,0 +1,2 @@
+	科学计算numpy、pandas；分析策略；数据可视化matpalotlib；
+自然语言处理NLTK
