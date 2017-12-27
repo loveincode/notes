@@ -1,0 +1,48 @@
+state 和 props 主要的区别在于 props 是不可变的，而 state 可以根据与用户交互来改变。
+这就是为什么有些容器组件需要定义 state 来更新和修改数据。 而子组件只能通过 props 来传递数据。
+
+使用 Props
+以下实例演示了如何在组件中使用 props：
+
+      var HelloMessage = React.createClass({
+        render: function() {
+          return <h1>Hello {this.props.name}</h1>;
+        }
+      });
+
+      ReactDOM.render(
+        <HelloMessage name="Runoob" />,
+        document.getElementById('example')
+      );
+	  
+	  实例中 name 属性通过 this.props.name 来获取。
+	  
+默认 Props
+你可以通过 getDefaultProps() 方法为 props 设置默认值，实例如下：
+
+      var HelloMessage = React.createClass({
+      getDefaultProps: function() {
+        return {
+          name: 'Runoob'
+        };
+      },
+      render: function() {
+        return <h1>Hello {this.props.name}</h1>;
+      }
+    });
+
+    ReactDOM.render(
+      <HelloMessage />,
+      document.getElementById('example')
+    );
+	
+State 和 Props
+以下实例演示了如何在应用中组合使用 state 和 props 。我们可以在父组件中设置 state， 并通过在子组件上使用 props 将其传递到子组件上。
+在 render 函数中, 我们设置 name 和 site 来获取父组件传递过来的数据。
+
+
+Props 验证
+Props 验证使用 propTypes，它可以保证我们的应用组件被正确使用，React.PropTypes 提供很多验证器 (validator) 来验证传入数据是否有效。
+当向 props 传入无效数据时，JavaScript 控制台会抛出警告。
+
+以下实例创建一个 Mytitle 组件，属性 title 是必须的且是字符串，非字符串类型会自动转换为字符串 ：
