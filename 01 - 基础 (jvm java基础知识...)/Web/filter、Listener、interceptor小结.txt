@@ -1,0 +1,51 @@
+http://blog.csdn.net/jing12062011/article/details/76684735
+
+一、Filter：
+Servlet加强版，对用户请求进行预处理，也可以对HttpServletResponse进行后处理，是典型的处理链。
+
+用处：
+1、  在HttpServletRequest到达servlet之前，拦截客户的HttpServletRequest
+2、  根据需要检查HttpServletRequest，或修改HttpServletRequest头和数据
+3、  在HttpServletResponse到达客户端之前，拦截HttpServletResponse
+4、  根据需要检查HttpServletResponse，或修改HttpServletResponse头和数据
+
+种类：
+1、  用户授权的filter
+2、  日志filter
+3、  负责解码的filter
+4、  能改变XML内容的XSLTfilter
+5、  filter可以负责拦截多个请求或响应，一个请求或响应也可以被多个filter拦截
+
+二、Listener
+监听web应用内部各种事件并做出处理
+
+ServletAPI给出的常用Listener接口，自定义Listener要选择性实现它们：
+1、  ServletContextAttributeListener
+2、  ServletContextListener
+3、  HttpSessionListener
+4、  HttpSessionAttributeListener
+
+使用Listener的步骤
+1、  定义Listener实现类
+2、  通过注解或者web.xml文件中配置Listener
+注解：@WebListener
+
+三、interceptor
+interceptor动态拦截Action调用的对象，在service或者其他方法前后调用一个方法进行处理。采用了java动态代理和反射的机制来实现，与servlet无关。不同框架实现的拦截器内部方法是不同的。
+
+实现拦截器的步骤（模块）：
+l  业务组件，被代理和被拦截的对象；
+l  代理处理器，实现了InvocationHandler 接口的一个对象；
+l  代理对象，Proxy 对象；
+l  拦截器，普通的JavaBean，在调用业务方法之前或者之后会自动拦截并执行自己的一些方法；
+l  客户端，执行业务处理的入口。
+具体见：http://blog.csdn.net/qq_35246620/article/details/68484407讲得很详细，不再赘述。
+
+四、过滤器（filter）和拦截器（interceptor）区别：http://jay-zhong.iteye.com/blog/1511919
+
+1、filter基于filter接口中的doFilter回调函数，interceptor则基于Java本身的反射机制；
+2、filter是依赖于servlet容器的，没有servlet容器就无法回调doFilter方法，而interceptor与servlet无关；
+3、filter的过滤范围比interceptor大，filter除了过滤请求外通过通配符可以保护页面、图片、文件等，而interceptor只能过滤请求，只对action起作用，在action之前开始，在action完成后结束（如被拦截，不执行action）；
+4、filter的过滤一般在加载的时候在init方法声明，而interceptor可以通过在xml声明是guest请求还是user请求来辨别是否过滤；
+5、interceptor可以访问action上下文、值栈里的对象，而filter不能；
+6、在action的生命周期中，拦截器可以被多次调用，而过滤器只能在容器初始化时被调用一次。

@@ -1,0 +1,13 @@
+J2EE Web 服务中的Handler技术特点非常像Servlet技术中的Filter。
+
+我们知道，在Servlet中，当一个HTTP到达服务端时，往往要经过多个Filter对请求进行过滤，然后才到达提供服务的Servlet，
+这些Filter的功能往往是对请求进行统一编码，对用户进行认证，把用户的访问写入系统日志等。
+
+相应的，Web服务中的Handler通常也提供一下的功能：
+对客户端进行认证、授权；
+把用户的访问写入系统日志；
+对请求的SOAP消息进行加密，解密；
+为Web Services对象做缓存。
+
+SOAP消息Handler能够访问代表RPC请求或者响应的SOAP消息。在JAX-RPC技术中，SOAP消息Handler可以部署在服务端，也可以在客户端使用。
+
