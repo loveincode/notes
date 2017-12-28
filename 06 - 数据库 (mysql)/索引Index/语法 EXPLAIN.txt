@@ -1,0 +1,9 @@
+select_type： 指定所使用的SELECT查询类型，这里值为SIMPLE，表示简单的SELECT，不使用UNION或者子查询。其他取值有PRIMARY、UNION、SUBQUERY、等
+table： 指定数据库读取的数据表的名字，它们按照被读取的先后顺序排列
+type： 指定了本数据表与其他数据表之间的关联关系，其它取值有system、const、eq_ref、ref、range、index和All
+possible_keys： MySQL在搜索数据记录时可选用的各个索引
+key： MySQL使用的实际索引
+key_len： 给出了索引按字节计算的长度，key_len数值越小，表示越快
+ref： 提供了关联关系中另外一个数据表里的数据列的名字
+rows： 指MySQL执行查询时预计从当前数据表中读出的数据行数
+Extra： 提供了与关联操作有关的信息
