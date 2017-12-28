@@ -1,0 +1,69 @@
+https://segmentfault.com/a/1190000012612232
+
+索引是用来快速检索出具有特定值的记录。如果没有索引，数据库就必须从第一条记录开始进行全表扫描，直到找出相关的行。数据越多，检索的代价就越高，检索时如果表的列存在索引，那么MySQL就能快速到达指定位置去搜索数据文件，而不必查看所有数据。
+
+索引依托于存储引擎的实现，因此，每种存储引擎的索引都不一定完全相同，并且每种存储引擎也不一定支持所有索引类型。所有存储引擎支持每个表至少16个索引，总索引长度至少为256字节。大多数存储引擎有更高的额限制。
+
+MySQL中索引的存储类型有两种：BTREE和HASH，具体和表的存储引擎相关；
+
+MyISAM和InnoDB存储引擎只支持BTREE索引，
+
+MEMORY/HEAP存储引擎可以支持HASH和BTREE索引。
+
+优点
+加快数据的查询速度
+唯一索引，可以保证数据库表中每一行数据的唯一性
+在实现数据的参考完整性方面，可以加速表和表之间的连接
+在使用分组和排序子句进行数据查询时，也可以显著减少查询中分组和排序的时间
+
+缺点
+占用磁盘空间，除了数据表占数据空间之外，每一个索引还要占一定的物理空间，如果有大量的索引，索引文件可能比数据文件更快达到最大文件尺寸（合理运用，问题不大）
+损耗性能（添加、修改、删除） 索引需要动态地维护
+
+
+分类
+
+普通索引： 数据库中的基本索引类型，允许在定义索引的列中插入重复值和空值
+唯一索引： 索引列的值必须唯一，但允许有空值，主键索引是一种特殊的唯一索引，不允许有空值（比如自增ID）
+
+单列索引： 即一个索引只包含单个列，一个表可以有多个单列索引
+组合索引： 指在表的多个字段组合上创建的索引，只有在查询条件中使用了这些字段的左边字段时，索引才会被使用
+
+全文索引： 类型为FULLTEXT，在定义索引的列上支持值的全文查找，允许在这些索引列中插入重复值和空值。全文索引可以在CHAR、VARCHAR或者TEXT类型的列上创建，MySQL中只有MyISAM存储引擎支持全文索引
+
+普通索引
+-- 这句作用是,如果 customer1 存在就删除
+DROP TABLE IF EXISTS customer1;
+CREATE TABLE `customer1` (
+  `customer_id` bigint(20) NOT NULL COMMENT '客户ID',
+  `customer_name` varchar(30) DEFAULT NULL COMMENT '客户姓名',
+  INDEX `idx_customer_id` (`customer_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='客户表';
+
+唯一索引
+单列索引是在数据表中的某一个字段上创建的索引，一个表中可以创建多个单列索引，前面两个例子中创建的索引都是单列索引，比如：
+
+DROP TABLE
+IF EXISTS customer1;
+
+CREATE TABLE `customer1` (
+    `customer_id` BIGINT (20) NOT NULL COMMENT '客户ID',
+    `customer_name` VARCHAR (30) DEFAULT NULL COMMENT '客户姓名',
+    UNIQUE INDEX `idx_customer_id` (`customer_id`) USING BTREE
+) ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = '客户表';
+这样就代表在表的customer_id字段上创建了一个名为idx_customer_id的唯一索引
+
+组合索引
+组合索引是在多个字段上创建一个索引，比如：
+
+DROP TABLE
+IF EXISTS customer1;
+
+CREATE TABLE `customer1` (
+    `customer_id` BIGINT (20) NOT NULL COMMENT '客户ID',
+    `customer_name` VARCHAR (30) DEFAULT NULL COMMENT '客户姓名',
+     INDEX `idx_group_customer` (`customer_id`,`customer_name`) USING BTREE
+) ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = '客户表';
+
+SHOW INDEX FROM customer1;
+这就为customer_id、customer_name两个字段成功创建了一个名为idx_group_customer的组合索引，通过SHOW INDEX FROM customer1; 
