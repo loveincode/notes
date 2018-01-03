@@ -1,4 +1,5 @@
 
+centos7 mysql5.7安装
 
 mysql https://dev.mysql.com/downloads/repo/yum/
 	https://www.cnblogs.com/wishwzp/p/7113403.html
@@ -16,7 +17,7 @@ mysql https://dev.mysql.com/downloads/repo/yum/
 		执行 yum install mysql-community-server
 
 安装成功后重启mysql 服务
-		service mysqld restart
+		service mysqld restart  systemctl start mysqld.service  systemctl daemon-reload
 
 初次安装mysql，root账户没有密码。
 		[root@yl-web yl]# mysql -u root 
@@ -28,7 +29,8 @@ mysql https://dev.mysql.com/downloads/repo/yum/
 		mysql配置文件为/etc/my.cnf
 		最后加上编码配置
 			[mysql]
-			default-character-set =utf8
+			#default-character-set =utf8
+			character-set-server = utf8
 		这里的字符编码必须和/usr/share/mysql/charsets/Index.xml中一致。
 
 	远程连接设置：
@@ -48,6 +50,39 @@ mysql 的配置文件 /etc/my.cnf
 
 查看 linux 是否在 监听某一个端口：
 	ss -tnl | grep 3306
+	
+默认配置文件路径： 
+配置文件：		/etc/my.cnf 
+日志文件：		/var/log/mysqld.log 
+服务启动脚本：  /usr/lib/systemd/system/mysqld.service 
+socket文件：	/var/run/mysqld/mysqld.pid
+
+
+启动文件 /etc/init.d/mysqld 
+参数文件 /etc/my.cnf
+日志文件 /var/log/mysqld.log
+sock文件 /var/lib/mysql/mysql.sock
+pid文件/var/run/mysqld/mysqld.pid
+
+ 
+
+四，由于CentOS7.2抽风，重启后/run/mysqld /var/run/mysqld 消失，造成启动失败；
+
+故修改一下三个地方
+
+1 my.cnf 中
+
+pid-file=/var/lib/mysql/mysqld.pid
+
+2 mysqld 中头注释
+
+# pidfile: /var/lib/mysql/mysqld.pid
+
+2 mysqld 中函数调用参数
+
+get_mysql_option mysqld_safe pid-file "/var/lib/mysql/mysqld.pid"
+
+执行文件 /usr/bin/my*
 	
 mysql http://www.jianshu.com/p/4a41a6df19a6
 	
