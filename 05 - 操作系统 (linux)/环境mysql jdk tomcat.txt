@@ -36,7 +36,17 @@ mysql https://dev.mysql.com/downloads/repo/yum/
 	远程连接设置：
 		把在所有数据库的所有表的所有权限赋值给位于所有IP地址的root用户。
 			mysql> grant all privileges on *.* to root@'%'identified by 'password';（填写root 的密码即可）
-
+					
+					flush privileges;
+					
+防火墙原因
+1、打开防火墙配置文件
+vi  /etc/sysconfig/iptables
+2、增加下面一行
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 3306 -j ACCEPT
+3、重启防火墙
+service  iptables restart
+					
 		如果是新用户而不是root，则要先新建用户
 			mysql>create user 'username'@'%' identified by 'password'; 
 
