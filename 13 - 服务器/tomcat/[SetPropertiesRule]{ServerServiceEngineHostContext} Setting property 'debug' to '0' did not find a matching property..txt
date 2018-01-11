@@ -1,0 +1,15 @@
+[SetPropertiesRule]{ServerServiceEngineHostContext} Setting property 'debug' to '0' did not find a matching property.
+
+
+<Context path="/n" docBase="E:/aWorkingCopy/ndaoti/war" debug="0" reloadable="true" crossContext="false">  
+
+把debug="0"去除即可。
+
+分析：tomcat的6.0.16这个版本中可能用别的属性替代了debug功能。
+
+
+设置默认启动项 
+conf/server.xml 
+<Host>节点中 
+<Context path="/n" docBase="E:/aWorkingCopy/ndaoti/war" debug="0" reloadable="true" crossContext="false">   
+

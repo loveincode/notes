@@ -1,0 +1,20 @@
+org.apache.catalina.loader.WebappClassLoaderBase.clearReferencesJdbc
+
+解决办法可参考http://forum.springsource.org/showthread.php?87335-Failure-to-unregister-the-MySQL-JDBC-Driver
+
+把JDBC驱动复制到tomcat/lib 目录下
+
+当项目没有stop时，redeploy产生的问题
+
+
+BasicDataSource中的close方法没有注销（deregister）jdbc驱动。在web server环境中，当reload content时，就引起了堆内存泄露（permgen memory leaks）。
+
+例如，当在使用spring和tomcat  6.0.26时，BasicDataSource在Spring context被声明了，这样就会有一条信息在web application reload的时候： 
+
+SEVERE: A web application registered the JBDC driver [com.mysql.jdbc.Driver] but failed to unregister it when the web application was stopped. 
+To prevent a memory leak, the JDBC Driver has been forcibly unregistered.
+
+该地址中 https://issues.apache.org/jira/browse/DBCP-332 提供了一种解决方案。
+
+我并没有使用该方案，因为使用的是bonecp，所以我看了下bonecp的BoneCPDataSource的close方法，发现，
+其中有个 BoneCPConfig类，其中有这个属性：deregisterDriverOnClose。 于是我在spring的xml配置中，加入了该配置。
