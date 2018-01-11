@@ -1,0 +1,8 @@
+tomcat 依赖 mysql redis
+
+所以启动顺序 mysql→redis→tomcat
+
+停止顺序 tomcat→redis→mysql
+
+
+# chkconfig   - 85 15

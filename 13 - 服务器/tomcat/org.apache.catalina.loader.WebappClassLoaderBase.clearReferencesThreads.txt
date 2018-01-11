@@ -1,0 +1,13 @@
+org.apache.catalina.loader.WebappClassLoaderBase.clearReferencesThreads
+
+
+其实是在使用数据连接池的时候注册了数据驱动，但是关闭tomcat的时候没有反注册，手动把它反注册就好了。
+
+      try {
+            DriverManager.deregisterDriver(DriverManager.getDrivers().nextElement());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+		
+		
+JDBC连接没有正确关闭，你看是不是代码哪里获取数据库连接没有close或者close没调用到。
