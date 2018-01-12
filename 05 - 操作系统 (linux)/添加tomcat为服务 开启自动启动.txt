@@ -5,7 +5,7 @@ http://blog.csdn.net/wangyonglin1123/article/details/50996300
 2. 修改刚才复制的tomcat脚本：
  　　a. 在脚本的第三行后面插入下面两行
 
-  　　# chkconfig: 2345 10 90
+  　　# chkconfig: 2345 90 10
   　　# description:Tomcat service
 
 　　第一行是服务的配置：第一个数字是服务的运行级，2345表明这个服务的运行级是2、3、4和5级（Linux的运行级为0到6）；第二个数字是启动优先级，数值从0到99；第三个数是停止优先级，数值也是从0到99。
