@@ -1,0 +1,101 @@
+SSH框架项目开发命名规范 
+一、各层包及类命名规范
+
+总体原则：包名所有字母小写，类名采用“驼峰标识”，具体如下：
+
+1.      Action类所在包命名规范：com.xdsc.action.子系统名称
+
+    如学生管理系统：com.xdsc.action.xsgl_system 
+
+2.      Action类命名规范：模块名 + 后缀Action 。
+
+    如UserAction
+
+3.      DAO层接口类所在包命名规范：com.xdsc.dao.子系统名称
+
+    如学生管理系统: com.xdsc.dao.xsgl_system
+
+4.      DAO层接口类命名规范：模块名 + 后缀DAO。（注意DAO大写）
+
+    如UserDAO
+
+5.      DAO层实现类所在包命名规范：com.xdsc.dao.子系统名称.impl
+
+    如学生管理系统:com.xdsc.dao.xsgl_system.impl
+
+6.      DAO层实现类命名规范：模块名+DAOImpl（注意Impl第一个字母大写）
+
+    如UserDAOImpl
+
+7.      model层类所在包命名规范：com.xdsc.model.子系统名称
+
+    如学生管理系统:com.xdsc.model.xsgl_system
+
+8.      model层类命名规范：模块名
+
+    如:User
+
+9.      service层接口类所在包命名规范：com.xdsc.service.子系统名称
+
+    如学生管理系统:com.xdsc.service.xsgl_system
+
+10. service层接口类命名规范：模块名+Manager
+
+    如：UserManager
+
+11. service层实现类所在包命名规范：com.xdsc.service.子系统名称.impl
+
+    如学生管理系统:com.xdsc.service.xsgl_system.impl
+
+12. service层实现类命名规范：模块名+ManagerImpl
+
+    如：UserManagerImpl
+
+13. util层公共类所在包命名规范：com.xdsc.util
+
+    公共类命名规范：HibernateUtil
+
+二、配置文件命名规范
+
+总体原则：变量、属性、id等均采用“驼峰标识”，但首字母必须小写。
+
+1.      struts.xml 
+
+    package命名规范：子系统名称，如xsgl_system
+
+    Action命名规范：功能模块名，如user
+
+2.      beans.xml
+
+   bean命名规范：功能模块，如userManager
+
+3.      hibernate.cfg.xml
+
+   按默认规范
+
+4.      web.xml
+
+    按默认规范
+
+5.model层类对应配置文件
+
+    按默认规范
+
+三、其它命名规范
+
+1.    变量命名：
+
+    变量名首字母必须小写，如果该变量名有多个单词组成，后面的单词首字母大写，单词与单词之间不要使用"_"做连接，变量名访问控制必须为私有， 可以对其增加setter与getter方法。
+
+2.    常量命名：
+
+    所有字母大写，如果有多个单词组成，单词与单词之间以” _“隔开。而且该变量必须是公共、静态、final类型     
+
+3.    方法命名：
+
+    首字母必须小写，如果该变量名有多个单词组成，后面的单词首字母大写，单词与单词之间不要使用"_"做连接。单词不要使用名词
+
+4.jsp文件命名
+
+    “驼峰标识”，且单词与单词之间不要使用"_"做连接。
+
