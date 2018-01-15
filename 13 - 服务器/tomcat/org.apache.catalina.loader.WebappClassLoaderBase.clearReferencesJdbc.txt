@@ -18,3 +18,12 @@ To prevent a memory leak, the JDBC Driver has been forcibly unregistered.
 
 我并没有使用该方案，因为使用的是bonecp，所以我看了下bonecp的BoneCPDataSource的close方法，发现，
 其中有个 BoneCPConfig类，其中有这个属性：deregisterDriverOnClose。 于是我在spring的xml配置中，加入了该配置。
+
+
+
+
+
+
+
+
+可能是 依赖的redis 没有启动

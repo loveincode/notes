@@ -11,3 +11,6 @@ org.apache.catalina.loader.WebappClassLoaderBase.clearReferencesThreads
 		
 		
 JDBC连接没有正确关闭，你看是不是代码哪里获取数据库连接没有close或者close没调用到。
+
+
+可能是依赖的redis客户端未启动
