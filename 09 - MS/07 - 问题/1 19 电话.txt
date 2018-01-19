@@ -1,0 +1,28 @@
+
+基本类型
+	8个
+	byte short int long 
+	float double 
+	char 
+	boolean
+
+构造方法重载
+	重载 含义掌握 就知道构造方法无法重载
+
+重载的含义
+
+多线程实现方式 runnable	
+	Callable不太了解
+	
+voliate
+	含义
+	与 synchronize分清楚
+
+
+接口与抽象类	区别
+
+jdbc
+	PreparedStatement	
+
+快排
+	思想

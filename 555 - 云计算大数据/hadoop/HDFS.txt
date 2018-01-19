@@ -1,0 +1,15 @@
+https://www.cnblogs.com/laov/p/3434917.html
+HDFS（Hadoop Distributed File System ）Hadoop分布式文件系统。
+
+是根据google发表的论文翻版的。论文为GFS（Google File System）Google 文件系统（中文，英文）。
+
+HDFS有很多特点：
+
+   ① 保存多个副本，且提供容错机制，副本丢失或宕机自动恢复。默认存3份。
+
+   ② 运行在廉价的机器上。
+
+   ③ 适合大数据的处理。多大？多小？
+	HDFS默认会将文件分割成block，64M为1个block。
+		然后将block按键值对存储在HDFS上，并将键值对的映射存到内存中。
+			如果小文件太多，那内存的负担会很重。
