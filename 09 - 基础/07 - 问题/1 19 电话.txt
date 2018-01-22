@@ -1,9 +1,9 @@
 
 基本类型
 	8个
-	byte short int long 
-	float double 
-	char 
+	byte short int long
+	float double
+	char
 	boolean
 
 构造方法重载
@@ -11,9 +11,18 @@
 
 重载的含义
 
-多线程实现方式 runnable	
+多线程实现方式 runnable
 	Callable不太了解
-	
+	相同点：
+		两者都是接口；（废话）
+		两者都可用来编写多线程程序；
+		两者都需要调用Thread.start()启动线程；
+	不同点：
+		两者最大的不同点是：实现Callable接口的任务线程能返回执行结果；而实现Runnable接口的任务线程不能返回结果；
+		Callable接口的call()方法允许抛出异常；而Runnable接口的run()方法的异常只能在内部消化，不能继续上抛；
+	注意点：
+		Callable接口支持返回执行结果，此时需要调用FutureTask.get()方法实现，此方法会阻塞主线程直到获取‘将来’结果；当不调用此方法时，主线程不会阻塞！
+
 voliate
 	含义
 	与 synchronize分清楚
@@ -22,7 +31,7 @@ voliate
 接口与抽象类	区别
 
 jdbc
-	PreparedStatement	
+	PreparedStatement
 
 快排
 	思想
