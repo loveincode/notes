@@ -1,0 +1,13 @@
+链表反转 pre cur next
+数组中最多存在的数是否大于其余数个数总和
+
+object.wait()
+thread.sleep()
+
+int byte 字节 范围
+
+数组 装篮子 arr[] n 
+递归法
+贪心算法
+
+
