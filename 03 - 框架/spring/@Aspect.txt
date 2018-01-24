@@ -1,5 +1,7 @@
 http://blog.csdn.net/jobjava/article/details/44063427
 
+http://blog.csdn.net/wangligong/article/details/53224594
+
 @AspectJ的详细用法 
 在Spring AOP中目前只有执行方法这一个连接点，Spring AOP支持的AspectJ切入点指示符如下：
 
