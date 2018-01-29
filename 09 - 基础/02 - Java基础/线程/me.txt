@@ -1,0 +1,21 @@
+
+https://www.cnblogs.com/yjd_hycf_space/p/7526608.html
+
+实现方式
+
+继承 实现接口
+
+线程状态
+
+线程调度
+Thread.sleep(long millis)
+Object.wait()
+Thread.yield()
+join()
+Object.notify()
+
+
+线程同步
+
+
+线程数据传递
