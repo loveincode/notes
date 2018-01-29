@@ -1,0 +1,35 @@
+https://zhuanlan.zhihu.com/p/23511594?refer=dreawer
+一、线程池
+
+1.1 newSingleThreadExecutor
+
+1.2 newFixedThreadPool
+
+1.3 newCachedThreadPool
+
+1.4 newScheduledThreadPool
+
+1.5 ExecutorService任务周期管理接口
+
+二、ThreadToolExecutor详解
+
+				Excutor
+
+			ExcutorService
+
+ScheduleExcutorService AbstractExcutorService
+
+	
+					ThreadPoolExcutor ForkJoinPool
+					
+	ScheduleThreadPoolExcutor
+	
+	
+				Excutors
+				
+Executor存在的目的是提供一种将"任务提交"与"任务如何运行"分离开来的机制。
+虽然只有一个方法，但是却为灵活且强大的异步任务执行框架提供了基础。
+它提供了一种标准的方法将任务的提交过程与执行过程解耦开来，并用Runnable来表示任务。
+
+
+https://zhuanlan.zhihu.com/p/23635167
