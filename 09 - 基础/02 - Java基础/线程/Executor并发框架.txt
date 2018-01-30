@@ -31,5 +31,46 @@ Executor存在的目的是提供一种将"任务提交"与"任务如何运行"�
 虽然只有一个方法，但是却为灵活且强大的异步任务执行框架提供了基础。
 它提供了一种标准的方法将任务的提交过程与执行过程解耦开来，并用Runnable来表示任务。
 
+Executor：是Java线程池的超级接口；提供一个execute(Runnable command)方法;我们一般用它的继承接口ExecutorService。
+
+Executors：是java.util.concurrent包下的一个类，提供了若干个静态方法，用于生成不同类型的线程池。Executors一共可以创建下面这四类线程池：
+
+newCachedThreadPool 创建一个可缓存线程池，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，则新建线程。
+newFixedThreadPool 创建一个定长线程池，可控制线程最大并发数，超出的线程会在队列中等待。
+newScheduledThreadPool 创建一个线程池，它可安排在给定延迟后运行命令或者定期地执行。
+newSingleThreadExecutor 创建一个使用单个 worker 线程的 Executor，以无界队列方式来运行该线程。它只会用唯一的工作线程来执行任务，保证所有任务按照指定顺序(FIFO, LIFO, 优先级)执行。
+
+ExecutorService：它是线程池定义的一个接口，继承Executor。有两个实现类，分别为ThreadPoolExecutor,ScheduledThreadPoolExecutor。
+
+ExecutorService常用的几个方法：
+
+execute(Runnable)从父类继承过来的方法
+submit(Runnable)
+submit(Callable)
+invokeAny(...)
+invokeAll(...)
+shutdown()
+execute方法：方法接收一个Runnable实例，并且异步的执行，
+这个方法有个问题，就是没有办法获知task的执行结果。如果我们想获得task的执行结果，我们可以传入一个Callable的实例（下面会介绍）
+submit(Runnable)方法：返回一个Future对象，通过返回的Future对象，我们可以检查提交的任务是否执行完毕。
+submit(Callable)：与submit(Runnable)类似，也会返回一个Future对象，但是除此之外，
+submit(Callable)接收的是一个Callable的实现，Callable接口中的call()方法有一个返回值，可以返回任务的执行结果，而Runnable接口中的run()方法是void的，没有返回值。
+invokeAny(...)：方法接收的是一个Callable的集合，执行这个方法不会返回Future，但是会返回所有Callable任务中其中一个任务的执行结果。
+这个方法也无法保证返回的是哪个任务的执行结果，反正是其中的某一个。
+invokeAll(...)：与 invokeAny(...)类似也是接收一个Callable集合，但是前者执行之后会返回一个Future的List，其中对应着每个Callable任务执行后的Future对象。
+shutdown()：我们使用完成ExecutorService之后应该关闭它，否则它里面的线程会一直处于运行状态。
+
+如果的应用程序是通过main()方法启动的，在这个main()退出之后，如果应用程序中的ExecutorService没有关闭，这个应用将一直运行。
+之所以会出现这种情况，是因为ExecutorService中运行的线程会阻止JVM关闭。
+
+如果要关闭ExecutorService中执行的线程，我们可以调用ExecutorService.shutdown()方法。
+在调用shutdown()方法之后，ExecutorService不会立即关闭，但是它不再接收新的任务，直到当前所有线程执行完成才会关闭，所有在shutdown()执行之前提交的任务都会被执行。
+
+如果我们想立即关闭ExecutorService，我们可以调用ExecutorService.shutdownNow()方法。
+这个动作将跳过所有正在执行的任务和被提交还没有执行的任务。但是它并不对正在执行的任务做任何保证，有可能它们都会停止，也有可能执行完成。
+
+
+
+
 
 https://zhuanlan.zhihu.com/p/23635167
