@@ -1,0 +1,38 @@
+https://jeffjade.com/2017/05/01/122-how-to-better-use-google_chrome/
+
+精确搜索 前后添加 双引号（搜索的关键字用“”（双引号，中英文皆可）包含）
+	“loveincode”
+	
+模糊搜索 星号（*） 是常用的通配符，* 号代表任何文字
+
+站内搜索 可以指定仅在某个站点下搜索 
+	
+	site:jeffjade.com 数组 
+	site:ruanyifeng.com npm
+
+排除搜索
+
+	在想搜索结果中不包含某个词，就在该词的前面加一个 -（减号，⚠️这个得是半角英文，并和之后的词得连着，不能有空格）。
+
+	举例说明，ListView 控件在 Android 跟 React Native 都会含有，如果你想要更精确你的结果，即可屏蔽掉另一方，相这样：
+	ListView -Android
+	ListView -ReactNative // (这 React Native 得连起来，否则会被拆分)
+
+标题中搜索
+	
+	intitle: (冒号得是半角英文，且与关键词间不能有空格)， 表示搜索结果的标题都必须含有 intitle: 后的查询关键词，以帮助排除无关网页。
+	intitle:loveincode
+	
+	allintitle:；如此搜索，返回的内容是，页面标题中包含多组关键词的页面。
+	
+	例如：allintitle:SEO 搜索引擎优化，就相当于：
+	intitle:SEO intitle:搜索引擎优化，返回的是标题中既包含“SEO”，也包含“搜索引擎优化”的页面。
+	
+文件类型
+
+	指定格式用：filetype ，表示搜索特定的文件格式；如此一来，我们搜索出来的内容，就是指定格式文件（eg：PDF）。
+	代码大全 filetype:PDF
+	Clean Code filetype:PDF
+	
+以上，只是 Google 搜索技巧中常用的几个，其他还有很多，比如：inurl， inanchor，allinurl诸次等等，更多玩法，可以参考知乎 如何用好谷歌等搜索引擎？https://www.zhihu.com/question/20161362
+
