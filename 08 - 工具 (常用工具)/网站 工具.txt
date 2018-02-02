@@ -4,3 +4,53 @@
 leetcode https://leetcode.com/problemset/all/
 
 发布项目 https://pivotal.io/ 文档 http://docs.run.pivotal.io/cf-cli/install-go-cli.html
+
+
+易源数据 https://www.showapi.com/
+
+HTML entity encoder/decoder https://mothereff.in/html-entities
+
+emoji　 https://emojipedia.org/
+
+在线Cron表达式生成器 http://cron.qqe2.com/
+
+在线工具 - 程序员的工具箱 https://tool.lu/
+
+loading图片 https://loading.io/
+
+git插件 Octotree
+
+jar 包 下载：http://www.java2s.com/Code/Jar/
+
+美图免费下载：https://magdeleine.co/
+
+bing今日美图：http://bing.plmeizi.com/
+
+屏幕录制：screentogif http://www.screentogif.com/?l=zh_cn
+
+抖包袱版|一亩三分地论坛 - Powered by Discuz! http://www.1point3acres.com/bbs/
+nasa https://images.nasa.gov/#/ 
+
+　　Beautiful Free Images | Unsplash https://unsplash.com/
+
+　　Free Gradients Collection by itmeo.com https://webgradients.com/
+
+　　Font Map · An AI Experiment by IDEO http://fontmap.ideo.com/
+
+　　57,900 Free Icons (SVG, PNG) https://icons8.com/
+
+　　mvnrepository http://www.mvnrepository.com/
+
+　　中国气象数据网 http://data.cma.cn/
+
+　　OfficePLUS http://office.mmais.com.cn/Template/Home.shtml
+
+　　MDN https://developer.mozilla.org/zh-CN/
+
+　　Cmd Markdown https://www.zybuluo.com/cmd/
+
+　　TortoiseSVN SendRpt.exe not found解决方案 http://blog.csdn.net/freelk/article/details/77509191
+
+　　sublime text 3 http://www.sublimetextcn.com/3/
+
+　　springsource https://repo.springsource.org/webapp/#/home
