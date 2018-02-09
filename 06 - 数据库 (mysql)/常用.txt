@@ -1,0 +1,9 @@
+
+in
+not in 	注意NUll值
+
+count sum avg min max
+
+Group By
+
+Order By
