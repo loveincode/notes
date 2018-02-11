@@ -44,7 +44,8 @@ public class Singleton {
 2.进入Synchronized 临界区以后，还要再做一次判空。因为当两个线程同时访问的时候，线程A构建完对象，线程B也已经通过了最初的判空验证，不做第二次判空的话，线程B还是会再次构建instance对象。
 
 问题：栗2
-这种情况表面看似没什么问题，要么Instance还没被线程A构建，线程B执行 if（instance == null）的时候得到true；
+这种情况表面看似没什么问题，
+要么Instance还没被线程A构建，线程B执行 if（instance == null）的时候得到true；
 要么Instance已经被线程A构建完成，线程B执行 if（instance == null）的时候得到false。
 
 这里涉及到了JVM编译器的指令重排。
