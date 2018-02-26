@@ -1,0 +1,21 @@
+
+synchronized是Java语言的关键字，当它用来修饰一个方法或者一个代码块的时候，
+	能够保证在同一时刻最多只有一个线程执行该段代码。synchronized就是针对内存区块申请内存锁。 
+	
+（1）JAVA中的Object类型都是带有一个内存锁的，在有线程获取该内存锁后，其它线程无法访问该内存，从而实现JAVA中简单的同步、互斥操作。//所以叫做内存锁 
+（2）this关键字代表类的一个对象，所以其内存锁是针对相同对象的互斥操作，而static成员属于类专有，其内存空间为该类所有成员共有，
+	这就导致synchronized()对static成员加锁，相当于对类加锁，也就是在该类的所有成员间实现互斥，在同一时间只有一个线程可访问该类的实例。
+
+在使用wait和notify的时候必须注意：
+	Obj.wait()与Obj.notify()必须要与synchronized(Obj)一起使用，也就是wait与notify是针对已经获取了Obj锁的对象来进行操作。
+	也就是调用wait或者notify方法都必须先获取该对象的锁，不然报错，所以这个两个方法必须放在synchronized封装体体中
+	
+（1）Obj.wait()、Obj.notify必须在synchronized(Obj){…}语句块内。 
+（2）wait就是说线程在获取对象锁后，主动释放对象锁，同时本线程休眠。直到有其它线程调用对象的notify()唤醒该线程，才能继续获取对象锁，并继续执行。
+	相应的notify()就是对对象锁的唤醒操作。 
+（3）notify()调用后，并不是马上就释放对象锁的，而是在相应的synchronized(){}语句块执行结束，自动释放锁后，JVM会在wait()对象锁的线程中随机选取一线程，
+	赋予其对象锁，唤醒线程，继续执行。如果是notifyAll()就会释放所有的锁。
+
+注意1：如果notify的对象没有wait，会报IllegalMonitorStateException错误
+注意2：Thread.sleep()与Object.wait()二者都可以暂停当前线程，释放CPU控制权，主要的区别在于Object.wait()在释放CPU同时，释放了对象锁的控制。
+
