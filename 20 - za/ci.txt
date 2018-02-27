@@ -1,0 +1,3 @@
+CDN Content Delivery Network 内容分发网络
+SOA Service-Oriented Architecture 面向服务的架构
+AOP Aspect Oriented Programming  面向切面编程
