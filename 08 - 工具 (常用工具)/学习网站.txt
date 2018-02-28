@@ -1,2 +1,5 @@
 并发 编程网 http://ifeve.com/
 海子博客园 http://www.cnblogs.com/dolphin0520/
+
+centos 小书 https://array-huang.gitbooks.io/centos-book/content/content/systemd.html
+
