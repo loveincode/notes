@@ -123,7 +123,7 @@ ie:tie pie
 uy:buy
 
 重读开音节 元音+辅音+ e(不发音) 辅音+元音 发字母的名称音
-重读闭音节 元音+辅音
+重读闭音节 元音+辅音 发发音
 重读开音节 rape  bate  rope  kite abuse  be
 重读闭音节 rap   bat   rop   kit  bus    egg
 
@@ -142,3 +142,27 @@ ear :pear bear wear
 
 1 读音和相关字母组合
 2 重读开音节和重读闭音节
+
+6
+剩余4个双元音读法写法
+组合
+音标词拼读
+/iə/ /uə/ /ɔi/boy /əu/
+
+/iə/ 伊e
+ear:ear hear tear
+eer:deer beer
+
+/uə/ 舞e
+oor:poor
+our:tour
+ure:sure pure
+
+/ɔi/boy 喔哎
+oi:oil boil coin
+oy:boy toy
+
+/əu/e舞 o
+o: nose rose poen over
+oa: boat coat soap goat
+ow: show window snow bowl
