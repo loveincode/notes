@@ -13,7 +13,7 @@ int 和 Integer 有什么区别
 HTTP 请求的 GET 与 POST 方式的区别
 session 与 cookie 区别
 session 分布式处理
-JDBC 流程
+JDBC 流程 http://blog.csdn.net/harryweasley/article/details/45689023
 MVC 设计思想
 equals 与 == 的区别
 
