@@ -1,0 +1,33 @@
+https://www.jianshu.com/p/fe027772e156
+AQS
+
+什么是AQS
+AQS即是AbstractQueuedSynchronizer，一个用来构建锁和同步工具的框架，包括常用的ReentrantLock、CountDownLatch、Semaphore等。
+
+AQS没有锁之类的概念，它有个state变量，是个int类型，在不同场合有着不同含义。本文研究的是锁，为了好理解，姑且先把state当成锁。
+
+AQS围绕state提供两种基本操作“获取”和“释放”，有条双向队列存放阻塞的等待线程，并提供一系列判断和处理方法，简单说几点：
+
+
+state是独占的，还是共享的；
+state被获取后，其他线程需要等待；
+state被释放后，唤醒等待线程；
+线程等不及时，如何退出等待。
+至于线程是否可以获得state，如何释放state，就不是AQS关心的了，要由子类具体实现。
+
+直接分析AQS的代码会比较难明白，所以结合子类ReentrantLock来分析。AQS的功能可以分为独占和共享，ReentrantLock实现了独占功能，是本文分析的目标。
+
+ReentrantLock对比synchronized
+
+Lock lock = new ReentranLock();
+lock.lock();
+try{
+    //do something
+}finally{
+    lock.unlock();
+}
+
+ReentrantLock实现了Lock接口，加锁和解锁都需要显式写出，注意一定要在适当时候unlock。
+
+和synchronized相比，ReentrantLock用起来会复杂一些。在基本的加锁和解锁上，两者是一样的，所以无特殊情况下，推荐使用synchronized。
+ReentrantLock的优势在于它更灵活、更强大，增加了轮训、超时、中断等高级功能。
