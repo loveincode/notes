@@ -1,0 +1,3 @@
+https://www.jianshu.com/p/7c7a5df5bda6?ref=myread
+
+CountDownLatch是同步工具类之一，可以指定一个计数值，在并发环境下由线程进行减1操作，当计数值变为0之后，被await方法阻塞的线程将会唤醒，实现线程间的同步。
