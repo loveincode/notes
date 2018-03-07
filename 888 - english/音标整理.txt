@@ -8,8 +8,8 @@
 
 	4.1 掐头法 6  /æf/ /æl/   /æm/  /æn/  /æs/  /æks/
 
-	4.2 去尾法 9  /be/  /ce/(/s/or/k/)   /de/  /ja/(/dʒ/)  /ka/  /pe/  /te/	/ve/  /ze/	
- 
+	4.2 去尾法 9  /be/  /ce/(/s/or/k/)   /de/  /ja/(/dʒ/)  /ka/  /pe/  /te/	/ve/  /ze/
+
 	4.3 对比法 5  /g/   /h/   /j/   /w/   /r/
 
 	4.4 联想记忆法 10  /dʒ/ /tʃ/  /ʃ/  /dz/  /ts/  /ʒ/ /θ/ /ð/ /ŋ/ /j/
@@ -21,7 +21,7 @@ Ff   Ll     Mm     Nn    Ss    Xx
 
 去尾法 9
 Bb    Cc               Dd    Jj           Kk    Pp    Tt	Vv    Zz
-/be/  /ce/(/s/or/k/)   /de/  /ja/(/dʒ/)  /ka/  /pe/  /te/	/ve/  /ze/	
+/be/  /ce/(/s/or/k/)   /de/  /ja/(/dʒ/)  /ka/  /pe/  /te/	/ve/  /ze/
 
 对比法 5 与拼音对比
 g     h     y     w     r
@@ -53,11 +53,11 @@ tack teck tick
 pat pet pit
 
 
-o 
+o
   /ɔ/ 哦	fox coffee dog shop doctor long
   /o/ 啊	son come color love money
 
-u 
+u
   /ʌ/ 啊    son nut jump gum bus brush supper us
   /u/ 舞 	look good book foot wood
   /uː/
@@ -98,7 +98,7 @@ ear early learn
 重 or word work world
 
 
-双元音 
+双元音
 /ai/ /au/ /ei/ /eə/
 /iə/ /uə/ /ɔi/boy /əu/
 

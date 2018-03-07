@@ -162,8 +162,9 @@ ow: show window snow bowl
 7
 联想记忆法 五个音标
 五个音标发音规律组合
-zh    ch   sh    z      c     s
-/dʒ/ /tʃ/  /ʃ/   /dz/   /ts/
+zh    ch    sh    z      c     s
+/dʒ/ /tʃ/   /ʃ/   /dz/   /ts/
+吱     吃-清 师-清  ri-清    ci
 
 /dʒ/ zhi
 g:ginger giraffe
