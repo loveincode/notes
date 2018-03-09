@@ -1,24 +1,57 @@
 http://blog.csdn.net/he90227/article/details/52576452#t1
 
+线程池的优点是可总结为以下三点：
 
+	1 线程复用
+	2 控制最大并发数
+	3 管理线程
+	
+1.线程复用过程
 
-Executor
+	实现线程复用的原理应该就是要保持线程处于存活状态（就绪，运行或阻塞）。接下来来看下ThreadPoolExecutor是怎么实现线程复用的。
+	
+	在ThreadPoolExecutor主要Worker类来控制线程的复用。看下Worker类简化后的代码，这样方便理解：
+	
+	private final class Worker implements Runnable {
 
+		final Thread thread;
 
+		Runnable firstTask;
 
-ExecutorService
+		Worker(Runnable firstTask) {
+			this.firstTask = firstTask;
+			this.thread = getThreadFactory().newThread(this);
+		}
 
-ThreadPoolExecutor
+		public void run() {
+			runWorker(this);
+		}
 
-public ThreadPoolExecutor(int corePoolSize,int maximumPoolSize,long keepAliveTime,TimeUnit unit,BlockingQueue<Runnable> workQueue) {
-        this(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue,Executors.defaultThreadFactory(), defaultHandler);
-}
+		final void runWorker(Worker w) {
+			Runnable task = w.firstTask;
+			w.firstTask = null;
+			while (task != null || (task = getTask()) != null){
+			task.run();
+		}
+	}
+	
+	Worker是一个Runnable，同时拥有一个thread，这个thread就是要开启的线程，在新建Worker对象时同时新建一个Thread对象，
+	同时将Worker自己作为参数传入TThread，这样当Thread的start()方法调用时，运行的实际上是Worker的run()方法，接着到runWorker()中,
+	有个while循环，一直从getTask()里得到Runnable对象，顺序执行。getTask()又是怎么得到Runnable对象的呢？
+	
+	依旧是简化后的代码：
+	
+	private Runnable getTask() {
+		if(一些特殊情况) {
+			return null;
+		}
 
-- corePoolSize：线程池的核心线程数,线程池中运行的线程数也永远不会超过 corePoolSize 个,默认情况下可以一直存活。可以通过设置allowCoreThreadTimeOut为True,此时 核心线程数就是0,此时keepAliveTime控制所有线程的超时时间。
-- maximumPoolSize：线程池允许的最大线程数;
-- keepAliveTime： 指的是空闲线程结束的超时时间;
-- unit ：是一个枚举，表示 keepAliveTime 的单位;
-- workQueue：表示存放任务的BlockingQueue<Runnable队列。
-- BlockingQueue:阻塞队列（BlockingQueue）是java.util.concurrent下的主要用来控制线程同步的工具。
-如果BlockQueue是空的,从BlockingQueue取东西的操作将会被阻断进入等待状态,直到BlockingQueue进了东西才会被唤醒。同样,如果BlockingQueue是满的,任何试图往里存东西的操作也会被阻断进入等待状态,直到BlockingQueue里有空间才会被唤醒继续操作。
-阻塞队列常用于生产者和消费者的场景，生产者是往队列里添加元素的线程，消费者是从队列里拿元素的线程。阻塞队列就是生产者存放元素的容器，而消费者也只从容器里拿元素。具体的实现类有LinkedBlockingQueue,ArrayBlockingQueued等。一般其内部的都是通过Lock和Condition(显示锁（Lock）及Condition的学习与使用)来实现阻塞和唤醒。
+		Runnable r = workQueue.take();
+
+		return r;
+	}
+	这个workQueue就是初始化ThreadPoolExecutor时存放任务的BlockingQueue队列，
+	这个队列里的存放的都是将要执行的Runnable任务。
+	因为BlockingQueue是个阻塞队列，BlockingQueue.take()得到如果是空，则进入等待状态直到BlockingQueue有新的对象被加入时唤醒阻塞的线程。
+	所以一般情况Thread的run()方法就不会结束,而是不断执行从workQueue里的Runnable任务，这就达到了线程复用的原理了。
+	
