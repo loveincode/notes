@@ -5,13 +5,13 @@ http://blog.csdn.net/he90227/article/details/52576452#t1
 	1 线程复用
 	2 控制最大并发数
 	3 管理线程
-	
+
 1.线程复用过程
 
 	实现线程复用的原理应该就是要保持线程处于存活状态（就绪，运行或阻塞）。接下来来看下ThreadPoolExecutor是怎么实现线程复用的。
-	
+
 	在ThreadPoolExecutor主要Worker类来控制线程的复用。看下Worker类简化后的代码，这样方便理解：
-	
+
 	private final class Worker implements Runnable {
 
 		final Thread thread;
@@ -34,13 +34,13 @@ http://blog.csdn.net/he90227/article/details/52576452#t1
 			task.run();
 		}
 	}
-	
+
 	Worker是一个Runnable，同时拥有一个thread，这个thread就是要开启的线程，在新建Worker对象时同时新建一个Thread对象，
 	同时将Worker自己作为参数传入TThread，这样当Thread的start()方法调用时，运行的实际上是Worker的run()方法，接着到runWorker()中,
 	有个while循环，一直从getTask()里得到Runnable对象，顺序执行。getTask()又是怎么得到Runnable对象的呢？
-	
+
 	依旧是简化后的代码：
-	
+
 	private Runnable getTask() {
 		if(一些特殊情况) {
 			return null;
@@ -54,4 +54,102 @@ http://blog.csdn.net/he90227/article/details/52576452#t1
 	这个队列里的存放的都是将要执行的Runnable任务。
 	因为BlockingQueue是个阻塞队列，BlockingQueue.take()得到如果是空，则进入等待状态直到BlockingQueue有新的对象被加入时唤醒阻塞的线程。
 	所以一般情况Thread的run()方法就不会结束,而是不断执行从workQueue里的Runnable任务，这就达到了线程复用的原理了。
-	
+
+2.控制最大并发数
+
+	那Runnable是什么时候放入workQueue？
+	Worker又是什么时候创建，Worker里的Thread的又是什么时候调用start()开启新线程来执行Worker的run()方法的呢？
+	有上面的分析看出Worker里的runWorker()执行任务时是一个接一个，串行进行的，那并发是怎么体现的呢？
+
+	很容易想到是在execute(Runnable runnable)时会做上面的一些任务。看下execute里是怎么做的。
+
+	execute:
+	简化后的代码
+	public void execute(Runnable command) {
+	    if (command == null)
+	        throw new NullPointerException();
+
+	     int c = ctl.get();
+	    // 当前线程数 < corePoolSize
+	    if (workerCountOf(c) < corePoolSize) {
+	        // 直接启动新的线程。
+	        if (addWorker(command, true))
+	            return;
+	        c = ctl.get();
+	    }
+
+	    // 活动线程数 >= corePoolSize
+	    // runState为RUNNING && 队列未满
+	    if (isRunning(c) && workQueue.offer(command)) {
+	        int recheck = ctl.get();
+	        // 再次检验是否为RUNNING状态
+	        // 非RUNNING状态 则从workQueue中移除任务并拒绝
+	        if (!isRunning(recheck) && remove(command))
+	            reject(command);// 采用线程池指定的策略拒绝任务
+	        // 两种情况：
+	        // 1.非RUNNING状态拒绝新的任务
+	        // 2.队列满了启动新的线程失败（workCount > maximumPoolSize）
+	    } else if (!addWorker(command, false))
+	        reject(command);
+	 }
+
+	 addWorker:
+ 	 简化后的代码
+		private boolean addWorker(Runnable firstTask, boolean core) {
+
+		    int wc = workerCountOf(c);
+		    if (wc >= (core ? corePoolSize : maximumPoolSize)) {
+		        return false;
+		    }
+
+		    w = new Worker(firstTask);
+		    final Thread t = w.thread;
+		    t.start();
+		}
+
+		根据代码再来看上面提到的线程池工作过程中的添加任务的情况：
+		* 如果正在运行的线程数量小于 corePoolSize，那么马上创建线程运行这个任务；
+		* 如果正在运行的线程数量大于或等于 corePoolSize，那么将这个任务放入队列；
+		* 如果这时候队列满了，而且正在运行的线程数量小于 maximumPoolSize，那么还是要创建非核心线程立刻运行这个任务；
+		* 如果队列满了，而且正在运行的线程数量大于或等于 maximumPoolSize，那么线程池会抛出异常RejectExecutionException。
+
+		这就是Android的AsyncTask在并行执行是在超出最大任务数是抛出RejectExecutionException的原因所在，
+		详见基于最新版本的AsyncTask源码解读及AsyncTask的黑暗面 http://www.silencedut.com/2016/07/08/%E5%9F%BA%E4%BA%8E%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84AsyncTask%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB%E5%8F%8AAsyncTask%E7%9A%84%E9%BB%91%E6%9A%97%E9%9D%A2/
+
+		通过addWorker如果成功创建新的线程成功，则通过start()开启新线程，同时将firstTask作为这个Worker里的run()中执行的第一个任务。
+		虽然每个Worker的任务是串行处理，但如果创建了多个Worker，因为共用一个workQueue，所以就会并行处理了。
+		所以根据corePoolSize和maximumPoolSize来控制最大并发数。大致过程可用下图表示。
+
+
+		3.管理线程
+		通过线程池可以很好的管理线程的复用，控制并发数，以及销毁等过程,线程的复用和控制并发上面已经讲了，而线程的管理过程已经穿插在其中了，也很好理解。
+		在ThreadPoolExecutor有个ctl的AtomicInteger变量。通过这一个变量保存了两个内容：
+			所有线程的数量
+			每个线程所处的状态
+		其中低29位存线程数，高3位存runState，通过位运算来得到不同的值。
+
+		private final AtomicInteger ctl = new AtomicInteger(ctlOf(RUNNING, 0));
+
+		//得到线程的状态
+		private static int runStateOf(int c) {
+		    return c & ~CAPACITY;
+		}
+
+		//得到Worker的的数量
+		private static int workerCountOf(int c) {
+		    return c & CAPACITY;
+		}
+
+		// 判断线程是否在运行
+		private static boolean isRunning(int c) {
+		    return c < SHUTDOWN;
+		}
+
+		这里主要通过shutdown和shutdownNow()来分析线程池的关闭过程。首先线程池有五种状态来控制任务添加与执行。主要介绍以下三种：
+
+				RUNNING状态：线程池正常运行，可以接受新的任务并处理队列中的任务；
+				SHUTDOWN状态：不再接受新的任务，但是会执行队列中的任务；
+				STOP状态：不再接受新任务，不处理队列中的任务
+
+	  shutdown这个方法会将runState置为SHUTDOWN，会终止所有空闲的线程，而仍在工作的线程不受影响，所以队列中的任务人会被执行。
+		shutdownNow方法将runState置为STOP。和shutdown方法的区别，这个方法会终止所有的线程，所以队列中的任务也不会被执行了。
