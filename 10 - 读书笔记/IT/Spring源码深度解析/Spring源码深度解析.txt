@@ -1,16 +1,16 @@
 前言
 	阅读源码是一个非常好的学习方式
-	
+
 第一章 Spring整体架构和环境搭建
-	
+
 	Spring 分为大约20个模块
 	Core Container 包含 Core、Beans、Context、Expresssion Language模块
-	
+
 第二章	容器的基本实现
 
-	封装Resource 
+	封装Resource
 	XML验证
 	加载Document
 	解析注册Bean
-	
+
 第三章 默认标签的解析
