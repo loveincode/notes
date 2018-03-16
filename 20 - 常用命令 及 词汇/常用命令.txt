@@ -1,9 +1,0 @@
-mysql
-	mysql -u root -h 127.0.0.1 -p
-
-	use [database]
-
-	show tables 查看所有表
-	show table status where comment='view';  查看所有视图
-
-	describe [tablename] 查看表结构
