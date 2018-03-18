@@ -246,3 +246,125 @@ mysql
 	    -> ADD PRIMARY KEY (last_name, first_name);
 
 	SQL注入
+	SQL注入，就是通过把 **SQL命令** 插入到Web表单递交或输入域名或页面请求的查询字符串，最终达到欺骗服务器执行恶意的SQL命令。
+
+	我们永远不要信任用户的输入，我们必须认定用户输入的数据都是不安全的，我们都需要对用户输入的数据进行过滤处理。
+
+	以下实例中，输入的用户名必须为字母、数字及下划线的组合，且用户名长度为 8 到 20 个字符之间：
+	``` mysql
+		if (preg_match("/^\w{8,20}$/", $_GET['username'], $matches))
+		{
+		   $result = mysqli_query($conn, "SELECT * FROM users
+		                          WHERE username=$matches[0]");
+		}
+		 else
+		{
+		   echo "username 输入异常";
+		}
+	```
+	让我们看下在没有过滤特殊字符时，出现的SQL情况：
+
+	// 设定$name 中插入了我们不需要的SQL语句
+	$name = "Qadir'; DELETE FROM users;";
+	mysqli_query($conn, "SELECT * FROM users WHERE name='{$name}'");
+
+	Like语句中的注入
+	like查询时，如果用户输入的值有"_"和"%"，则会出现这种情况：用户本来只是想查询"abcd_"，查询结果中却有"abcd_"、"abcde"、"abcdf"等等；用户要查询"30%"（注：百分之三十）时也会出现问题。
+
+	**导出数据**
+
+	使用 **SELECT ... INTO 	OUTFILE** 语句导出数据
+
+	SELECT ... INTO OUTFILE 语句有以下属性:
+	**LOAD DATA INFILE** 是SELECT ... INTO OUTFILE的逆操作，SELECT句法。为了将一个数据库的数据写入一个文件，使用SELECT ... INTO OUTFILE，为了将文件读回数据库，使用LOAD DATA INFILE。
+	SELECT...INTO OUTFILE 'file_name'形式的SELECT可以把被选择的行写入一个文件中。该文件被创建到服务器主机上，因此您必须拥有FILE权限，才能使用此语法。
+	输出不能是一个 **已存在** 的文件。防止文件数据被篡改。
+	你需要有一个登陆服务器的账号来检索文件。否则 SELECT ... INTO OUTFILE 不会起任何作用。
+	在UNIX中，该文件被创建后是可读的，权限由MySQL服务器所拥有。这意味着，虽然你就可以读取该文件，但可能无法将其删除。
+
+	**导出表作为原始数据** **mysqldump**
+	mysqldump是mysql用于转存储数据库的实用程序。它主要产生一个SQL脚本，其中包含从头重新创建数据库所必需的命令CREATE TABLE INSERT等。
+
+	使用mysqldump导出数据需要使用 --tab 选项来指定导出文件指定的目录，该目标必须是可写的。
+	以下实例将数据表 runoob_tbl 导出到 /tmp 目录中：
+
+		$ mysqldump -u root -p --no-create-info \
+		            --tab=/tmp RUNOOB runoob_tbl
+		password ******
+
+		**导出SQL格式的数据**
+	导出SQL格式的数据到指定文件，如下所示：
+
+	$ mysqldump -u root -p RUNOOB runoob_tbl > dump.txt
+	password ******
+
+	如果你需要导出整个数据库的数据，可以使用以下命令：
+
+	$ mysqldump -u root -p RUNOOB > database_dump.txt
+	password ******
+
+	如果需要备份所有数据库，可以使用以下命令：
+
+	$ mysqldump -u root -p --all-databases > database_dump.txt
+	password ******
+	--all-databases 选项在 MySQL 3.23.12 及以后版本加入。 该方法可用于实现数据库的备份策略。
+
+	将数据表及数据库拷贝至其他主机
+	如果你需要将数据拷贝至其他的 MySQL 服务器上, 你可以在 mysqldump 命令中指定数据库名及数据表。
+
+	在源主机上执行以下命令，将数据备份至 dump.txt 文件中:
+
+	$ mysqldump -u root -p database_name table_name > dump.txt
+	password *****
+	如果完整备份数据库，则无需使用特定的表名称。
+
+	如果你需要将备份的数据库导入到MySQL服务器中，可以使用以下命令，使用以下命令你需要确认数据库已经创建：
+
+	$ mysql -u root -p database_name < dump.txt
+	password *****
+	你也可以使用以下命令将导出的数据直接导入到远程的服务器上，但请确保两台服务器是相通的，是可以相互访问的：</p>
+	$ mysqldump -u root -p database_name \
+	       | mysql -h other-host.com database_name
+				 以上命令中使用了管道来将导出的数据导入到指定的远程主机上。
+
+	**导入数据**
+
+	使用 **LOAD DATA** 导入数据
+	MySQL 中提供了LOAD DATA INFILE语句来插入数据。 以下实例中将从当前目录中读取文件 dump.txt ，将该文件中的数据插入到当前数据库的 mytbl 表中。
+
+	mysql> LOAD DATA LOCAL INFILE 'dump.txt' INTO TABLE mytbl;
+	　如果指定LOCAL关键词，则表明从客户主机上按路径读取文件。如果没有指定，则文件在服务器上按路径读取文件。
+
+	你能明确地在LOAD DATA语句中指出列值的分隔符和行尾标记，但是默认标记是定位符和换行符。
+
+	两个命令的 FIELDS 和 LINES 子句的语法是一样的。两个子句都是可选的，但是如果两个同时被指定，FIELDS 子句必须出现在 LINES 子句之前。
+
+	如果用户指定一个 FIELDS 子句，它的子句 （TERMINATED BY、[OPTIONALLY] ENCLOSED BY 和 ESCAPED BY) 也是可选的，不过，用户必须至少指定它们中的一个。
+
+	mysql> LOAD DATA LOCAL INFILE 'dump.txt' INTO TABLE mytbl
+	  -> FIELDS TERMINATED BY ':'
+	  -> LINES TERMINATED BY '\r\n';
+	LOAD DATA 默认情况下是按照数据文件中列的顺序插入数据的，如果数据文件中的列与插入表中的列不一致，则需要指定列的顺序。
+
+	如，在数据文件中的列顺序是 a,b,c，但在插入表的列顺序为b,c,a，则数据导入语法如下：
+
+	mysql> LOAD DATA LOCAL INFILE 'dump.txt'
+	    -> INTO TABLE mytbl (b, c, a);
+
+	**使用 mysqlimport 导入数据**
+	mysqlimport客户端提供了LOAD DATA INFILEQL语句的一个命令行接口。mysqlimport的大多数选项直接对应LOAD DATA INFILE子句。
+
+	从文件 dump.txt 中将数据导入到 mytbl 数据表中, 可以使用以下命令：
+
+	$ mysqlimport -u root -p --local database_name dump.txt
+	password *****
+	mysqlimport命令可以指定选项来设置指定格式,命令语句格式如下：
+
+	$ mysqlimport -u root -p --local --fields-terminated-by=":" \
+	   --lines-terminated-by="\r\n"  database_name dump.txt
+	password *****
+	mysqlimport 语句中使用 --columns 选项来设置列的顺序：
+
+	$ mysqlimport -u root -p --local --columns=b,c,a \
+	    database_name dump.txt
+	password *****
