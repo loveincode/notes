@@ -1,8 +1,0 @@
-http://www.cnblogs.com/xybaby/p/7867735.html
-
-
-算法
-
-轮训、随机、哈希
-加权轮训、加权随机、一致性hash
-最少连接算法（least connection）

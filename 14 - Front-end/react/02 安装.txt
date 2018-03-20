@@ -1,0 +1,51 @@
+React 可以直接下载使用，下载包中也提供了很多学习的实例。
+
+本教程使用了 React 的版本为 15.4.2，你可以在官网 http://facebook.github.io/react/ 下载最新版。
+
+你也可以直接使用 BootCDN 的 React CDN 库，地址如下：
+
+<script src="https://cdn.bootcss.com/react/15.4.2/react.min.js"></script>
+<script src="https://cdn.bootcss.com/react/15.4.2/react-dom.min.js"></script>
+<script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+
+react.min.js - React 的核心库
+react-dom.min.js - 提供与 DOM 相关的功能
+babel.min.js - Babel 可以将 ES6 代码转为 ES5 代码，这样我们就能在目前不支持 ES6 浏览器上执行 React 代码。
+			   Babel 内嵌了对 JSX 的支持。通过将 Babel 和 babel-sublime 包（package）一同使用可以让源码的语法渲染上升到一个全新的水平。
+			   
+
+通过 npm 使用 React
+我们建议在 React 中使用 CommonJS 模块系统，比如 browserify 或 webpack，本教程使用 webpack。
+国内使用 npm 速度很慢，你可以使用淘宝定制的 cnpm (gzip 压缩支持) 命令行工具代替默认的 npm:
+$ npm install -g cnpm --registry=https://registry.npm.taobao.org
+$ npm config set registry https://registry.npm.taobao.org
+这样就可以使用 cnpm 命令来安装模块了：
+$ cnpm install [name]
+更多信息可以查阅：http://npm.taobao.org/。
+
+
+使用 create-react-app 快速构建 React 开发环境
+create-react-app 是来自于 Facebook，通过该命令我们无需配置就能快速构建 React 开发环境。
+create-react-app 自动创建的项目是基于 Webpack + ES6 。
+执行以下命令创建项目：
+$ cnpm install -g create-react-app
+$ create-react-app my-app
+$ cd my-app/
+$ npm start
+
+项目的目录结构如下：
+my-app/
+  README.md
+  node_modules/
+  package.json
+  .gitignore
+  public/
+    favicon.ico
+    index.html
+  src/
+    App.css
+    App.js
+    App.test.js
+    index.css
+    index.js
+    logo.svg

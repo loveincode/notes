@@ -1,0 +1,45 @@
+	
+	html
+	<div id="evts" class="demo"></div>
+	
+	css
+	<link type="text/css" rel="stylesheet" href="jstree/dist/themes/default/style.min.css" />
+
+	js
+	<script type="text/javascript" src="jstree/dist/libs/jquery.js"></script>
+	<script type="text/javascript" src="jstree/dist/jstree.min.js"></script>
+	
+	
+	$('#evts').on(
+			"changed.jstree",
+			function(e, data) {
+				if (data.selected.length) {
+					alert('The selected node is: '
+							+ data.instance.get_node(data.selected[0]).text);
+				}
+			}).jstree({
+		'core' : {
+			'multiple' : false,
+			'data' : [ {
+				"text" : "Root node",
+				"id" : 1,
+				"children" : [ {
+					"text" : "Child node 1",
+					"id" : 11
+					}, {
+					"text" : "Child node 2",
+					"id" : 12,
+					"children" : [ {
+						"text" : "Child Child node 1",
+						"id" : 121
+						}, {
+						"text" : "Child Child node 2",
+						"id" : 122
+						} ]
+				} ]
+			} ]
+		}
+	});
+	
+	
+	

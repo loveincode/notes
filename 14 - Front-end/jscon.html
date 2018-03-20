@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+	
+
+<head>
+	
+<body  bgcolor="#ffffff"  onLoad="document.form.input.focus()">
+
+	
+	
+	 <SCRIPT LANGUAGE="JavaScript">
+<!-- Begin
+function doit() {
+form.input.value = eval(form.input.value)
+}
+function Cos() {
+x = form.input.value
+if (x == '') alert('Error: Input Required');
+else form.input.value = Math.cos(x);
+}
+function Sin() {
+x = form.input.value
+if (x == '') alert('Error: Input Required');
+else form.input.value = Math.sin(x);
+}
+function Ln() {
+x = form.input.value
+if (x == '') alert('Error: Input Required');
+else form.input.value = Math.log(x);
+}
+function Root() {
+x = form.input.value
+if (x == '') alert('Error: Input Required');
+else form.input.value = Math.sqrt(x);
+}
+function Tan() {
+x = form.input.value
+if (x == '') alert('Error: Input Required');
+else form.input.value = Math.tan(x);
+}
+function Icos() {
+x = form.input.value
+if (x == '') alert('Error: Input Required');
+else form.input.value = Math.acos(x);
+}
+function Isin() {
+x = form.input.value
+if (x == '') alert('Error: Input Required');
+else form.input.value = Math.asin(x);
+}
+function Itan() {
+x = form.input.value
+if (x == '') alert('Error: Input Required');
+else form.input.value = Math.atan(x);
+}
+function Round() {
+x = form.input.value
+if (x == '') alert('Error: Input Required');
+else form.input.value = Math.round(x);
+}
+function Ran() {
+x = form.input.value
+form.input.value = Math.random(x);
+}
+function Neg () {
+x = form.input.value
+if (x == '') alert('Error: Input Required');
+else x = parseFloat(x) * -1;
+}
+function del() {
+x = form.input.value
+x = (x.substring) - 1
+}
+//  End -->
+</script>
+<div align="center">
+<form name="form" method="post" action="javascript:doit()">
+  <table width="260" border="0" height="260" align="center" bordercolor="#000000" bgcolor="#000000">
+    <tr bgcolor="#000000">
+      <td colspan="7" height="2">
+        <div align="center"><b><font face="Arial, Helvetica, sans-serif" color="#FFFFFF">考勤计算器</font></b></div>
+      </td>
+    </tr>
+    <tr bgcolor="#000000">
+      <td colspan="7" height="2">
+        <div align="center">
+          <input type="text"   name="input" size="40">
+        </div>
+      </td>
+    </tr>
+    <tr bgcolor="#000000">
+      <td width="50" height="4">
+        <input type="button" name="one"   value="1" onClick="form.input.value += '1'" style="COLOR: #FFFFFF; BACKGROUND-COLOR: #666666; HEIGHT: 25 px; WIDTH: 40px">
+      </td>
+      <td width="50" height="4">
+        <input type="button" name="two"   value="2" onClick="form.input.value += '2'" style="COLOR: #FFFFFF; BACKGROUND-COLOR: #666666; HEIGHT: 25 px; WIDTH: 40px">
+      </td>
+      <td width="50" height="4">
+        <input type="button" name="three" value="3" onClick="form.input.value += '3'" style="COLOR: #FFFFFF; BACKGROUND-COLOR: #666666; HEIGHT: 25 px; WIDTH: 40px">
+      </td>
+      <td width="20" height="4"> </td>
+      <td width="50" height="4">
+        <input type="button" name="clear" value="C" onClick="form.input.value = ''" style="COLOR: #FFFFFF; BACKGROUND-COLOR: #9F0004; HEIGHT: 25 px; WIDTH: 40px">
+      </td>
+      <td width="50" height="4">
+        <input type="button" name="percent" value=" % " onClick="form.input.value = eval(form.input.value) / 100" style="COLOR: #FFFFFF; BACKGROUND-COLOR: #000000; HEIGHT: 25 px; WIDTH: 40px">
+      </td>
+      <td width="50" height="4">
+        <input type="button" name="(" value=" ( " onClick="form.input.value += '('" style="COLOR: #FFFFFF; BACKGROUND-COLOR: #000000; HEIGHT: 25 px; WIDTH: 40px">
+      </td>
+    </tr>
+    <tr bgcolor="#000000">
+      <td width="50" height="2">
+        <input type="button" name="four"  value="4" onClick="form.input.value += '4'" style="COLOR: #FFFFFF; BACKGROUND-COLOR: #666666; HEIGHT: 25 px; WIDTH: 40px">
+      </td>
+      <td width="50" height="2">
+        <input type="button" name="five"  value="5" onClick="form.input.value += '5'" style="COLOR: #FFFFFF; BACKGROUND-COLOR: #666666; HEIGHT: 25 px; WIDTH: 40px">
+      </td>
+      <td width="50" height="2">
+        <input type="button" name="six"   value="6" onClick="form.input.value += '6'" style="COLOR: #FFFFFF; BACKGROUND-COLOR: #666666; HEIGHT: 25 px; WIDTH: 40px">
+      </td>
+      <td width="20" height="2">  </td>
+      <td width="50" height="2">
+        <input type="button" name="times" value="  x  " onClick="form.input.value += ' * '" style="COLOR: #FFFFFF; BACKGROUND-COLOR: #000000; HEIGHT: 25 px; WIDTH: 40px">
+      </td>
+      <td width="50" height="2">
+        <input type="button" name="div"   value="  /  " onClick="form.input.value += ' / '" style="COLOR: #FFFFFF; BACKGROUND-COLOR: #000000; HEIGHT: 25 px; WIDTH: 40px">
+      </td>
+      <td width="50" height="2">
+        <input type="button" name=")" value=" ) " onClick="form.input.value += ')'" style="COLOR: #FFFFFF; BACKGROUND-COLOR: #000000; HEIGHT: 25 px; WIDTH: 40px">
+      </td>
+    </tr>
+    <tr bgcolor="#000000">
+      <td width="50" height="2">
+        <input type="button" name="seven" value="7" onClick="form.input.value += '7'" style="COLOR: #FFFFFF; BACKGROUND-COLOR: #666666; HEIGHT: 25 px; WIDTH: 40px">
+      </td>
+      <td width="50" height="2">
+        <input type="button" name="eight" value="8" onClick="form.input.value += '8'" style="COLOR: #FFFFFF; BACKGROUND-COLOR: #666666; HEIGHT: 25 px; WIDTH: 40px">
+      </td>
+      <td width="50" height="2">
+        <input type="button" name="nine"  value="9" onClick="form.input.value += '9'" style="COLOR: #FFFFFF; BACKGROUND-COLOR: #666666; HEIGHT: 25 px; WIDTH: 40px">
+      </td>
+      <td width="20" height="2">  </td>
+      <td width="50" height="2">
+        <input type="button" name="plus"  value="  +  " onClick="form.input.value += ' + '" style="COLOR: #FFFFFF; BACKGROUND-COLOR: #000000; HEIGHT: 25 px; WIDTH: 40px">
+      </td>
+      <td width="50" height="2">
+        <input type="button" name="minus" value="  -  " onClick="form.input.value += ' - '" style="COLOR: #FFFFFF; BACKGROUND-COLOR: #000000; HEIGHT: 25 px; WIDTH: 40px">
+      </td>
+      <td width="50" height="2">
+        <input type="button" name="round" value="Rnd" onClick="Round()" style="COLOR: #FFFFFF; BACKGROUND-COLOR: #000000; HEIGHT: 25 px; WIDTH: 40px">
+      </td>
+    </tr>
+    <tr bgcolor="#000000">
+      <td width="50" height="2">
+        <input type="button" name="zero"  value="0" onClick="form.input.value += '0'" style="COLOR: #FFFFFF; BACKGROUND-COLOR: #666666; HEIGHT: 25 px; WIDTH: 40px">
+      </td>
+      <td width="50" height="2">
+        <input type="button" name="point" value="." onClick="form.input.value += '.'" style="COLOR: #FFFFFF; BACKGROUND-COLOR: #666666; HEIGHT: 25 px; WIDTH: 40px">
+      </td>
+      <td width="50" height="2">
+        <input type="button" name="pi" value="PI" onClick="form.input.value += '3.1415926535897932384626433832795'" style="COLOR: #FFFFFF; BACKGROUND-COLOR: #666666; HEIGHT: 25 px; WIDTH: 40px">
+      </td>
+      <td width="20" height="2">  </td>
+      <td width="50" height="2">
+        <input type="button" name="pi2" value="+/-" onClick="Neg()" style="COLOR: #FFFFFF; BACKGROUND-COLOR: #000000; HEIGHT: 25 px; WIDTH: 40px">
+      </td>
+      <td width="50" height="2">
+        <input type="button" name="DoIt"  value=" = " onClick="doit()" style="COLOR: #FFFFFF; BACKGROUND-COLOR: #000000; HEIGHT: 25 px; WIDTH: 40px">
+      </td>
+      <td width="50" height="2">
+        <input type="button" name="round2" value="Ran#" onClick="Ran()" style="COLOR: #FFFFFF; BACKGROUND-COLOR: #000000; HEIGHT: 25 px; WIDTH: 40px">
+      </td>
+    </tr>
+    <tr bgcolor="#000000">
+      <td width="50" height="24"> </td>
+      <td width="50" height="24"> </td>
+      <td width="50" height="24"> </td>
+      <td width="20" height="24"> </td>
+      <td width="50" height="24">  </td>
+      <td width="50" height="24"> </td>
+      <td width="50" height="24"> </td>
+    </tr>
+    <tr bgcolor="#000000">
+      <td width="50">
+        <input type="button" name="quad" value="^2" onClick="form.input.value = form.input.value * form.input.value" style="COLOR: #FFFFFF; BACKGROUND-COLOR: #333333; HEIGHT: 25 px; WIDTH: 40px">
+      </td>
+      <td width="50">
+        <input type="button" name="root" value="root" onClick="Root()" style="COLOR: #FFFFFF; BACKGROUND-COLOR: #333333; HEIGHT: 25 px; WIDTH: 40px">
+      </td>
+      <td width="50">
+        <input type="button" name="ln" value="ln" onClick="Ln()" style="COLOR: #FFFFFF; BACKGROUND-COLOR: #333333; HEIGHT: 25 px; WIDTH: 40px">
+      </td>
+      <td width="20"> </td>
+      <td width="50">
+        <input type="button" name="1/2" value="1/2" onClick="form.input.value += '0.5'" style="COLOR: #B3B300; BACKGROUND-COLOR: #000000; HEIGHT: 25 px; WIDTH: 40px">
+      </td>
+      <td width="50">
+        <input type="button" name="1/3" value="1/3" onClick="form.input.value += '0.3333333333'" style="COLOR: #B3B300; BACKGROUND-COLOR: #000000; HEIGHT: 25 px; WIDTH: 40px">
+      </td>
+      <td width="50">
+        <input type="button" name="1/4" value="1/4" onClick="form.input.value += '0.25'" style="COLOR: #B3B300; BACKGROUND-COLOR: #000000; HEIGHT: 25 px; WIDTH: 40px">
+      </td>
+    </tr>
+    <tr bgcolor="#000000">
+      <td width="50">
+        <input type="button" name="sin" value="sin" onClick="Sin()" style="COLOR: #FFFFFF; BACKGROUND-COLOR: #333333; HEIGHT: 25 px; WIDTH: 40px">
+      </td>
+      <td width="50">
+        <input type="button" name="cos" value="cos" onClick="Cos()" style="COLOR: #FFFFFF; BACKGROUND-COLOR: #333333; HEIGHT: 25 px; WIDTH: 40px">
+      </td>
+      <td width="50">
+        <input type="button" name="tan" value="tan" onClick="Tan()" style="COLOR: #FFFFFF; BACKGROUND-COLOR: #333333; HEIGHT: 25 px; WIDTH: 40px">
+      </td>
+      <td width="20"> </td>
+      <td width="50">
+        <input type="button" name="1/5" value="1/5" onClick="form.input.value += '0.2'" style="COLOR: #B3B300; BACKGROUND-COLOR: #000000; HEIGHT: 25 px; WIDTH: 40px">
+      </td>
+      <td width="50">
+        <input type="button" name="1/6" value="1/6" onClick="form.input.value += '0.1666666667'" style="COLOR: #B3B300; BACKGROUND-COLOR: #000000; HEIGHT: 25 px; WIDTH: 40px">
+      </td>
+      <td width="50">
+        <input type="button" name="1/7" value="1/7" onClick="form.input.value += '0.1428571429'" style="COLOR: #B3B300; BACKGROUND-COLOR: #000000; HEIGHT: 25 px; WIDTH: 40px">
+      </td>
+    </tr>
+    <tr bgcolor="#000000">
+      <td width="50">
+        <input type="button" name="sin2" value="asin" onClick="Isin()" style="COLOR: #FFFFFF; BACKGROUND-COLOR: #333333; HEIGHT: 25 px; WIDTH: 40px">
+      </td>
+      <td width="50">
+        <input type="button" name="cos2" value="acos" onClick="Icos()" style="COLOR: #FFFFFF; BACKGROUND-COLOR: #333333; HEIGHT: 25 px; WIDTH: 40px">
+      </td>
+      <td width="50">
+        <input type="button" name="tan2" value="atan" onClick="Itan()" style="COLOR: #FFFFFF; BACKGROUND-COLOR: #333333; HEIGHT: 25 px; WIDTH: 40px">
+      </td>
+      <td width="20"> </td>
+      <td width="50">
+        <input type="button" name="1/8" value="1/8" onClick="form.input.value += '0.125'" style="COLOR: #B3B300; BACKGROUND-COLOR: #000000; HEIGHT: 25 px; WIDTH: 40px">
+      </td>
+      <td width="50">
+        <input type="button" name="1/9" value="1/9" onClick="form.input.value += '0.1111111111'" style="COLOR: #B3B300; BACKGROUND-COLOR: #000000; HEIGHT: 25 px; WIDTH: 40px">
+      </td>
+      <td width="50">
+        <input type="button" name="1/10" value="1/10" onClick="form.input.value += '0.1'" style="COLOR: #B3B300; BACKGROUND-COLOR: #000000; HEIGHT: 25 px; WIDTH: 40px">
+      </td>
+    </tr>
+  </table>
+</form>
+</div> 
+</body>
+
+</head>
+</html>

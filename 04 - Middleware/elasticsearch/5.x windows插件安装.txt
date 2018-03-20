@@ -1,0 +1,2 @@
+ElasticSearch5.x踩坑记录(一):windows系统下的ElasticSearch5.6.3及head插件安装 - CSDN博客
+http://blog.csdn.net/blq4411568/article/details/78453735
