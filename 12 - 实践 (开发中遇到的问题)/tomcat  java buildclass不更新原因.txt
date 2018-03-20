@@ -1,5 +1,0 @@
-依赖的jar包不足，程序中有错 解决所有的javaproblem
-可能是build下部分文件夹被删除 清空 build目录
-
-
-eclipse Project clean后会重新build

@@ -1,0 +1,23 @@
+即若客户端通过POST方法，
+
+路径变量（url）
+内容变量（http body）
+头变量（header）
+
+
+
+@PathVariable 
+路径变量（url）
+
+@RequestParam
+在http body中传递的参数为key=value表单形式，则可用@RequestParam进行解析；
+
+@ModelAttribute
+在http body中传递的参数为key=value表单形式，用@ModelAttribute组织成对象
+
+
+@RequestBody
+若传递的参数为JSON形式，则使用@RequestBody注解进行解析。
+
+简单类型不能使用@RequestBody
+

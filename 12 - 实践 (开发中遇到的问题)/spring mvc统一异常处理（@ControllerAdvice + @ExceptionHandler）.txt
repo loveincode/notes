@@ -1,3 +1,0 @@
-http://blog.csdn.net/kinginblue/article/details/70186586
-
-@ControllerAdvice 要在spring扫描范围内

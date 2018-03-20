@@ -1,3 +1,0 @@
-tcpdump -i eth0 -w dump.pcap
-
-使用wireshark打开 分析
