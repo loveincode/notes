@@ -30,7 +30,7 @@
   ReentrantLock lock = new ReentrantLock(isFair)
   ifFair **true** 为 **公平锁** **false** 为 **非公平锁**
 
-#### 4.1.10-15  Lock 和 Condition 的方法
+#### 4.1.10-15  Lock 和 Condition 的 **方法**
 
     Lock
 
@@ -56,10 +56,17 @@
 
     boolean awaitUntil(Date deadline)  
 
-### 4.2 使用ReentrantReadWriteLock 类
+### 4.2 使用 **ReentrantReadWriteLock** 类
 
-  读写锁
+  **读写锁**
 
-  读 共享锁
+  读 **共享锁**
 
-  写 排它锁
+  写 **排它锁**
+
+  读读共享
+      readLock()，允许多个线程同时执行lock()方法后面的代码 **lock.readLock().lock()**
+  写写互斥
+      writeLock()，同一时间只允许一个线程执行lock()方法后面的代码 **lock.writeLock().lock()**
+  读写互斥
+  写读互斥
