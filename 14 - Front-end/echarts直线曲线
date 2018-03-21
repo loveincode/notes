@@ -1,0 +1,12 @@
+series : [
+      {
+           name:'your name',
+           symbol:'none',  //这句就是去掉点的
+           smooth:true,  //这句就是让曲线变平滑的
+           type:'line',
+           stack: '总量',
+           data:[0, 0, 0, 0, 0, 0, 0]
+
+       },
+
+ ]  
