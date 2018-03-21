@@ -1,5 +1,7 @@
-sz
+sz 下载
 
 rz
 
 日志存储
+
+清空文件内容 echo "" > filename
