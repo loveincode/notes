@@ -16,10 +16,6 @@
   查看已缓存的与未缓存的所有改动：git diff HEAD
   显示摘要而非整个 diff：git diff --stat
 
-<<<<<<< HEAD
-=======
-
->>>>>>> branch 'master' of https://github.com/loveincode/notes.git
 ## git commit
 
   git commit -m
