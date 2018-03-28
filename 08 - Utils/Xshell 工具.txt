@@ -3,3 +3,12 @@ Xshell 终端工具
 sz 下载
 rz 上传
 
+notepad++ 的插件 NppFTP
+32的notepad可以直接在编辑器里 安装插件
+插件 → Plugin Manager → Show Plugin Manager
+可查看 Available Update Installed 找到NppFTP即可安装
+
+64的notepad没有插件管理功能，可以导入插件。
+插件下载地址：http://sourceforge.net/projects/npp-plugins/files/
+
+安装NppFtp 需要重启 即可配置服务器信息 直接读取服务器文件 并编辑文件上传
