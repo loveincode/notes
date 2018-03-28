@@ -7,6 +7,7 @@ leetcode https://leetcode.com/problemset/all/
 
 发布项目 https://pivotal.io/ 文档 http://docs.run.pivotal.io/cf-cli/install-go-cli.html
 
+下载 插件 https://sourceforge.net/
 
 易源数据 https://www.showapi.com/
 
@@ -31,7 +32,7 @@ bing今日美图：http://bing.plmeizi.com/
 屏幕录制：screentogif http://www.screentogif.com/?l=zh_cn
 
 抖包袱版|一亩三分地论坛 - Powered by Discuz! http://www.1point3acres.com/bbs/
-nasa https://images.nasa.gov/#/ 
+nasa https://images.nasa.gov/#/
 
 　　Beautiful Free Images | Unsplash https://unsplash.com/
 
