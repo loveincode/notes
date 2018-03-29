@@ -21,7 +21,7 @@ emoji　 https://emojipedia.org/
 
 loading图片 https://loading.io/
 
-git插件 Octotree
+git插件 Octotree insight.io看源码 https://insight.io/account/projects
 
 jar 包 下载：http://www.java2s.com/Code/Jar/
 
