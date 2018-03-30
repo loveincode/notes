@@ -90,6 +90,16 @@ mysql
 	SELECT field1, field2,...fieldN FROM table_name1, table_name2...
 			WHERE condition1 [AND [OR]] condition2.....
 
+	**Like 子句**
+	```
+	*
+	_ : 表示任意单个字符。匹配单个任意字符，它常用来限制表达式的字符长度语句：（可以代表一个中文字符）
+	% ：表示任意个或多个字符。可匹配任意类型和长度的字符。
+
+	如果我就真的要查%或者_，怎么办呢？使用escape，转义字符后面的%或_就不作为通配符了，注意前面没有转义字符的%和_仍然起通配符作用
+	like '%/_20%' escape "/"
+	```
+
   **ORDER BY** field1, [field2...] [**ASC** [**DESC**]]
 
 	SELECT column_name, **function**(column_name)
@@ -270,6 +280,8 @@ mysql
 
 	Like语句中的注入
 	like查询时，如果用户输入的值有"_"和"%"，则会出现这种情况：用户本来只是想查询"abcd_"，查询结果中却有"abcd_"、"abcde"、"abcdf"等等；用户要查询"30%"（注：百分之三十）时也会出现问题。
+
+
 
 	**导出数据**
 
