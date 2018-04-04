@@ -18,7 +18,7 @@ Confirm / Cancel 阶段：
 		释放 Try 阶段预留的业务资源
 		Cancel 操作满足幂等性
 	Confirm 与 Cancel 互斥
-	
+
 与 2PC协议 比较：
 
 	位于业务服务层而非自愿层
