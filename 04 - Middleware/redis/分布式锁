@@ -1,0 +1,37 @@
+https://www.cnblogs.com/liuyang0/p/6744076.html
+setnx
+
+使用命令介绍
+SETNX
+
+SETNX key val
+当且仅当key不存在时，set一个key为val的字符串，返回1；若key存在，则什么都不做，返回0。
+
+expire
+
+expire key timeout
+为key设置一个超时时间，单位为second，超过这个时间锁会自动释放，避免死锁。
+
+delete
+
+delete key
+删除key
+
+在使用Redis实现分布式锁的时候，主要就会使用到这三个命令。
+
+实现思想
+
+获取锁的时候，使用setnx加锁，并使用expire命令为锁添加一个超时时间，超过该时间则自动释放锁，锁的value值为一个随机生成的UUID，通过此在释放锁的时候进行判断。
+获取锁的时候还设置一个获取的超时时间，若超过这个时间则放弃获取锁。
+释放锁的时候，通过UUID判断是不是该锁，若是该锁，则执行delete进行锁释放。
+
+https://blog.csdn.net/fuyuwei2015/article/details/72870131
+
+SETNX key value
+将 key 的值设为 value ，当且仅当 key 不存在。
+若给定的 key 已经存在，则 SETNX 不做任何动作。
+SETNX 是『SET if Not eXists』(如果不存在，则 SET)的简写。
+
+GETSET key value
+将给定 key 的值设为 value ，并返回 key 的旧值(old value)。
+当 key 存在但不是字符串类型时，返回一个错误。
