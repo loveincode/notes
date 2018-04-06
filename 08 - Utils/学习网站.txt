@@ -3,3 +3,6 @@
 
 centos 小书 https://array-huang.gitbooks.io/centos-book/content/content/systemd.html
 
+采访 "独立开发者" 和 "远程工作者" 做产品盈利的故事 http://sideidea.com/
+
+https://dawnlabs.io/carbon
