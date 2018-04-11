@@ -89,9 +89,30 @@ web.xml添加<servlet>配置
   5. ServletBean的初始化
 
 ### 11.3.3 WebApplicationContext的初始化
-  initWebApplicationContext函数的主要工作就是创建或刷新WebApplicationContext实例并对Servlet功能所使用的变量进行初始化
+  initWebApplicationContext函数的主要工作就是创建或刷新WebApplicationContext实例并对Servlet功能所使用的变量进行初始化。
+  包含几个部分：
+  1. 寻找或创建对应的WebApplicationContext实例
+    1. 通过构造函数的注入进行初始化
+    2. 通过contextAttribute进行初始化
+    3. 重新创建WebApplicationContext实例
+  2. configureAndRefreshWebApplicationContext
+    configureAndRefreshWebApplicationContext方法来对已经创建的 WebApplicationContext 实例进行配置及刷新
+
+  3. 刷新
+    doRefresh是FrameworkServlet类中提供的模板方法，在其子类DispatcherServlet中进行了重写，主要用于刷新Spring在Web功能实现中所必须使用的全局变量。
+    主要介绍初始化过程以及使用场景。
+    1. 初始化MultipartResolver
+    2. 初始化LocaleResolver
+    3. 初始化ThemeResolver
+    4. 初始化HandlerMappings
+    5. 初始化HandlerAdapters
+    6. 初始化HandlerExceptionResolvers
+    7. 初始化RequestToViewNameTranslator
+    8. 初始化ViewResolvers
+    9. 初始化FlashMapManager
 
 ## 11.4 DispatcherServlet的逻辑处理
+  processRequest(request,response)
 　　11.4.1 MultipartContent类型的request处理
 　　11.4.2 根据request信息寻找对应的Handler
 　　11.4.3 没找到对应的Handler的错误处理
