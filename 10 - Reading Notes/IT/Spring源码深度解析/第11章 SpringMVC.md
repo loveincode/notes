@@ -1,6 +1,6 @@
 ## 11.1 SpringMVC快速体验
 
-## 11.2 ContextLoaderListener
+## 11.2 **ContextLoaderListener**
 对于SpringMVC功能实现的分析，
   ContextLoaderListener的作用就是启动Web容器时，自动装配ApplicationContext的配置信息。
   因为它实现了ServletContextListener这个接口，在web.xml配置这个监听器，启动容器时，就会默认执行它实现的方法。
@@ -9,7 +9,7 @@
 
   在ServletContextListener中的核心逻辑便是初始化WebApplicationContext实例并存放至ServletContext
 
-### 11.2.1 ServletContextListener的使用
+### 11.2.1 **ServletContextListener** 的使用
   目标是在系统启动时添加自定义的属性
 
 ``` java
@@ -25,7 +25,7 @@
 com.XXX.xxxListener
 </listener>
 
-### 11.2.2 Spring中的ContextLoaderListener
+### 11.2.2 Spring中的 **ContextLoaderListener**
   ContextLoaderListener只是辅助功能，用于创建WebApplicationContext类型实例。
   **initWebApplicationContext** 函数主要体现了创建WebApplicationContext实例的一个功能架构，从函数中我们看到了初始化的大致步骤
 1. WebApplicationContext存在性的验证
@@ -76,7 +76,7 @@ web.xml添加<servlet>配置
 </servlet-mapping>
 ```
 
-### 11.3.2 DispatcherServlet的初始化
+### 11.3.2 **DispatcherServlet** 的初始化
   init()
   主要是通过将当前的Servlet类型实例转换为BeanWrapper类型实例，以便使用Spring中提供的注入功能进行对应属性的注入。
   这些属性如contextAttribute、 contextClass、nameSpace、contextConfigLocation等，都可以在web.xml文件以初始化参数的方式配置在Servlet的声明中。
@@ -101,15 +101,30 @@ web.xml添加<servlet>配置
   3. 刷新
     doRefresh是FrameworkServlet类中提供的模板方法，在其子类DispatcherServlet中进行了重写，主要用于刷新Spring在Web功能实现中所必须使用的全局变量。
     主要介绍初始化过程以及使用场景。
-    1. 初始化MultipartResolver
-    2. 初始化LocaleResolver
-    3. 初始化ThemeResolver
-    4. 初始化HandlerMappings
-    5. 初始化HandlerAdapters
-    6. 初始化HandlerExceptionResolvers
-    7. 初始化RequestToViewNameTranslator
-    8. 初始化ViewResolvers
-    9. 初始化FlashMapManager
+    1. 初始化 **MultipartResolver**
+      处理文件上传
+    2. 初始化 **LocaleResolver**
+      国际化配置
+      三种配置方法 基于URL参数的配置 基于session的配置 基于cookie的国际化配置
+    3. 初始化 **ThemeResolver**
+      主题控制网页风格
+    4. 初始化 **HandlerMappings**
+      当客户端发出Request时DispatcherServlet会将Request提交给HandlerMapping，然后HandlerMapping根据WebAppliction Context的配置来回传给DispatcherServlet相应的Controller。
+    5. 初始化 **HandlerAdapters**
+      适配器模式将一个类的接口适配成用户所期待的。使用适配器，可以使接口不兼容而无法在一起工作的类协同工作，做法是将类自己的接口包裹在一个已存在的类中。
+      Http请求处理器适配器 HttpRequestHandlerAdapter
+      简单控制器处理器适配器 SimpleControllerHandlerAdapter
+      注解方法处理器适配器 AnnotationMethodHandlerAdapter
+    6. 初始化 **HandlerExceptionResolvers**
+      基于HandlerExceptionResolver接口的异常处理，使用这种方式只需要实现resolveException方法，该方法返回一个ModelandView对象，在方法内部对异常的类型进行判断，
+    7. 初始化 **RequestToViewNameTranslator**
+      当Controller处理器方法没有返回一个View对象或逻辑视图名称，并且在该方法中没有直接往response的输出流里面写数据的时候，Spring就会采用约定好的方式提供一个逻辑视图名称。
+    8. 初始化 **ViewResolvers**
+      在SpringMVC中，当Controller将请求处理结果放入到ModelAndView中以后，DispatcherServlet会根据ModelAndView选择合适的视图进行渲染。
+    9. 初始化 **FlashMapManager**
+      SpringMVCFlash attributes提供了一个请求存储属性，可供其他请求使用，例如Post/Redirect/Get模式
+      Flash attributes在重定向之前暂存（就像存在session中）以便重定向之后还能使用，并立即删除。
+
 
 ## 11.4 DispatcherServlet的逻辑处理
   processRequest(request,response)
