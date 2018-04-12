@@ -99,7 +99,7 @@ web.xml添加<servlet>配置
     configureAndRefreshWebApplicationContext方法来对已经创建的 WebApplicationContext 实例进行配置及刷新
 
   3. 刷新
-    doRefresh是FrameworkServlet类中提供的模板方法，在其子类DispatcherServlet中进行了重写，主要用于刷新Spring在Web功能实现中所必须使用的全局变量。
+    doRefresh是FrameworkServlet类中提供的 **模板** 方法，在其子类DispatcherServlet中进行了重写，主要用于刷新Spring在Web功能实现中所必须使用的全局变量。
     主要介绍初始化过程以及使用场景。
     1. 初始化 **MultipartResolver**
       处理文件上传
