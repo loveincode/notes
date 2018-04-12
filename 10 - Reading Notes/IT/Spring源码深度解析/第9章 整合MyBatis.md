@@ -10,7 +10,21 @@
   3. 映射文件
   4. 测试
 ## 9.3 源码分析
+### 9.3.1 sqlSessionFactory创建
+  实现了 FactoryBean 和 InitializingBean
+  FactoryBean：一旦某个bean实现此接口，name通过getBean方法获取bean时其实是获取此类的getObject()返回的实例。
+  InitializingBean：实现此接口的bean会在初始化时调用 afterPropertiesSet 方法来进行bean的逻辑初始化。
+  1 SqlSessionFactoryBean初始化
+  2 获取SqlSessionFactoryBean 实例
+### 9.3.2 MapperFactoryBean 的创建
 
-### 9.3.1 sqlSession actory创建
-### 9.3.2 MapperFactoryBean的创建
+  1 MapperFactoryBean 初始化
+  2 获取 MapperFactoryBean 实例
 ### 9.3.3 MapperScannerConfigurer
+  使用MapperScannerConfigurer，让它扫描特定的包，自动帮我们成批地创建映射器。
+  ``` xml
+  <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+      <property name="basePackage" value="com.xxx.xxx.dao" />
+      <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+  </bean>
+  ```
