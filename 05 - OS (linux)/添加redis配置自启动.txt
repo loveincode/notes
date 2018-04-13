@@ -1,10 +1,11 @@
-一.先下载解压redis，然后进入utils目录 
+一.先下载解压redis，然后进入utils目录
 这里写图片描述
 
-二.打开文件redis_init_script 
+二.打开文件redis_init_script
 这里写图片描述
 
-三.根据实际环境重新写路径，注意最后的两行蓝色注释要加上。PIDFILE先去/var/run看看有没有redis开头的pid文件，没有的话先去redis-3.2.5/src下执行 ./redis-server ../redis.conf 手动启动redis，然后pid结尾的文件就会生成。 
+三.根据实际环境重新写路径，注意最后的两行蓝色注释要加上。
+PIDFILE先去/var/run看看有没有redis开头的pid文件，没有的话先去redis-3.2.5/src下执行 ./redis-server ../redis.conf 手动启动redis，然后pid结尾的文件就会生成。
 
 # chkconfig:2345 90 10
 # description: Redis service
@@ -36,12 +37,12 @@ chmod +x /etc/init.d/redis 修改读写权限
 
 
 
-加入开机自启服务 
+加入开机自启服务
 chkconfig –add redis
 
-开启服务自启动 
+开启服务自启动
 chkconfig redis on
 
 
-service redis start 
+service redis start
 service redis stop
