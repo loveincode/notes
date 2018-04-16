@@ -28,3 +28,6 @@
       <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
   </bean>
   ```
+  1. processPropertyPlaceHolders 属性的处理
+  2. 根据配置属性生成过滤器
+  3. 扫描Java文件
