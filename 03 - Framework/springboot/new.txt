@@ -31,8 +31,8 @@ application-prod.properties：生产环境
 	使用@AfterReturning在切入点return内容之后切入内容（可以用来对处理返回值做一些加工处理）
 	使用@Around在切入点前后切入内容，并自己控制何时执行切入点自身的内容
 	使用@AfterThrowing用来处理当切入内容部分抛出异常之后的处理逻辑
-	
-事务级别	
+
+事务级别
 @Transactional(isolation = Isolation.DEFAULT)
 DEFAULT：这是默认值，表示使用底层数据库的默认隔离级别。对大部分数据库而言，通常这值就是：READ_COMMITTED。
 READ_UNCOMMITTED：该隔离级别表示一个事务可以读取另一个事务修改但还没有提交的数据。该级别不能防止脏读和不可重复读，因此很少使用该隔离级别。
