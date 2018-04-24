@@ -27,3 +27,6 @@
 ## git reset HEAD
 
 ## git rm
+
+
+## git push
