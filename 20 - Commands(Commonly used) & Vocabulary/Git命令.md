@@ -35,6 +35,7 @@ git rm -f <file>
 从暂存区域移除，但仍然希望保留在当前工作目录中
 git rm --cached <file>
 
+在暂存区 移动  影响工作区
 git mv README  README.md
 
 ## git push
