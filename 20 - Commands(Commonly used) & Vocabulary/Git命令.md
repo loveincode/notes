@@ -1,3 +1,4 @@
+https://git-scm.com/book/zh/v1/%E8%B5%B7%E6%AD%A5
 ## git clone
 
   git clone [url]
@@ -9,7 +10,7 @@
 
 ## git status -s
 
-## git add .
+## git add . git add 命令可将该文件添加到缓存
 
 ## git diff
 
