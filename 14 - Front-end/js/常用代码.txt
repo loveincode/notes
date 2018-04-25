@@ -25,3 +25,13 @@ clearInterval(timetask);
 当前鼠标的聚焦点 取id tag
 document.activeElement.tagName
 document.activeElement.id
+
+通过属性选择
+ $('a[hreflang|="en"]').css("border","2px solid red");
+
+
+遮罩层
+$("<div id='l-window-mask_treeselect' class='l-window-mask'></div>").appendTo("body").css({"z-index":"9100","display":"block"});
+
+移除
+$（）.remove();
