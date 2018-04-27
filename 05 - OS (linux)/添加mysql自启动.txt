@@ -20,5 +20,5 @@ chkconfig --level 345 mysql on
 
 
 systemctl start mysqld
-systemctl status mysql
+systemctl status mysqld
 看原因 pid文件重复 删除 权限 chown -R mysql
