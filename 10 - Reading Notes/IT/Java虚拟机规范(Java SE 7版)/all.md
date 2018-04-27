@@ -1,3 +1,5 @@
+读后总结：https://www.jianshu.com/p/00ffffc9103c?from=timeline&isappinstalled=0
+
 第1章 引言
 
 第2章 Java虚拟机结构
