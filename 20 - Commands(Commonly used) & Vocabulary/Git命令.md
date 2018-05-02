@@ -1,4 +1,14 @@
 https://git-scm.com/book/zh/v1/%E8%B5%B7%E6%AD%A5
+
+https://blog.csdn.net/qq_33528613/article/details/72579427
+
+git config --global user.name "loveincode"
+git config --global user.email "huonefl@163.com"
+
+git config --global --replace-all user.name "loveincode"
+git config --global --replace-all user.email "huonefl@163.com"
+
+ssh-keygen -t rsa -C "huonefl@163.com"
 ## git clone
 
   git clone [url]
