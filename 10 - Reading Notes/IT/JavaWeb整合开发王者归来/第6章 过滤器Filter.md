@@ -39,12 +39,14 @@ doFilter()方法中一定要执行chain.doFilter(request,response) 否则request
 <filter-mapping>配置在前面的Filter执行要早于配置在后面的Filter
 
 ## 案例
-防盗链
-字符编码
-日志记录
-异常捕捉
-权限验证
-内容替换
-GZIP压缩
-图像水印
-缓存
+防盗链Filter
+字符编码Filter
+日志记录Filter
+异常捕捉Filter
+权限验证Filter
+内容替换Filter
+GZIP压缩Filter
+图像水印Filter
+缓存Filter
+XSLT转换Filter
+文件上传Filter
