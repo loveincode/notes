@@ -46,6 +46,7 @@ notepad–－打开记事本
 nslookup–网络管理的工具向导
 ntbackup–系统备份和还原
 narrator–屏幕“讲述人”
+
 ntmsmgr.msc–移动存储管理器
 ntmsoprq.msc－－－移动存储管理员操作请求
 netstat －an–(TC)命令检查接口
