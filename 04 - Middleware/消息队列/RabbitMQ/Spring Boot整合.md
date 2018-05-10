@@ -1,0 +1,6 @@
+Spring Boot整合
+下面，我们通过在Spring Boot应用中整合RabbitMQ，并实现一个简单的发送、接收消息的例子来对RabbitMQ有一个直观的感受和理解。
+
+在Spring Boot中整合RabbitMQ是一件非常容易的事，因为之前我们已经介绍过Starter POMs，其中的AMQP模块就可以很好的支持RabbitMQ，下面我们就来详细说说整合过程：
+
+在pom.xml中引入如下依赖内容，其中spring-boot-starter-amqp用于支持RabbitMQ。
