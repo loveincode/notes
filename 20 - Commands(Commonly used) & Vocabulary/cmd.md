@@ -60,10 +60,10 @@ rononce －p –15秒关机
 regsvr32 /u * .dll–停止dll文件运行（把*号换成要停止的dll文件名）
 regedt32–注册表编辑器
 rsop.msc–组策略结果集
-regedit.exe–注册表
+**regedit.exe**–注册表
 regsvr32 /u zipfldr.dll–－－取消ZIP支持
 sndrec32–录音机
-services.msc－－－本地服务设置
+**services.msc**－－－本地服务设置
 syncapp–－创建一个公文包
 sysedit–－系统配置编辑器
 sigverif–文件签名验证程序
