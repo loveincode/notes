@@ -47,7 +47,7 @@ Spring Boot 一经推出就受到开源社区的追捧，Spring Boot 官方提�
 
 Spring Boot 本身发展特别快，自从 2014 年 4 月发布 Spring Boot 1.0 之后，版本更新非常频繁，我在 2016 年使用的时候是 1.3.X，到现在 Spring Boot 已经发布了 Spring Boot 2.0，Spring Boot 2.0 集成了很多最新优秀的技术和新特性，并且对 Spring Boot 1.0 的 API 进行了大幅优化。Spring Boot 一经推出就迅速的成为一门热门的技术，从下图也可以看出这个结论：
 
-![](https://github.com/loveincode/notes/blob/master/image/04/springcloud/springboot-hot.png)
+![](https://github.com/loveincode/notes/blob/master/image/03/springcloud/springboot-hot.png)
 
 上图为2014年到2018年 Spring Boot 的百度指数，可以看出 Spring Boot 2.0 的推出引发了搜索高峰。
 
