@@ -21,7 +21,8 @@ Spring Cloud CLI
 对于“微服务架构”，大家在互联网可以搜索到很多相关的介绍和研究文章来进行学习和了解。也可以阅读始祖Martin Fowler的《Microservices》，本文不做更多的介绍和描述。
 
 
-Spring Cloud Netflix : 它主要提供的模块包括：服务发现（Eureka），断路器（Hystrix），智能路有（Zuul），客户端负载均衡（Ribbon）等。
+Spring Cloud Netflix : 它主要提供的模块包括：**服务发现（Eureka）**，**断路器（Hystrix）**，**智能路由（Zuul）**，**客户端负载均衡（Ribbon）** 等。
 
+服务注册中心 Eureka
 
 Ribbon Ribbon是一个基于HTTP和TCP客户端的负载均衡器。 Feign中也使用Ribbon，
