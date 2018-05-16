@@ -41,4 +41,13 @@ Cc.equals(c);false
 
 ## 静态代码块
 一个类可以有一个or多个静态代码块，静态代码块在类被加载时执行，优于构造函数的执行，并且按照各静态模块放在类中的顺序执行。
-##
+## -127 - 128 会在jvm启动时载入内存，除非用new Integer()显示 的创建对象，否则都是同一个对象
+Interget的value方法返回一个对象，先判断传入的参数是否在-128-127之间，若已经存在，则直接返回引用 ，否则返回new Integer()
+Integer i1=59
+Int i2=59;
+Integer i3=Integer.valueOf(59);
+Integer i4=new Integer(59);
+i1==i2 true
+i1==i3 true
+i3==i4 false  
+i4==i2 true   i2 是int类型，和i4比较，i4会自动拆箱

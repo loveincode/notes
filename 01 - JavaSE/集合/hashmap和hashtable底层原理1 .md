@@ -3,7 +3,7 @@ hashmap http://www.admin10000.com/document/3322.html
 hashtable http://www.cnblogs.com/skywang12345/p/3310887.html
 http://blog.csdn.net/chdjj/article/details/38581035
 
-# HashNap
+# HashMap
 ## 1. HashMap的存取实现：
 ``` java
 public V put(K key, V value) {  
