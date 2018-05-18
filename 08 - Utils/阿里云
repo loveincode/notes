@@ -8,3 +8,9 @@ https://www.aliyun.com/jiaocheng/198178.html
 
 47.104.230.49(公)
 172.31.17.211(私有)
+
+redis
+
+memcached /usr/bin/memcached
+
+MongoDB /opt/
