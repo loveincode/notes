@@ -6,7 +6,7 @@ import time
 
 first=('张','王','李','赵','金','艾','单','龚','钱','周','吴','郑','孔','曺','严','华','吕','徐','何')
 middle=('芳','军','建','明','辉','芬','红','丽','功')
-last=('明','芳','','民','敏','丽','辰','楷','龙','雪','凡','锋','芝')
+last=('明','芳','民','敏','丽','辰','楷','龙','雪','凡','锋','芝')
 conn = MySQLdb.connect(host='127.0.0.1', port=33060, user='root', passwd='kdc',db='vas')
 
 for i in range(20000):
@@ -21,6 +21,7 @@ for i in range(20000):
       GroupID.append(rec[0])
   cur1.close()
   suuid2 = r.choice(GroupID)
+  print i
   print name1
   print suuid1 +" "+ suuid2
   cur2 = conn.cursor()
