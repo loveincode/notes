@@ -4,7 +4,7 @@
 ---
 客户端
 
-```
+``` java
 Socket socket = new Socket("ip", 端口);
 
 InputStream is = socket.getInputStream();
@@ -16,7 +16,7 @@ DataInputStream dos = new DataOutputStream(os);
 
 服务器端
 
-```
+``` java
 ServerSocket serverSocket = new ServerSocket(端口);
 Socket socket = serverSocket.accept();
 //获取流的方式与客户端一样
@@ -24,14 +24,14 @@ Socket socket = serverSocket.accept();
 
 读取输入流
 
-```
-byte[] buffer = new byte[1024]; 
-do{ 
-	int count = is.read(buffer); 
+``` java
+byte[] buffer = new byte[1024];
+do{
+	int count = is.read(buffer);
 	if(count <= 0){ break; }
-	else{ 
-	// 对buffer保存或者做些其他操作 
-		} 
+	else{
+	// 对buffer保存或者做些其他操作
+		}
 	}
 while(true);
 
@@ -43,7 +43,7 @@ while(true);
 ---
 客户端和服务器端一样的
 
-```
+``` java
 DatagramSocket socket = new DatagramSocket(端口);
 InetAddress serverAddress = InetAddress.getbyName("ip");
 //发送

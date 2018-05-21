@@ -10,13 +10,11 @@
 3) BlockingQueue阻塞队列方法
 4) PipedInputStream / PipedOutputStream
 
-
 ## wait()/notify()
-
-
 
 ### blockingQueue方式
 
+``` java
     public class ProducerConsumer<T> {
         static  class MsgQueueManager<T> {
             /**
@@ -29,7 +27,7 @@
             MsgQueueManager() {
                 this.messageQueue = new LinkedBlockingQueue<T>();
             }
-    
+
             public void put(T msg) {
                 try {
                     messageQueue.put(msg);
@@ -37,7 +35,7 @@
                     Thread.currentThread().interrupt();
                 }
             }
-    
+
             public T take() {
                 try {
                     return messageQueue.take();
@@ -47,7 +45,7 @@
                 return null;
             }
         }
-    
+
         static  class Producer extends Thread {
             private MsgQueueManager msgQueueManager;
             public Producer(MsgQueueManager msgQueueManager) {
@@ -68,21 +66,21 @@
                 Object o = msgQueueManager.take();
             }
         }
-    
+
         public static void main(String[] args) {
             MsgQueueManager<String> msgQueueManager = new MsgQueueManager<String>();
-    
+
             for(int i = 0; i < 100; i ++) {
                 new Producer(msgQueueManager).start();
-    
+
             }
             for(int i = 0; i < 100; i ++) {
                 new Consumer(msgQueueManager).start();
-    
+
             }
         }
     }
-
+```
 
 
 http://www.infoq.com/cn/articles/producers-and-consumers-mode/
