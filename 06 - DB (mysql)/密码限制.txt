@@ -24,3 +24,5 @@ validate_password_number_count
 
 
 ALTER USER 'root'@'localhost' IDENTIFIED BY 'root123';
+
+mysql 8 以后的属性有变化
