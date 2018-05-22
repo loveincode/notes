@@ -33,7 +33,7 @@
  1. 为其他子类提供一个公共的类型
  2. 封装子类中重复定义的内容
  3. 定义抽象方法,子类虽然有不同的实现,但是定义时一致的
- 
+
 ## 接口和抽象类的区别
 
 |比较|抽象类|接口|
@@ -71,7 +71,7 @@
 ## switch中能否使用string做参数
 在idk 1.7之前,switch只能支持byte,short,char,int或者其对应的封装类以及Enum类型。从idk 1.7之后switch开始支持String.
 
-## switch能否作用在byte,long上? 
+## switch能否作用在byte,long上?
 可以用在byte上,但是不能用在long上.
 
 ## String s1="ab",String s2="a"+"b",String s3="a",String s4="b",s5=s3+s4请问s5==s2返回什么?
@@ -115,7 +115,7 @@
  2. 通过软引用实现Java对象的高速缓存:比如我们创建了一Person的类，如果每次需要查询一个人的信息,哪怕是几秒中之前刚刚查询过的，都要重新构建一个实例，这将引起大量Person对象的消耗,并且由于这些对象的生命周期相对较短,会引起多次GC影响性能。此时,通过软引用和 HashMap 的结合可以构建高速缓存,提供性能.
 
 
-## java中==和`eqauls()`的区别,`equals()`和`hashcode的区别
+## java中==和`eqauls()`的区别,`equals()`和`hashcode`的区别
 ==是运算符,用于比较两个变量是否相等,而equals是Object类的方法,用于比较两个对象是否相等.默认Object类的equals方法是比较两个对象的地址,此时和==的结果一样.换句话说:基本类型比较用==,比较的是他们的值.默认下,对象用==比较时,比较的是内存地址,如果需要比较对象内容,需要重写equal方法
 ##`equals()`和`hashcode()`的联系
 `hashCode()`是Object类的一个方法,返回一个哈希值.如果两个对象根据equal()方法比较相等,那么调用这两个对象中任意一个对象的hashCode()方法必须产生相同的哈希值.
@@ -273,7 +273,7 @@ StringBuffer是对对象本身操作,而不是产生新的对象,因此在有大
 
 但是需要注意现在JVM会对String拼接做一定的优化:
 `String s=“This is only ”+”simple”+”test”`会被虚拟机直接优化成`String s=“This is only simple test”`,此时就不存在拼接过程.
- 
+
 ### StringBuffer和StringBuilder
 StringBuffer是线程安全的可变字符串,其内部实现是可变数组.StringBuilder是jdk 1.5新增的,其功能和StringBuffer类似,但是非线程安全.因此,在没有多线程问题的前提下,使用StringBuilder会取得更好的性能.
 
@@ -393,7 +393,7 @@ wait()方法和notify()/notifyAll()方法在放弃对象监视器的时候的区
  - sleep()来自Thread类，和wait()来自Object类.调用sleep()方法的过程中，线程不会释放对象锁。而 调用 wait 方法线程会释放对象锁
  - sleep()睡眠后不出让系统资源，wait让其他线程可以占用CPU
  - sleep(milliseconds)需要指定一个睡眠时间，时间一到会自动唤醒.而wait()需要配合notify()或者notifyAll()使用
- 
+
 ## 为什么wait,nofity和nofityAll这些方法不放在Thread类当中
 一个很明显的原因是JAVA提供的锁是对象级的而不是线程级的，每个对象都有锁，通过线程获得。如果线程需要等待某些锁那么调用对象中的wait()方法就有意义了。如果wait()方法定义在Thread类中，线程正在等待的是哪个锁就不明显了。简单的说，由于wait，notify和notifyAll都是锁级别的操作，所以把他们定义在Object类中因为锁属于对象。
 
@@ -430,7 +430,7 @@ synchronized是和if、else、for、while一样的关键字，ReentrantLock是�
 
 ## 如何正确的使用wait()?使用if还是while?
 wait() 方法应该在循环调用，因为当线程获取到 CPU 开始执行的时候，其他条件可能还没有满足，所以在处理前，循环检测条件是否满足会更好。下面是一段标准的使用 wait 和 notify 方法的代码：
-```
+``` java
  synchronized (obj) {
     while (condition does not hold)
       obj.wait(); // (Releases lock, and reacquires on wakeup)
@@ -453,7 +453,7 @@ wait() 方法应该在循环调用，因为当线程获取到 CPU 开始执行�
 可以通过阻塞队列实现,也可以通过wait-notify来实现.
 
 ### 使用阻塞队列来实现
-```
+``` java
 //消费者
 public class Producer implements Runnable{
     private final BlockingQueue<Integer> queue;
@@ -566,7 +566,7 @@ ConcurrentHashMap是线程安全的，但是与Hashtablea相比，实现线程�
  - CyclicBarrier的某个线程运行到某个点上之后，该线程即停止运行，直到所有的线程都到达了这个点，所有线程才重新运行；CountDownLatch则不是，某线程运行到某个点上之后，只是给某个数值-1而已，该线程继续运行
  - CyclicBarrier只能唤起一个任务，CountDownLatch可以唤起多个任务
  - CyclicBarrier可重用，CountDownLatch不可重用，计数值为0该CountDownLatch就不可再用了
- 
+
 ## java中的++操作符线程安全么?
 不是线程安全的操作。它涉及到多个指令，如读取变量值，增加，然后存储回内存，这个过程可能会出现多个线程交差
 
@@ -622,7 +622,7 @@ WeakHashMap 的工作与正常的 HashMap 类似，但是使用弱引用作为 k
 在 Java 7 中，ArrayList 的默认大小是 10 个元素，HashMap 的默认大小是16个元素（必须是2的幂）。这就是 Java 7 中 ArrayList 和 HashMap 类的代码片段
 ```
 private static final int DEFAULT_CAPACITY = 10;
- 
+
  //from HashMap.java JDK 7
  static final int DEFAULT_INITIAL_CAPACITY = 1 << 4; // aka 16
 ```
@@ -740,7 +740,7 @@ DOM,SAX,PULL三种解析方式:
  - DOM:消耗内存：先把xml文档都读到内存中，然后再用DOM API来访问树形结构，并获取数据。这个写起来很简单，但是很消耗内存。要是数据过大，手机不够牛逼，可能手机直接死机
  - SAX:解析效率高，占用内存少，基于事件驱动的：更加简单地说就是对文档进行顺序扫描，当扫描到文档(document)开始与结束、元素(element)开始与结束、文档(document)结束等地方时通知事件处理函数，由事件处理函数做相应动作，然后继续同样的扫描，直至文档结束。
  - PULL:与 SAX 类似，也是基于事件驱动，我们可以调用它的next（）方法，来获取下一个解析事件（就是开始文档，结束文档，开始标签，结束标签），当处于某个元素时可以调用XmlPullParser的getAttributte()方法来获取属性的值，也可调用它的nextText()获取本节点的值。
- 
+
 
 
 ## JDK 1.7特性
@@ -761,56 +761,9 @@ Date 与 Time API，最终，有一个稳定、简单的日期和时间库可供
  - 使用PreparedStatement来避免SQL漏洞
  - 使用数据连接池
  - 通过列名来获取结果集
- 
+
 ## IO操作最佳实践
 1. 使用有缓冲的IO类,不要单独读取字节或字符
 2. 使用NIO和NIO 2或者AIO,而非BIO
 3. 在finally中关闭流
 4. 使用内存映射文件获取更快的IO
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
