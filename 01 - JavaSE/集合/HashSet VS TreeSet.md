@@ -23,7 +23,7 @@ HashSet与TreeSet都是基于Set接口的实现类。其中TreeSet是Set的子�
 注意，如果要把一个对象放入HashSet中，重写该对象对应类的equals方法，也应该重写其hashCode()方法。其规则是如果两个对 象通过equals方法比较返回true时，其hashCode也应该相同。另外，对象中用作equals比较标准的属性，都应该用来计算 hashCode的值。
 
 例如：
-
+``` java
 #
 	import java.util.HashSet;
 	import java.util.Iterator;
@@ -38,7 +38,7 @@ HashSet与TreeSet都是基于Set接口的实现类。其中TreeSet是Set的子�
 	                 hs.add(new Student(2,"lishi"));
 	                 hs.add(new Student(3,"wangwu"));
 	                 hs.add(new Student(1,"zhangsan"));
-	                
+
 	                 Iterator it=hs.iterator();
 	                 while(it.hasNext()){
 	                         System.out.println(it.next());
@@ -63,6 +63,7 @@ HashSet与TreeSet都是基于Set接口的实现类。其中TreeSet是Set的子�
 	                 return num==s.num && name.equals(s.name);
 	         }
 	}
+```
 #
 
 #### TreeSet类
@@ -84,40 +85,40 @@ obj1大于obj2，如果是 负数，则表明obj1小于obj2。
 **2.定制排序**
 
 自然排序是根据集合元素的大小，以升序排列，如果要定制排序，应该使用Comparator接口，实现 int compare(T o1,T o2)方法,我们可以构造TreeSet对象时,传递实现了Comparator接口的比较器对象.
-	
+	``` java
 	import java.util.Comparator;
 	import java.util.Iterator;
 	import java.util.TreeSet;
-	
+
 	public class TreeSetTest {
 		public static void main(String[] args) {
-	
+
 			TreeSet<Students> ts = new TreeSet<Students>(new CompareToStudent());
 			ts.add(new Students(2, "zhangshan"));
 			ts.add(new Students(3, "lishi"));
 			ts.add(new Students(1, "wangwu"));
 			ts.add(new Students(4, "maliu"));
-	
+
 			Iterator<Students> it = ts.iterator();
 			while (it.hasNext()) {
 				System.out.println(it.next());
 			}
 		}
 	}
-	
+
 	class Students implements Comparable<Students> {
 		int num;
 		String name;
-	
+
 		Students(int num, String name) {
 			this.num = num;
 			this.name = name;
 		}
-	
+
 		public String toString() {
 			return num + ":" + name;
 		}
-	
+
 		@Override
 		public int compareTo(Students o) {
 			int result;
@@ -129,7 +130,7 @@ obj1大于obj2，如果是 负数，则表明obj1小于obj2。
 			return result;
 		}
 	}
-	
+
 	class CompareToStudent implements Comparator<Object> {
 		public int compare(Object o1, Object o2) {
 			Students s1 = (Students) o1;
@@ -142,6 +143,7 @@ obj1大于obj2，如果是 负数，则表明obj1小于obj2。
 		}
 	}
 
+```
 
 与HashSet相比，TreeSet还提供了几个额外的方法：
 
@@ -164,4 +166,3 @@ obj1大于obj2，如果是 负数，则表明obj1小于obj2。
 
 #### LinkedHashSet
 HashSet还有一个子类LinkedHashSet，其集合也是根据元素hashCode值来决定元素的存储位置，但它同时用链表来维护元素的次序，这样使得元素看起来是以插入的顺序保存的，也就是说，当遍历LinkedHashSet集合元素时，它将会按元素的添加顺序来访问集合里的元素。所以LinkedHashSet的性能略低于HashSet，但在迭代访问全部元素时将有很好的性能，因为它以链表来维护内部顺序。
-

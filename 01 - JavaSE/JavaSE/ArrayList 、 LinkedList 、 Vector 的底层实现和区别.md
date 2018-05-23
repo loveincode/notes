@@ -1,7 +1,5 @@
 #Java基础之集合List-ArrayList、LinkedList、Vector的底层实现和区别
 
-
-
 1. ArrayList底层实际是采用数组实现的（并且该数组的类型是Object类型的）
 2. 如果jdk6,采用Array.copyOf()方法来生成一个新的数组，如果是jdk5，采用的是System.arraycopy()方法（当添加的数据量大于数组的长度的时候）
 3. List list = new ArrayList()时，底层会生成一个长度为10的数组来存放对象
