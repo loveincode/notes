@@ -27,7 +27,7 @@
         比较基础数据类型(Java中基础数据类型包括八中：short,int,long,float,double,char,byte,boolen)：这种情况下，==比较的是他们的值是否相等。
         引用间的比较：在这种情况下，==比较的是他们在内存中的地址，也就是说，除非引用指向的是同一个new出来的对象，此时他们使用`==`去比较得到true，否则，得到false。
 2. 使用equals进行比较：
-    
+
         equals追根溯源，是Object类中的一个方法，在该类中，equals的实现也仅仅只是比较两个对象的内存地址是否相等，但在一些子类中，如：String、Integer 等，该方法将被重写。
 
 3. 以`String`类为例子说明`eqauls`与`==`的区别：
@@ -35,26 +35,26 @@
 `String a = "abc"`这样的语句进行定义一个引用的时候，首先会在*字符串缓冲池*中查找是否已经相同的对象，如果存在，那么就直接将这个对象的引用返回给a，如果不存在，则需要新建一个值为"abc"的对象，再将新的引用返回a。`String a = new String("abc");`这样的语句明确告诉JVM想要产生一个新的String对象，并且值为"abc"，于是就*在堆内存中的某一个小角落开辟了一个新的String对象*。
 
     - `==`在比较引用的情况下，会去比较两个引用的内存地址是否相等。
-    ```
+    ``` java
         String str1 = "abc";
         String str2 = "abc";
-        
+
         System.out.println(str1 == str2);
         System.out.println(str1.equals(str2));
-        
+
         String str2 = new String("abc");
         System.out.println(str1 == str2);
         System.out.println(str1.equals(str2));
-        
+
     ```
         以上代码将会输出
         true
         true
         false
         true
-        **第一个true：**因为在str2赋值之前，str1的赋值操作就已经在内存中创建了一个值为"abc"的对象了，然后str2将会与str1指向相同的地址。
-        **第二个true：**因为`String`已经重写了`equals`方法：为了方便大家阅读我贴出来，并且在注释用进行分析：
-        ```
+        **第一个true：** 因为在str2赋值之前，str1的赋值操作就已经在内存中创建了一个值为"abc"的对象了，然后str2将会与str1指向相同的地址。
+        **第二个true：** 因为`String`已经重写了`equals`方法：为了方便大家阅读我贴出来，并且在注释用进行分析：
+        ``` java
         public boolean equals(Object anObject) {
         //如果比较的对象与自身内存地址相等的话
         //就说明他两指向的是同一个对象
@@ -157,7 +157,7 @@ JDK1.2之前只有强引用,其他几种引用都是在JDK1.2之后引入的.
 
 * 强引用（Strong Reference）
 	最常用的引用类型，如Object obj = new Object(); 。只要强引用存在则GC时则必定不被回收。
-	
+
 * 软引用（Soft Reference）
 	用于描述还有用但非必须的对象，当堆将发生OOM（Out Of Memory）时则会回收软引用所指向的内存空间，若回收后依然空间不足才会抛出OOM。一般用于实现内存敏感的高速缓存。
 当真正对象被标记finalizable以及的finalize()方法调用之后并且内存已经清理, 那么如果SoftReference object还存在就被加入到它的 ReferenceQueue.只有前面几步完成后,Soft Reference和Weak Reference的get方法才会返回null
@@ -177,12 +177,12 @@ JDK1.2之前只有强引用,其他几种引用都是在JDK1.2之后引入的.
 
 [http://c610367182.iteye.com/blog/1930676](http://c610367182.iteye.com/blog/1930676)
 
-以Java.lang.Object来理解,JVM每new一个Object,它都会将这个Object丢到一个Hash哈希表中去,这样的话,下次做Object的比较或者取这个对象的时候,它会根据对象的hashcode再从Hash表中取这个对象。这样做的目的是提高取对象的效率。具体过程是这样: 
+以Java.lang.Object来理解,JVM每new一个Object,它都会将这个Object丢到一个Hash哈希表中去,这样的话,下次做Object的比较或者取这个对象的时候,它会根据对象的hashcode再从Hash表中取这个对象。这样做的目的是提高取对象的效率。具体过程是这样:
 
-1. new Object(),JVM根据这个对象的Hashcode值,放入到对应的Hash表对应的Key上,如果不同的对象确产生了相同的hash值,也就是发生了Hash key相同导致冲突的情况,那么就在这个Hash key的地方产生一个链表,将所有产生相同hashcode的对象放到这个单链表上去,串在一起。 
+1. new Object(),JVM根据这个对象的Hashcode值,放入到对应的Hash表对应的Key上,如果不同的对象确产生了相同的hash值,也就是发生了Hash key相同导致冲突的情况,那么就在这个Hash key的地方产生一个链表,将所有产生相同hashcode的对象放到这个单链表上去,串在一起。
 
 
-2. 比较两个对象的时候,首先根据他们的hashcode去hash表中找他的对象,当两个对象的hashcode相同,那么就是说他们这两个对象放在Hash表中的同一个key上,那么他们一定在这个key上的链表上。那么此时就只能根据Object的equal方法来比较这个对象是否equal。当两个对象的hashcode不同的话，肯定他们不能equal. 
+2. 比较两个对象的时候,首先根据他们的hashcode去hash表中找他的对象,当两个对象的hashcode相同,那么就是说他们这两个对象放在Hash表中的同一个key上,那么他们一定在这个key上的链表上。那么此时就只能根据Object的equal方法来比较这个对象是否equal。当两个对象的hashcode不同的话，肯定他们不能equal.
 
 ---
 
@@ -214,40 +214,40 @@ Java异常架构图
 ![](http://images2015.cnblogs.com/blog/679904/201510/679904-20151025210813989-921927916.jpg)
 
 
-1. Throwable 
-Throwable是 Java 语言中所有错误或异常的超类。 
-Throwable包含两个子类: Error 和 Exception 。它们通常用于指示发生了异常情况。 
+1. Throwable
+Throwable是 Java 语言中所有错误或异常的超类。
+Throwable包含两个子类: Error 和 Exception 。它们通常用于指示发生了异常情况。
 Throwable包含了其线程创建时线程执行堆栈的快照，它提供了printStackTrace()等接口用于获取堆栈跟踪数据等信息。
 
-2. Exception 
+2. Exception
 Exception及其子类是 Throwable 的一种形式，它指出了合理的应用程序想要捕获的条件。
 
-3. RuntimeException 
-RuntimeException是那些可能在 Java 虚拟机正常运行期间抛出的异常的超类。 
-编译器不会检查RuntimeException异常。 例如，除数为零时，抛出ArithmeticException异常。RuntimeException是ArithmeticException的超类。当代码发生除数为零的情况时，倘若既"没有通过throws声明抛出ArithmeticException异常"，也"没有通过try...catch...处理该异常"，也能通过编译。这就是我们所说的"编译器不会检查RuntimeException异常"！ 
+3. RuntimeException
+RuntimeException是那些可能在 Java 虚拟机正常运行期间抛出的异常的超类。
+编译器不会检查RuntimeException异常。 例如，除数为零时，抛出ArithmeticException异常。RuntimeException是ArithmeticException的超类。当代码发生除数为零的情况时，倘若既"没有通过throws声明抛出ArithmeticException异常"，也"没有通过try...catch...处理该异常"，也能通过编译。这就是我们所说的"编译器不会检查RuntimeException异常"！
 如果代码会产生RuntimeException异常，则需要通过修改代码进行避免。 例如，若会发生除数为零的情况，则需要通过代码避免该情况的发生！
 
-4. Error 
-和Exception一样， Error也是Throwable的子类。 它用于指示合理的应用程序不应该试图捕获的严重问题，大多数这样的错误都是异常条件。 
+4. Error
+和Exception一样， Error也是Throwable的子类。 它用于指示合理的应用程序不应该试图捕获的严重问题，大多数这样的错误都是异常条件。
 和RuntimeException一样， 编译器也不会检查Error。
 
 Java将可抛出(Throwable)的结构分为三种类型： 被检查的异常(Checked Exception)，运行时异常(RuntimeException)和错误(Error)。
 
-(01) 运行时异常 
-定义 : RuntimeException及其子类都被称为运行时异常。 
-特点 : Java编译器不会检查它。 也就是说，当程序中可能出现这类异常时，倘若既"没有通过throws声明抛出它"，也"没有用try-catch语句捕获它"，还是会编译通过。例如，除数为零时产生的ArithmeticException异常，数组越界时产生的IndexOutOfBoundsException异常，fail-fail机制产生的ConcurrentModificationException异常等，都属于运行时异常。 
-虽然Java编译器不会检查运行时异常，但是我们也可以通过throws进行声明抛出，也可以通过try-catch对它进行捕获处理。 
+(01) 运行时异常
+定义 : RuntimeException及其子类都被称为运行时异常。
+特点 : Java编译器不会检查它。 也就是说，当程序中可能出现这类异常时，倘若既"没有通过throws声明抛出它"，也"没有用try-catch语句捕获它"，还是会编译通过。例如，除数为零时产生的ArithmeticException异常，数组越界时产生的IndexOutOfBoundsException异常，fail-fail机制产生的ConcurrentModificationException异常等，都属于运行时异常。
+虽然Java编译器不会检查运行时异常，但是我们也可以通过throws进行声明抛出，也可以通过try-catch对它进行捕获处理。
 如果产生运行时异常，则需要通过修改代码来进行避免。 例如，若会发生除数为零的情况，则需要通过代码避免该情况的发生！
 
-(02) 被检查的异常 
-定义 :  Exception类本身，以及Exception的子类中除了"运行时异常"之外的其它子类都属于被检查异常。 
-特点 : Java编译器会检查它。 此类异常，要么通过throws进行声明抛出，要么通过try-catch进行捕获处理，否则不能通过编译。例如，CloneNotSupportedException就属于被检查异常。当通过clone()接口去克隆一个对象，而该对象对应的类没有实现Cloneable接口，就会抛出CloneNotSupportedException异常。 
+(02) 被检查的异常
+定义 :  Exception类本身，以及Exception的子类中除了"运行时异常"之外的其它子类都属于被检查异常。
+特点 : Java编译器会检查它。 此类异常，要么通过throws进行声明抛出，要么通过try-catch进行捕获处理，否则不能通过编译。例如，CloneNotSupportedException就属于被检查异常。当通过clone()接口去克隆一个对象，而该对象对应的类没有实现Cloneable接口，就会抛出CloneNotSupportedException异常。
 被检查异常通常都是可以恢复的。
 
-(03) 错误 
-定义 : Error类及其子类。 
-特点 : 和运行时异常一样，编译器也不会对错误进行检查。 
-当资源不足、约束失败、或是其它程序无法继续运行的条件发生时，就产生错误。程序本身无法修复这些错误的。例如，VirtualMachineError就属于错误。 
+(03) 错误
+定义 : Error类及其子类。
+特点 : 和运行时异常一样，编译器也不会对错误进行检查。
+当资源不足、约束失败、或是其它程序无法继续运行的条件发生时，就产生错误。程序本身无法修复这些错误的。例如，VirtualMachineError就属于错误。
 按照Java惯例，我们是不应该是实现任何新的Error子类的！
 
 对于上面的3种结构，我们在抛出异常或错误时，到底该哪一种？《Effective Java》中给出的建议是： 对于可以恢复的条件使用被检查异常，对于程序错误使用运行时异常。
@@ -303,7 +303,7 @@ Java将可抛出(Throwable)的结构分为三种类型： 被检查的异常(Che
 封装：通常认为封装是把数据和操作数据的方法绑定起来，对数据的访问只能通过已定义的接口。面向对象的本质就是将现实世界描绘成一系列完全自治、封闭的对象。我们在类中编写的方法就是对实现细节的一种封装；我们编写一个类就是对数据和数据操作的封装。可以说，封装就是隐藏一切可隐藏的东西，只向外界提供最简单的编程接口（可以想想普通洗衣机和全自动洗衣机的差别，明显全自动洗衣机封装更好因此操作起来更简单；我们现在使用的智能手机也是封装得足够好的，因为几个按键就搞定了所有的事情）。
 
 多态：多态性是指允许不同子类型的对象对同一消息作出不同的响应。简单的说就是用同样的对象引用调用同样的方法但是做了不同的事情。多态性分为编译时的多态性和运行时的多态性。如果将对象的方法视为对象向外界提供的服务，那么运行时的多态性可以解释为：当A系统访问B系统提供的服务时，B系统有多种提供服务的方式，但一切对A系统来说都是透明的（就像电动剃须刀是A系统，它的供电系统是B系统，B系统可以使用电池供电或者用交流电，甚至还有可能是太阳能，A系统只会通过B类对象调用供电的方法，但并不知道供电系统的底层实现是什么，究竟通过何种方式获得了动力）。方法重载（overload）实现的是编译时的多态性（也称为前绑定），而方法重写（override）实现的是运行时的多态性（也称为后绑定）。运行时的多态是面向对象最精髓的东西，要实现多态需要做两件事：1. 方法重写（子类继承父类并重写父类中已有的或抽象的方法）；2. 对象造型（用父类型引用引用子类型对象，这样同样的引用调用同样的方法就会根据子类对象的不同而表现出不同的行为）。
- 
+
 ---
 
 
@@ -335,8 +335,8 @@ Override：就是ride(重写)的意思，在子类继承父类的时候子类中
 
 当JVM执行Java字节码时，类型信息会存储在方法区中，为了优化对象的调用方法的速度，方法区的类型信息会增加一个指针，该指针指向一个记录该类方法的方法表，方法表中的每一个项都是对应方法的指针。
 
-方法区：方法区和JAVA堆一样，是各个线程共享的内存区域，用于存储已被虚拟机加载的类信息、常量、静态变量、即时编译器编译后的代码等数据。 
-运行时常量池：它是方法区的一部分，Class文件中除了有类的版本、方法、字段等描述信息外，还有一项信息是常量池，用于存放编译器生成的各种符号引用，这部分信息在类加载时进入方法区的运行时常量池中。 
+方法区：方法区和JAVA堆一样，是各个线程共享的内存区域，用于存储已被虚拟机加载的类信息、常量、静态变量、即时编译器编译后的代码等数据。
+运行时常量池：它是方法区的一部分，Class文件中除了有类的版本、方法、字段等描述信息外，还有一项信息是常量池，用于存放编译器生成的各种符号引用，这部分信息在类加载时进入方法区的运行时常量池中。
 方法区的内存回收目标是针对常量池的回收及对类型的卸载。
 
 方法表的构造
@@ -349,7 +349,7 @@ Override：就是ride(重写)的意思，在子类继承父类的时候子类中
 
 假设Class A是Class B的子类，并且A改写了B的方法的method()，那么B来说，method方法的指针指向B的method方法入口；对于A来说，A的方法表的method项指向自身的method而非父类的。
 
-流程：调用方法时，虚拟机通过对象引用得到方法区中类型信息的方法表的指针入口，查询类的方法表 ，根据实例方法的符号引用解析出该方法在方法表的偏移量，子类对象声明为父类类型时，形式上调用的是父类的方法，此时虚拟机会从实际的方法表中找到方法地址，从而定位到实际类的方法。 
+流程：调用方法时，虚拟机通过对象引用得到方法区中类型信息的方法表的指针入口，查询类的方法表 ，根据实例方法的符号引用解析出该方法在方法表的偏移量，子类对象声明为父类类型时，形式上调用的是父类的方法，此时虚拟机会从实际的方法表中找到方法地址，从而定位到实际类的方法。
 注：所有引用为父类，但方法区的类型信息中存放的是子类的信息，所以调用的是子类的方法表。
 
 ---
@@ -539,6 +539,3 @@ HashMap 不是线程安全的，可以存储 null 值
 Stack类：继承自Vector，实现一个后进先出的栈。提供了几个基本方法，push、pop、peak、empty、search等。
 
 Queue接口：提供了几个基本方法，offer、poll、peek等。已知实现类有LinkedList、PriorityQueue等。
-
-
-
