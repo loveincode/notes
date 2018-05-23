@@ -1,12 +1,12 @@
-## 1.Java 语言的优点
+## 1. Java语言的优点
 面向对象,平台无关,内存管理,安全性,多线程,Java 是解释型的
 
-### 2.Java 和 C++的区别
+## 2.Java 和 C++的区别
 1. **多重继承**(java接口多重,类不支持,C++支持)
 2. **自动内存管理**
 3. **预处理功能**
 4. **goto语句**(java不支持)
-5. **引用与指针**。在Java中不可能直接操作对象本身，所有的对象都由一个引用指向，必须通过这个引用才能访问对象本身，包括获取成员变量的值，改变对象的成员变量，调用对象的方法等。而在C++中存在引用，对象和指针三个东西，这三个东西都可以访问对象。其实，Java中的引用和C++中的指针在概念上是相似的，他们都是存放的对象在内存中的地址值，只是在Java中，引用丧失了部分灵活性，比如Java中的引用不能像C++中的指针那样进行**加减运算**。 
+5. **引用与指针**。在Java中不可能直接操作对象本身，所有的对象都由一个引用指向，必须通过这个引用才能访问对象本身，包括获取成员变量的值，改变对象的成员变量，调用对象的方法等。而在C++中存在引用，对象和指针三个东西，这三个东西都可以访问对象。其实，Java中的引用和C++中的指针在概念上是相似的，他们都是存放的对象在内存中的地址值，只是在Java中，引用丧失了部分灵活性，比如Java中的引用不能像C++中的指针那样进行**加减运算**。
 
 ## 3.值传递和引用传递
 变量被值传递，意味着传递了**变量的一个副本**。因此，就算是改变了变量副本，也不会影响源对象的值。
@@ -54,29 +54,29 @@ assertion(断言)在软件开发中是一种常用的调试方式，很多开发
 
 断言用于调试目的：
 
-		assert(a > 0); // throws an AssertionError if a <= 0
+assert(a > 0); // throws an AssertionError if a <= 0
 
 断言可以有两种形式：
 
-		assert Expression1;
-		assert Expression1 : Expression2 ;
+assert Expression1;
+assert Expression1 : Expression2 ;
 
 Expression1 应该总是产生一个布尔值。
 Expression2 可以是得出一个值的任意表达式；这个值用于生成显示更多调试信息的**字符串消息**
 断言在默认情况下是禁用的，要在编译时启用断言，需使用 source 1.4 标记：
 
-		javac -source 1.4 Test.java
+javac -source 1.4 Test.java
 
 要在运行时启用断言，可使用 -enableassertions 或者 -ea 标记。
 要在运行时选择禁用断言，可使用 -da 或者 -disableassertions 标记。
 
-## final, finally, finalize 的区别?
+## final finally finalize的区别
 **final**：修饰符（关键字）有三种用法：如果一个类被声明为final，意味着它不能再派生出新的子类，即不能被继承，因此它和 abstract 是反义词。将变量声明为 final，可以保证它们在使用中不被改变，被声明为 final 的变量必须在声明时给定初值，而在以后的引用中只能读取不可修改。被声明为 final 的方法也同样只能使用，不能在子类中被重写。
 **finally**：通常放在 try…catch 的后面构造总是执行代码块，这就意味着程序无论正常执行还是发生异常，这里的代码只要 JVM 不关闭都能执行，可以将释放外部资源的代码写在 finally 块中。
 **finalize**：Object 类中定义的方法，Java 中允许使用 finalize() 方法在垃圾收集器将对象从内存中清除出去之前做必要的清理工作。这个方法是由垃圾收集器在销毁对象时调用的，通过重写finalize() 方法可以整理系统资源或者执行其他清理工作。
 
 ## & 和 &&
-& 和 && 都可以用作逻辑与的运算符，表示逻辑与（and），当运算符两边的表达式的结果都为 true 时，整个运算结果才为 true，否则，只要有一方为 false，则结果为 false。 
+& 和 && 都可以用作逻辑与的运算符，表示逻辑与（and），当运算符两边的表达式的结果都为 true 时，整个运算结果才为 true，否则，只要有一方为 false，则结果为 false。
 **&& 还具有短路的功能**，即如果第一个表达式为 false，则不再计算第二个表达式.& 还可以用作位运算符，当 & 操作符两边的表达式不是 boolean 类型时，& 表示按位与操作.
 
 ## 用最有效率的方法算出 2 乘以 8 等於几
@@ -92,7 +92,7 @@ char 类型可以存储一个中文汉字，因为 Java 中使用的编码是 Un
 
 ## String不可变性
 至于为什么要把 String 类设计成不可变类，是它的用途决定的。其实不只 String，很多 Java 标准类库中的类都是不可变的。在开发一个系统的时候，我们有时候也需要设计不可变类，来传递一组相关的值，这也是面向对象思想的体现。不可变类有一些优点，比如因为它的对象是只读的，所以多线程并发访问也不会有任何问题。当然也有一些缺点，比如每个不同的状态都要一个对象来代表，可能会造成性能上的问题。所以 Java 标准类库还提供了一个可变版本，即 StringBuffer。
- Javac 编译可以对字符串常量直接相加的表达式进行优化，不必要等到运行期去进行加法运算处理，而是在**编译时去掉其中的加号**，直接将其编译成一个这些常量相连的结果。所以 
+ Javac 编译可以对字符串常量直接相加的表达式进行优化，不必要等到运行期去进行加法运算处理，而是在**编译时去掉其中的加号**，直接将其编译成一个这些常量相连的结果。所以
 		String s=“a”+”b”+”c”+”d”;只生成一个对象.
 
 ## 不可变对象
@@ -152,7 +152,7 @@ Java 允许在 finally 中改变返回值的做法是不好的，因为如果存
     **保持异常的原子性**
     **不要在 catch 中忽略掉捕获到的异常**
 
-## throws、throw、try、catch、finally 
+## throws、throw、try、catch、finally
 一般情况下是用 try 来执行一段程序，如果出现异常，系统会抛出（throw）一个异常，这时候你可以通过它的类型来捕捉（catch）它，或最后（finally）由缺省处理器来处理；try 用来指定一块预防所有“异常”的程序；catch 子句紧跟在 try 块后面，用来指定你想要捕捉的“异常”的类型；throw 语句用来明确地抛出一个“异常”；throws用来标明一个成员函数可能抛出的各种“异常”；finally 为确保一段代码不管发生什么“异常”都被执行一段代码；
 
 ## 常见的runtime exception
@@ -175,31 +175,31 @@ Java 1.7之前不可以，java 1.7后String可以作为参数。
 整型（byte，short int，int，long int），枚举类型，boolean，字符型(char),字符串都可以，唯独浮点型不可以
 
 ## equals与==的区别
-1、 == 是一个运算符。 
-2、Equals则是string对象的方法，可以.（点）出来。 
-我们比较无非就是这两种 1、基本数据类型比较 2、引用对象比较 
-1、基本数据类型比较 
+1、 == 是一个运算符。
+2、Equals则是string对象的方法，可以.（点）出来。
+我们比较无非就是这两种 1、基本数据类型比较 2、引用对象比较
+1、基本数据类型比较
 　==比较两个值是否相等。相等为true 否则为false；
- equals不能直接用于基本类型的比较。需要将基本类型转换为包装器进行比较。 
-2、引用对象比较 
-==和equals都是比较栈内存中的地址是否相等 。相等为true 否则为false； 　 
-需注意几点： 
-1、string是一个特殊的引用类型。对于两个字符串的比较，不管是 == 和 equals 这两者比较的都是字符串是否相同； 
-2、当你创建两个string对象时，内存中的地址是不相同的，你可以赋相同的值。 
-　　所以字符串的内容相同。引用地址不一定相同，（相同内容的对象地址不一定相同），但反过来却是肯定的； 
+ equals不能直接用于基本类型的比较。需要将基本类型转换为包装器进行比较。
+2、引用对象比较
+==和equals都是比较栈内存中的地址是否相等 。相等为true 否则为false； 　
+需注意几点：
+1、string是一个特殊的引用类型。对于两个字符串的比较，不管是 == 和 equals 这两者比较的都是字符串是否相同；
+2、当你创建两个string对象时，内存中的地址是不相同的，你可以赋相同的值。
+　　所以字符串的内容相同。引用地址不一定相同，（相同内容的对象地址不一定相同），但反过来却是肯定的；
 3、基本数据类型比较(string 除外) == 和 Equals 两者都是比较值；
 
 ## Object有哪些公用方法
-protected Object clone()创建并返回此对象的一个副本。 
-public boolean equals(Object obj)指示其他某个对象是否与此对象“相等”。 
-protected void finalize()当垃圾回收器确定不存在对该对象的更多引用时，由对象的垃圾回收器调用此方法。 
+protected Object clone()创建并返回此对象的一个副本。
+public boolean equals(Object obj)指示其他某个对象是否与此对象“相等”。
+protected void finalize()当垃圾回收器确定不存在对该对象的更多引用时，由对象的垃圾回收器调用此方法。
 public final native Class< ? > getClass() 返回此 Object 的运行时类。
-public int hashCode()返回该对象的哈希码值。 
-public String toString()返回该对象的字符串表示。 
-public void notify()唤醒在此对象监视器上等待的单个线程。 
-public void notifyAll()唤醒在此对象监视器上等待的所有线程。 
-public void wait()在其他线程调用此对象的 notify() 方法或 notifyAll() 方法前，导致当前线程等待。 
-public void wait(long timeout)在其他线程调用此对象的 notify() 方法或 notifyAll() 方法，或者超过指定的时间量前，导致当前线程等待。 
+public int hashCode()返回该对象的哈希码值。
+public String toString()返回该对象的字符串表示。
+public void notify()唤醒在此对象监视器上等待的单个线程。
+public void notifyAll()唤醒在此对象监视器上等待的所有线程。
+public void wait()在其他线程调用此对象的 notify() 方法或 notifyAll() 方法前，导致当前线程等待。
+public void wait(long timeout)在其他线程调用此对象的 notify() 方法或 notifyAll() 方法，或者超过指定的时间量前，导致当前线程等待。
 public void wait(long timeout, int nanos)在其他线程调用此对象的 notify() 方法或
 
 注意：
@@ -225,9 +225,9 @@ StringBuffer Sb = new StringBuilder(“This is only a”).append(“simple”).a
 参见：http://www.findspace.name/easycoding/1090
 
 ## try catch finally，try里有return，finally还执行么？
-1)不管有木有出现异常，finally块中代码都会执行 
-2)当try和catch中有return时，finally仍然会执行 
-3)finally是在return后面的表达式运算后执行的（此时并没有返回运算后的值，而是先把要返回的值保存起来，**不管finally中的代码怎么样，返回的值都不会改变**，任然是之前保存的值），所以函数返回值是在finally执行前确定的 
+1)不管有木有出现异常，finally块中代码都会执行
+2)当try和catch中有return时，finally仍然会执行
+3)finally是在return后面的表达式运算后执行的（此时并没有返回运算后的值，而是先把要返回的值保存起来，**不管finally中的代码怎么样，返回的值都不会改变**，任然是之前保存的值），所以函数返回值是在finally执行前确定的
 4)finally中最好不要包含return，否则程序会提前退出，返回值不是try或catch中保存的返回值
 
 ## UnsupportedOperationException是什么
@@ -249,7 +249,3 @@ http://www.cnblogs.com/dolphin0520/p/3780005.html
 
 ## 修饰符顺序
 public protected private abstract static final transient volatile synchronized native strictfp
-
-
-
-

@@ -7,27 +7,27 @@ Collection  是单列集合
 List   元素是有序的(元素存取是有序)、可重复
 有序的 collection，可以对列表中每个元素的插入位置进行精确地控制。可以根据元素的整数索引（在列表中的位置）访问元素，并搜索列表中的元素。可存放重复元素，元素存取是有序的。<br />
 List接口中常用类：<br />
-```Vector```：线程安全，但速度慢，已被ArrayList替代。底层数据结构是 **数组结构**<br />
-```ArrayList```：线程不安全，查询速度快。底层数据结构是数组结构<br />
-```LinkedList```：线程不安全。增删速度快。底层数据结构是链表结构<br />
+`Vector`：线程安全，但速度慢，已被ArrayList替代。底层数据结构是 **数组结构**<br />
+`ArrayList`：线程不安全，查询速度快。底层数据结构是数组结构<br />
+`LinkedList`：线程不安全。增删速度快。底层数据结构是链表结构<br />
 
 Set(集) 元素不可重复。
 取出元素的方法只有迭代器。**不可以存放重复元素，元素存取是无序的**。<br />
 Set接口中常用的类<br />
-```HashSet```：线程不安全，内部是基于散列函数实现,存取速度快。它是如何保证元素唯一性的呢？依赖的是元素的hashCode方法和euqals方法。.<br />
----```LinkedHashSet```:具有HashSet的查询速度，且内部采用双向链表**维护元素的顺序**（默认保持插入顺序排序， 如果初始化时将accessOrder设置为true将使用最近最少顺序，即最近使用的元素插在链表尾部）。元素必须实现hashCode(）方法。内部是由链表实现。</br>
-```TreeSet```：线程不安全，可以对Set集合中的元素进行排序,底层采用了红黑树。它的排序是如何进行的呢？通过compareTo或者compare方法中的来保证元素的唯一性。元素是以二叉树的形式存放的。意味着TreeSet中的元素要实现Comparable接口。或者有一个自定义的比较器。
+`HashSet`：线程不安全，内部是基于散列函数实现,存取速度快。它是如何保证元素唯一性的呢？依赖的是元素的hashCode方法和euqals方法。.<br />
+---`LinkedHashSet`:具有HashSet的查询速度，且内部采用双向链表 **维护元素的顺序**（默认保持插入顺序排序， 如果初始化时将accessOrder设置为true将使用最近最少顺序，即最近使用的元素插在链表尾部）。元素必须实现hashCode(）方法。内部是由链表实现。</br>
+`TreeSet`：线程不安全，可以对Set集合中的元素进行排序,底层采用了红黑树。它的排序是如何进行的呢？通过compareTo或者compare方法中的来保证元素的唯一性。元素是以二叉树的形式存放的。意味着TreeSet中的元素要实现Comparable接口。或者有一个自定义的比较器。
 
 Map　是一个双列集合<br />
-|--```Hashtable```:线程安全，速度快。底层是**哈希表数据**结构。是同步的。不允许null作为键，null作为值。<br />
-----```Properties```:用于配置文件的定义和操作，使用频率非常高，同时键和值都是字符串。是集合中可以和IO技术相结合的对象。(到了IO在学习它的特有和io相关的功能。)<br />
-|--```HashMap```:线程不安全，速度慢。底层也是哈希表数据结构。是不同步的。
+|-- `Hashtable` :线程安全，速度快。底层是 **哈希表数据** 结构。是同步的。不允许null作为键，null作为值。<br />
+----`Properties`:用于配置文件的定义和操作，使用频率非常高，同时键和值都是字符串。是集合中可以和IO技术相结合的对象。(到了IO在学习它的特有和io相关的功能。)<br />
+|--`HashMap`:线程不安全，速度慢。底层也是哈希表数据结构。是不同步的。
 允许null作为键，null作为值。替代了Hashtable.<br />
-----```LinkedHashMap```: 可以保证HashMap集合有序。存入的顺序和取出的顺序一致。<br />
-|--```TreeMap```：可以用来对Map集合中的键进行排序.底层是采用红黑树．<br />
+----`LinkedHashMap`: 可以保证HashMap集合有序。存入的顺序和取出的顺序一致。<br />
+|--`TreeMap`：可以用来对Map集合中的键进行排序.底层是采用红黑树．<br />
 Collection 和 Collections的区别<br />
 Collection是集合类的上级接口，子接口主要有Set 和List、Map。 <br />
-Collections是针对集合类的一个帮助类，提供了操作集合的工具方法：一系列静态方法实现对各种集合的搜索、排序、线程安全化等操作。 
+Collections是针对集合类的一个帮助类，提供了操作集合的工具方法：一系列静态方法实现对各种集合的搜索、排序、线程安全化等操作。
 
 ## 接口：Collection
 Collection是最基本的集合接口，**一个Collection代表一组Object，即Collection的元素（Elements）**。一些Collection允许相同的元素而另一些不行。一些能排序而另一些不行。Java SDK不提供直接继承自Collection的类，Java SDK提供的类都是继承自Collection的“子接口”如List和Set。</br>
@@ -42,7 +42,7 @@ Collection是最基本的集合接口，**一个Collection代表一组Object，�
 	}
 ```
 
-不需要维护遍历集合的“指针”，所有的内部状态都由```Iterator```来维护，而这个Iterator由集合类通过工厂方法生成。每一种集合类返回的Iterator具体类型可能不同，但它们都实现了Iterator接口，因此，我们不需要关心到底是哪种Iterator，它只需要获得这个Iterator接口即可，这就是接口的好处，面向对象的威力。</br>
+不需要维护遍历集合的“指针”，所有的内部状态都由`Iterator`来维护，而这个Iterator由集合类通过工厂方法生成。每一种集合类返回的Iterator具体类型可能不同，但它们都实现了Iterator接口，因此，我们不需要关心到底是哪种Iterator，它只需要获得这个Iterator接口即可，这就是接口的好处，面向对象的威力。</br>
 要确保遍历过程顺利完成，必须保证遍历过程中不更改集合的内容（Iterator的remove()方法除外），所以，确保遍历可靠的原则是：只在一个线程中使用这个集合，或者在多线程中对遍历代码进行同步。由Collection接口派生的两个接口是List和Set。
 
 ## Collection包结构，与Collections的区别
@@ -50,16 +50,16 @@ Collection是集类，包含List有序列表，Set无序集合以及Map双列集
 Collections是针对集合类的一个**帮助类**，提供了操作集合的工具方法：一系列静态方法实现对各种集合的搜索、排序、线程安全化等操作
 
 ## List、Map、Set 三个接口存储元素时各有什么特点
-1）**```List```**是有序的Collection，使用此接口**能够精确的控制每个元素插入的位置**。用户能够使用索引（元素在List中的位置，类似于数组下标）来访问List中的元素，这类似于Java的数组。和下面要提到的Set不同，List**允许有相同**的元素。
+1）**`List`**是有序的Collection，使用此接口**能够精确的控制每个元素插入的位置**。用户能够使用索引（元素在List中的位置，类似于数组下标）来访问List中的元素，这类似于Java的数组。和下面要提到的Set不同，List**允许有相同**的元素。
 除了具有Collection接口必备的iterator()方法外，List还提供一个listIterator()方法，返回一个ListIterator接口，和标准的Iterator接口相比，ListIterator多了一些add()之类的方法，允许添加，删除，设定元素，还能向前或向后遍历。实现List接口的常用类有LinkedList，ArrayList，Vector和Stack。</br>
-2）**```Set```** 是一种不包含重复的元素的 Collection，即任意的两个元素 e1 和 e2 都有e1.equals(e2)=false，**Set 最多有一个 null 元素**。</br>
-3）**```Map```** 接口 ：请注意，Map 没有继承 Collection 接口，Map 提供 key 到 value 的映射．使用底层散列函数
+2）**`Set`** 是一种不包含重复的元素的 Collection，即任意的两个元素 e1 和 e2 都有e1.equals(e2)=false，**Set 最多有一个 null 元素**。</br>
+3）**`Map`** 接口 ：请注意，Map 没有继承 Collection 接口，Map 提供 key 到 value 的映射．使用底层散列函数
 
 ## Map、Set、List、Queue、Stack的特点与用法
-Set集合类似于一个罐子，"丢进"Set集合里的多个对象之间没有明显的顺序。 
-List集合代表元素有序、可重复的集合，集合中每个元素都有其对应的顺序索引。 
+Set集合类似于一个罐子，"丢进"Set集合里的多个对象之间没有明显的顺序。
+List集合代表元素有序、可重复的集合，集合中每个元素都有其对应的顺序索引。
 Stack是Vector提供的一个子类，用于模拟"栈"这种数据结构(LIFO后进先出)
-Queue用于模拟"队列"这种数据结构(先进先出 FIFO)。 
+Queue用于模拟"队列"这种数据结构(先进先出 FIFO)。
 Map用于保存具有**"映射关系"**的数据，因此Map集合里保存着两组值
 
 ## Array和ArrayList有何区别？什么时候更适合用Array
@@ -70,7 +70,7 @@ Array是**指定大小的**，而ArrayList大小是固定的。
 （2）对于遍历**基本数据类型**，尽管Collections使用自动装箱来减轻编码任务，在指定大小的基本类型的列表上工作也会变得很慢。
 （3）如果你要使用**多维数组**，使用[][]比List更容易。
 
-## ArrayList 和 LinkedList 
+## ArrayList 和 LinkedList
 ArrayList 和 LinkedList 都实现了 List 接口，他们有以下的不同点：
 ArrayList 是基于索引的数据接口，它的底层是数组。它可以以O(1)时间复杂度对元素进行**随机访问**。与此对应，LinkedList 是以元素列表的形式存储它的数据，每一个元素都和它的前一个和后一个元素链接在一起，在这种情况下，查找某个元素的时间复杂度是O(n)。
 相对于 ArrayList，LinkedList的**插入，添加，删除操作速度更快**，因为当元素被添加到集合任意位置的时候，不需要像数组那样重新计算大小或者是更新索引。
@@ -163,7 +163,7 @@ HashMap和Hashtable都实现了Map接口，因此很多特性非常相似。但�
 http://www.importnew.com/7010.html
 
 ## HashMap 和 Hashtable 有什么区别
-HashMap 和 Hashtable 都实现了 Map 接口，因此很多特性非常相似。但是，他们有以下不同点： 
+HashMap 和 Hashtable 都实现了 Map 接口，因此很多特性非常相似。但是，他们有以下不同点：
 HashMap 允许键和值是 null，而 Hashtable 不允许键或者值是 null。
 Hashtable 是同步的，而 HashMap 不是。因此， HashMap 更适合于单线程环境，而 Hashtable 适合于多线程环境。
 HashMap 提供了可供应用迭代的键的集合，因此，HashMap 是快速失败的。另一方面，Hashtable 提供了对键的列举(Enumeration)。
@@ -214,7 +214,7 @@ Iterator接口提供遍历任何Collection的接口。我们可以从一个Colle
 下面列出了他们的区别：
 Iterator 可用来遍历 Set 和 List 集合，但是 ListIterator 只能用来遍历 List 。
 Iterator 对集合只能是前向遍历，ListIterator 既可以前向也可以后向。
-ListIterator 实现了 Iterator 接口，并包含其他的功能，比如：增加元素，替换元素，获取前一个和后一个元素的索引，等等。 
+ListIterator 实现了 Iterator 接口，并包含其他的功能，比如：增加元素，替换元素，获取前一个和后一个元素的索引，等等。
 
 ## 为何Iterator接口没有具体的实现
 Iterator接口定义了遍历集合的方法，但它的实现则是集合实现类的责任。每个能够返回用于遍历的Iterator的集合类都有它自己的Iterator实现内部类。
@@ -273,7 +273,7 @@ Collection接口指定一组对象，对象即为它的元素。**如何维护�
 ## ArrayList 是否支持序列化
 支持，
 实现了　serlializable接口，并实现了以下两个方法：
-```
+``` java
 　　 　private void writeObject(java.io.ObjectOutputStream s)
 	throws java.io.IOException{
 	// Write out element count, and any hidden stuff
@@ -321,7 +321,7 @@ Collection接口指定一组对象，对象即为它的元素。**如何维护�
 ```
 
 ArrayList
-```
+``` java
  public Object clone() {
 	try {
 	    ArrayList<?> v = (ArrayList<?>) super.clone();
@@ -336,7 +336,3 @@ ArrayList
 ```
 ## 为什么集合类没有实现 Cloneable 和 Serializable 接口
 ## Comparable 和Comparator 接口
-
-
-
-
