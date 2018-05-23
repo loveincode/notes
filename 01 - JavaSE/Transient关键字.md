@@ -9,7 +9,7 @@
 总之，java 的transient关键字为我们提供了便利，你只需要实现Serilizable接口，将不需要序列化的属性前添加关键字transient，序列化对象的时候，这个属性就不会序列化到指定的目的地中。
 
 **示例code如下:**
-
+``` java
 	import java.io.FileInputStream;
 	import java.io.FileNotFoundException;
 	import java.io.FileOutputStream;
@@ -17,23 +17,23 @@
 	import java.io.ObjectInputStream;
 	import java.io.ObjectOutputStream;
 	import java.io.Serializable;
-	
+
 	/**
 	 * @description 使用transient关键字不序列化某个变量
 	 *        注意读取的时候，读取数据的顺序一定要和存放数据的顺序保持一致
 	 */
 	public class TransientTest {
-	    
+
 	    public static void main(String[] args) {
-	        
+
 	        User user = new User();
 	        user.setUsername("Alexia");
 	        user.setPasswd("123456");
-	        
+
 	        System.out.println("read before Serializable: ");
 	        System.out.println("username: " + user.getUsername());
 	        System.err.println("password: " + user.getPasswd());
-	        
+
 	        try {
 	            ObjectOutputStream os = new ObjectOutputStream(
 	                    new FileOutputStream("C:/user.txt"));
@@ -50,11 +50,11 @@
 	                    "C:/user.txt"));
 	            user = (User) is.readObject(); // 从流中读取User的数据
 	            is.close();
-	            
+
 	            System.out.println("\nread after Serializable: ");
 	            System.out.println("username: " + user.getUsername());
 	            System.err.println("password: " + user.getPasswd());
-	            
+
 	        } catch (FileNotFoundException e) {
 	            e.printStackTrace();
 	        } catch (IOException e) {
@@ -64,40 +64,42 @@
 	        }
 	    }
 	}
-	
+
 	class User implements Serializable {
 	    private static final long serialVersionUID = 8294180014912103005L;  
-	    
+
 	    private String username;
 	    private transient String passwd;
-	    
+
 	    public String getUsername() {
 	        return username;
 	    }
-	    
+
 	    public void setUsername(String username) {
 	        this.username = username;
 	    }
-	    
+
 	    public String getPasswd() {
 	        return passwd;
 	    }
-	    
+
 	    public void setPasswd(String passwd) {
 	        this.passwd = passwd;
 	    }
-	
+
 	}
+```
 
 输出为：
-
-	read before Serializable: 
+```
+	read before Serializable:
 	username: Alexia
 	password: 123456
-	
-	read after Serializable: 
+
+	read after Serializable:
 	username: Alexia
 	password: null
+```
 
 密码字段为null，说明反序列化时根本没有从文件中获取到信息。
 
@@ -110,7 +112,7 @@
 3）被transient关键字修饰的变量不再能被序列化，一个静态变量不管是否被transient修饰，均不能被序列化。
 
 第三点可能有些人很迷惑，因为发现在User类中的username字段前加上static关键字后，程序运行结果依然不变，即static类型的username也读出来为“Alexia”了，这不与第三点说的矛盾吗？实际上是这样的：第三点确实没错（一个静态变量不管是否被transient修饰，均不能被序列化），反序列化后类中static型变量username的值为当前JVM中对应static变量的值，这个值是JVM中的不是反序列化得出的，不相信？好吧，下面我来证明：
-
+``` java
 	import java.io.FileInputStream;
 	import java.io.FileNotFoundException;
 	import java.io.FileOutputStream;
@@ -118,23 +120,23 @@
 	import java.io.ObjectInputStream;
 	import java.io.ObjectOutputStream;
 	import java.io.Serializable;
-	
+
 	/**
 	 * @description 使用transient关键字不序列化某个变量
 	 *        注意读取的时候，读取数据的顺序一定要和存放数据的顺序保持一致
 	 */
 	public class TransientTest {
-	    
+
 	    public static void main(String[] args) {
-	        
+
 	        User user = new User();
 	        user.setUsername("Alexia");
 	        user.setPasswd("123456");
-	        
+
 	        System.out.println("read before Serializable: ");
 	        System.out.println("username: " + user.getUsername());
 	        System.err.println("password: " + user.getPasswd());
-	        
+
 	        try {
 	            ObjectOutputStream os = new ObjectOutputStream(
 	                    new FileOutputStream("C:/user.txt"));
@@ -149,16 +151,16 @@
 	        try {
 	            // 在反序列化之前改变username的值
 	            User.username = "jmwang";
-	            
+
 	            ObjectInputStream is = new ObjectInputStream(new FileInputStream(
 	                    "C:/user.txt"));
 	            user = (User) is.readObject(); // 从流中读取User的数据
 	            is.close();
-	            
+
 	            System.out.println("\nread after Serializable: ");
 	            System.out.println("username: " + user.getUsername());
 	            System.err.println("password: " + user.getPasswd());
-	            
+
 	        } catch (FileNotFoundException e) {
 	            e.printStackTrace();
 	        } catch (IOException e) {
@@ -168,38 +170,38 @@
 	        }
 	    }
 	}
-	
+
 	class User implements Serializable {
 	    private static final long serialVersionUID = 8294180014912103005L;  
-	    
+
 	    public static String username;
 	    private transient String passwd;
-	    
+
 	    public String getUsername() {
 	        return username;
 	    }
-	    
+
 	    public void setUsername(String username) {
 	        this.username = username;
 	    }
-	    
+
 	    public String getPasswd() {
 	        return passwd;
 	    }
-	    
+
 	    public void setPasswd(String passwd) {
 	        this.passwd = passwd;
 	    }
-	
-	}
 
+	}
+```
 运行结果为：
 
-	read before Serializable: 
+	read before Serializable:
 	username: Alexia
 	password: 123456
-	
-	read after Serializable: 
+
+	read after Serializable:
 	username: jmwang
 	password: null
 
@@ -208,7 +210,7 @@
 #### 3. transient使用细节——被transient关键字修饰的变量真的不能被序列化吗？
 
 思考下面的例子：
-
+``` java
 	import java.io.Externalizable;
 	import java.io.File;
 	import java.io.FileInputStream;
@@ -218,44 +220,44 @@
 	import java.io.ObjectInputStream;
 	import java.io.ObjectOutput;
 	import java.io.ObjectOutputStream;
-	
+
 	/**
 	 * @descripiton Externalizable接口的使用
 	 */
 	public class ExternalizableTest implements Externalizable {
-	
+
 	    private transient String content = "是的，我将会被序列化，不管我是否被transient关键字修饰";
-	
+
 	    @Override
 	    public void writeExternal(ObjectOutput out) throws IOException {
 	        out.writeObject(content);
 	    }
-	
+
 	    @Override
 	    public void readExternal(ObjectInput in) throws IOException,
 	            ClassNotFoundException {
 	        content = (String) in.readObject();
 	    }
-	
+
 	    public static void main(String[] args) throws Exception {
-	        
+
 	        ExternalizableTest et = new ExternalizableTest();
 	        ObjectOutput out = new ObjectOutputStream(new FileOutputStream(
 	                new File("test")));
 	        out.writeObject(et);
-	
+
 	        ObjectInput in = new ObjectInputStream(new FileInputStream(new File(
 	                "test")));
 	        et = (ExternalizableTest) in.readObject();
 	        System.out.println(et.content);
-	
+
 	        out.close();
 	        in.close();
 	    }
 	}
-
+```
 content变量会被序列化吗？好吧，我把答案都输出来了，是的，运行结果就是：
-	
+
 	是的，我将会被序列化，不管我是否被transient关键字修饰
 
 这是为什么呢，不是说类的变量被transient关键字修饰以后将不能序列化了吗？
@@ -313,7 +315,7 @@ c）当你想通过RMI传输对象的时候；
 	os.writeObject(myFoo);
 
 **4、实现序列化（保存到一个文件）的步骤**
-	
+
 	FileOutputStream fs = new FileOutputStream("foo.ser");
 	ObjectOutputStream os = new ObjectOutputStream(fs);
 	os.writeObject(myObject1);
@@ -332,5 +334,3 @@ c）并非所有的对象都可以序列化，至于为什么不可以，有很�
 * 安全方面的原因，比如一个对象拥有private，public等field，对于一个要传输的对象，比如写到文件，或者进行rmi传输 等等，在序列化进行传输的过程中，这个对象的private等域是不受保护的。
 
 * 资源分配方面的原因，比如socket，thread类，如果可以序列化，进行传输或者保存，也无法对他们进行重新的资源分配，而且，也是没有必要这样实现。
-
-

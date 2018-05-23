@@ -5,7 +5,7 @@ Java语言是支持多线程的，为了解决线程并发的问题，在语言�
 
 锁提供了两种主要特性：互斥（mutual exclusion） 和可见性（visibility）。互斥即一次只允许一个线程持有某个特定的锁，因此可使用该特性实现对共享数据的协调访问协议，这样，一次就只有一个线程能够使用该共享数据。可见性要更加复杂一些，它必须确保释放锁之前对共享数据做出的更改对于随后获得该锁的另一个线程是可见的 —— 如果没有同步机制提供的这种可见性保证，线程看到的共享变量可能是修改前的值或不一致的值，这将引发许多严重问题。
 
-**synchronized** 
+**synchronized**
 
 同步块大家都比较熟悉，通过 synchronized 关键字来实现，所有加上synchronized 和 块语句，在多线程访问的时候，同一时刻只能有一个线程能够用。
 
@@ -21,12 +21,12 @@ Volatile 变量具有 synchronized 的可见性特性，但是不具备原子特
 
 下面看一个例子，我们实现一个计数器，每次线程启动的时候，会调用计数器inc方法，对计数器进行加一。
 
-执行环境——jdk版本：jdk1.6.0_31 ，内存 ：3G   cpu：x86 2.4G	
-
+执行环境——jdk版本：jdk1.6.0_31 ，内存 ：3G   cpu：x86 2.4G
+``` java
 	public class Counter{
-	 
+
 	    public static int count = 0;
-	 
+
 	    public static void inc(){
 	        //这里延迟1毫秒，使得结果明显
 	        try {
@@ -35,7 +35,7 @@ Volatile 变量具有 synchronized 的可见性特性，但是不具备原子特
 	        }
 	        count++;
 	    }
-	 
+
 	    public static void main(String[] args) {
 	        //同时启动1000个线程，去进行i++计算，看看实际结果
 	        for (int i = 0;i < 1000; i++) {
@@ -46,23 +46,23 @@ Volatile 变量具有 synchronized 的可见性特性，但是不具备原子特
 	                }
 	            }).start();
 	        }
-	 
+
 	        //这里每次运行的值都有可能不同,可能为1000
 	        System.out.println("运行结果:Counter.count=" +Counter.count);
 	    }
 	}
-
+```
 运行结果:Counter.count=995
 
-	
+
 实际运算结果每次可能都不一样，本机的结果为：运行结果:Counter.count=995，可以看出，在多线程的环境下，Counter.count并没有期望结果是1000。
 
 很多人以为，这个是多线程并发问题，只需要在变量count之前加上volatile就可以避免这个问题，那我们在修改代码看看，看看结果是不是符合我们的期望。
-
+``` java
 	public class Counter{
-	 
+
 	    public volatile static int count = 0;
-	 
+
 	    public static void inc(){
 	        //这里延迟1毫秒，使得结果明显
 	        try {
@@ -71,7 +71,7 @@ Volatile 变量具有 synchronized 的可见性特性，但是不具备原子特
 	        }
 	        count++;
 	    }
-	 
+
 	    public static void main(String[] args) {
 	        //同时启动1000个线程，去进行i++计算，看看实际结果
 	        for (int i = 0;i < 1000;i++) {
@@ -86,7 +86,7 @@ Volatile 变量具有 synchronized 的可见性特性，但是不具备原子特
 	        System.out.println("运行结果:Counter.count=" +Counter.count);
 	    }
 	}
-
+```
 运行结果:Counter.count=992
 
 运行结果还是没有我们期望的1000，下面我们分析一下原因
@@ -97,7 +97,7 @@ Volatile 变量具有 synchronized 的可见性特性，但是不具备原子特
 
 read and load 从主存复制变量到当前工作内存
 
-use and assign  执行代码，改变共享变量值 
+use and assign  执行代码，改变共享变量值
 
 store and write 用工作内存数据刷新主存相关内容
 
@@ -138,5 +138,3 @@ volatile 操作不会像锁一样造成阻塞，因此，在能够安全使用 v
 **正确使用 volatile 的模式**
 
 很多并发性专家事实上往往引导用户远离 volatile 变量，因为使用它们要比使用锁更加容易出错。然而，如果谨慎地遵循一些良好定义的模式，就能够在很多场合内安全地使用 volatile 变量。要始终牢记使用 volatile 的限制 —— 只有在状态真正独立于程序内其他内容时才能使用 volatile —— 这条规则能够避免将这些模式扩展到不安全的用例。
-
-
