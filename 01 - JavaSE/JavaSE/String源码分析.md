@@ -3,7 +3,7 @@
 
 从一段代码说起：
 
-```
+``` java
 public void stringTest(){
     String a = "a"+"b"+1;
     String b = "ab1";
@@ -13,7 +13,7 @@ public void stringTest(){
 
 大家猜一猜结果如何？如果你的结论是true。好吧，再来一段代码：
 
-```
+``` java
 public void stringTest(){
     String a = new String("ab1");
     String b = "ab1";
@@ -25,7 +25,7 @@ public void stringTest(){
 
 让我们看看经过编译器编译后的代码如何
 
-```
+``` java
 //第一段代码
 public void stringTest() {
     String a = "ab1";
@@ -33,7 +33,7 @@ public void stringTest() {
     System.out.println(a == b);
 }
 ```
-```
+``` java
 //第二段代码
 public void stringTest() {
     String a1 = new String("ab1");
@@ -56,7 +56,7 @@ Comparable接口有compareTo(String s)方法，CharSequence接口有length()，c
 
 String类中包含一个不可变的char数组用来存放字符串，一个int型的变量hash用来存放计算后的哈希值。
 
-```
+``` java
 /** The value is used for character storage. */
 private final char value[];
 
@@ -69,7 +69,7 @@ private static final long serialVersionUID = -6849794470754667710L;
 
 三 String构造函数
 
-```
+``` java
 //不含参数的构造函数，一般没什么用，因为value是不可变量
 public String() {
     this.value = new char[0];
@@ -104,7 +104,7 @@ public String(byte bytes[], String charsetName)
 
 三 String常用方法
 
-```
+``` java
 boolean equals(Object anObject)
 
 public boolean equals(Object anObject) {
@@ -147,7 +147,7 @@ equals方法经常用得到，它用来判断两个对象从实际意义上是�
 
 由此可以看出，如果对两个超长的字符串进行比较还是非常费时间的。
 
-```
+``` java
 int compareTo(String anotherString)
 
 public int compareTo(String anotherString) {
@@ -177,7 +177,7 @@ public int compareTo(String anotherString) {
 
 这个方法写的很巧妙，先从0开始判断字符大小。如果两个对象能比较字符的地方比较完了还相等，就直接返回自身长度减被比较对象长度，如果两个字符串长度相等，则返回的是0，巧妙地判断了三种情况。
 
-```
+``` java
 int hashCode()
 
 public int hashCode() {
@@ -200,7 +200,7 @@ public int hashCode() {
 
 String类重写了hashCode方法，Object中的hashCode方法是一个Native调用。String类的hash采用多项式计算得来，我们完全可以通过不相同的字符串得出同样的hash，所以两个String对象的hashCode相同，并不代表两个String是一样的。
 
-```
+``` java
 boolean startsWith(String prefix,int toffset)
 
 public boolean startsWith(String prefix, int toffset) {
@@ -234,7 +234,7 @@ public boolean endsWith(String suffix) {
 
 起始比较和末尾比较都是比较经常用得到的方法，例如在判断一个字符串是不是http协议的，或者初步判断一个文件是不是mp3文件，都可以采用这个方法进行比较。
 
-```
+``` java
 String concat(String str)
 
 public String concat(String str) {
@@ -252,7 +252,7 @@ public String concat(String str) {
 
 concat方法也是经常用的方法之一，它先判断被添加字符串是否为空来决定要不要创建新的对象。
 
-```
+``` java
 String replace(char oldChar,char newChar)
 
 public String replace(char oldChar, char newChar) {
@@ -288,7 +288,7 @@ public String replace(char oldChar, char newChar) {
 
 这个方法也有讨巧的地方，例如最开始先找出旧值出现的位置，这样节省了一部分对比的时间。replace(String oldStr,String newStr)方法通过正则表达式来判断。
 
-```
+``` java
 String trim()
 
 public String trim() {
@@ -311,7 +311,7 @@ public String trim() {
 
 trim方法用起来也6的飞起
 
-```
+``` java
 String intern()
 
 public native String intern();
@@ -321,7 +321,7 @@ intern方法是Native调用，它的作用是在方法区中的常量池里通�
 
 将引言中第二段代码
 
-```
+``` java
 //String a = new String("ab1");
 //改为
 String a = new String("ab1").intern();
@@ -329,7 +329,7 @@ String a = new String("ab1").intern();
 
 则结果为为真，原因在于a所指向的地址来自于常量池，而b所指向的字符串常量默认会调用这个方法，所以a和b都指向了同一个地址空间。
 
-```
+``` java
 int hash32()
 
 private transient int hash32 = 0;
@@ -351,7 +351,7 @@ int hash32() {
 
 在JDK1.7中，Hash相关集合类在String类作key的情况下，不再使用hashCode方式离散数据，而是采用hash32方法。这个方法默认使用系统当前时间，String类地址，System类地址等作为因子计算得到hash种子，通过hash种子在经过hash得到32位的int型数值。
 
-```
+``` java
 public int length() {
     return value.length;
 }
@@ -383,5 +383,3 @@ String对象的三种比较方式：
 equals字符串值比较：比较两个引用所指对象字面值是否相等。
 
 hashCode字符串数值化比较：将字符串数值化。两个引用的hashCode相同，不保证内存一定相同，不保证字面值一定相同。
-
-
