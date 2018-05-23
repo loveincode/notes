@@ -11,14 +11,14 @@ Comparable 是排序接口。
 Comparable 定义
 
 Comparable 接口仅仅只包括一个函数，它的定义如下：
-
+``` java
 	package java.lang;
 	import java.util.*;
 
 	public interface Comparable<T> {
 	    public int compareTo(T o);
 	}
-
+```
 说明：
 假设我们通过 x.compareTo(y) 来“比较x和y的大小”。若返回“负数”，意味着“x比y小”；返回“零”，意味着“x等于y”；返回“正数”，意味着“x大于y”。
 
@@ -33,7 +33,7 @@ Comparator 是比较器接口。
 Comparator 定义
 
 Comparator 接口仅仅只包括两个个函数，它的定义如下：
-
+``` Java
 	package java.util;
 
 	public interface Comparator<T> {
@@ -42,8 +42,7 @@ Comparator 接口仅仅只包括两个个函数，它的定义如下：
 
 	    boolean equals(Object obj);
 	}
-
-
+```
 说明：
 (01) 若一个类要实现Comparator接口：它一定要实现compareTo(T o1, T o2) 函数，但可以不实现 equals(Object obj) 函数。
 
@@ -58,6 +57,7 @@ Comparable是排序接口；若一个类实现了Comparable接口，就意味着
 我们不难发现：Comparable相当于“内部比较器”，而Comparator相当于“外部比较器”。
 
 我们通过一个测试程序来对这两个接口进行说明。源码如下：
+``` java
 	   import java.util.*;
 	   import java.lang.Comparable;
 
@@ -193,13 +193,13 @@ Comparable是排序接口；若一个类实现了Comparable接口，就意味着
 	     }
 
 	 }
-
+```
 
 下面对这个程序进行说明。
 
 
 a) Person类定义。如下：
-
+``` java
 	private static class Person implements Comparable<Person>{
 	    int age;
 	    String name;
@@ -216,7 +216,7 @@ a) Person类定义。如下：
 	        //return this.name - person.name;
 	    }   
 	}
-
+```
 说明：
 (01) Person类代表一个人，Persong类中有两个属性：age(年纪) 和 name“人名”。
 (02) Person类实现了Comparable接口，因此它能被排序。
@@ -253,7 +253,7 @@ e) 对比Comparable和Comparator
 e.1) AscAgeComparator比较器
 
 它是将Person按照age进行升序排序。代码如下：
-
+``` java
 	/**
 	 * @desc AscAgeComparator比较器
 	 *       它是“Person的age的升序比较器”
@@ -265,11 +265,11 @@ e.1) AscAgeComparator比较器
 	        return p1.getAge() - p2.getAge();
 	    }
 	}
-
+```
 e.2) DescAgeComparator比较器
 
 它是将Person按照age进行降序排序。代码如下：
-
+``` java
 	/**
 	 * @desc DescAgeComparator比较器
 	 *       它是“Person的age的升序比较器”
@@ -281,7 +281,7 @@ e.2) DescAgeComparator比较器
 	        return p2.getAge() - p1.getAge();
 	    }
 	}
-
+```
 f) 运行结果
 运行程序，输出如下：
 
@@ -299,6 +299,7 @@ Comparable接口：如果一个对象需要实现排序那么它将实现该接�
 
 例如：
 
+```java
 	public class Country implements Comparable{
        @Override
 	    public int compareTo(Object arg0) {
@@ -306,21 +307,23 @@ Comparable接口：如果一个对象需要实现排序那么它将实现该接�
 	        return (this.countryId < country.countryId ) ? -1: (this.countryId > country.countryId ) ? 1:0 ;
 		}
     }
-
+```
 若任何实现了comparable接口的类集合对象将可以使用Collection.sort()或者Arrays.sort()方法根据compareTo方法对其进行排序。
 
 在java中，实现了Comparable接口的对象可以在SortedMap，像TreeMap或者SortedSet或者TreeSet 作为关键字而不用实现任何接口。
 
 Comparator接口：实现可排序的类的对象不需要实现该接口，其他一个类可以实现该接口，例如下面的CountrySortByIdComparator 实现了Comparator接口来完成对集合对象Country根据id进行排序：
-
+```
 	public class CountrySortByIdComparator implements Comparator<Country>{
     @Override
     public int compare(Country country1, Country country2) {
         return (country1.getCountryId() < country2.getCountryId() ) ? -1: (country1.getCountryId() > country2.getCountryId() ) ? 1:0 ;
     }
+```
 
 使用Comparator接口，我们可以根据不同的属性来写不同的排序规则，你可以使用匿名的comparator来对代码进行对比：
 
+``` java
     Country indiaCountry=new Country(1, 'India');
     Country chinaCountry=new Country(4, 'China');
     Country nepalCountry=new Country(3, 'Nepal');
@@ -330,13 +333,14 @@ Comparator接口：实现可排序的类的对象不需要实现该接口，其�
     listOfCountries.add(chinaCountry);
     listOfCountries.add(nepalCountry);
     listOfCountries.add(bhutanCountry);
-	//Sort by countryName
+	 //Sort by countryName
     Collections.sort(listOfCountries,new Comparator<Country>() {
        @Override
        public int compare(Country o1, Country o2) {
            return o1.getCountryName().compareTo(o2.getCountryName());
        }
     });
+```
 
 ### Comparator vs Comparable
 
@@ -345,7 +349,7 @@ Comparator接口：实现可排序的类的对象不需要实现该接口，其�
 java代码：
 
 对于Comparable我们创建了包含id和name属性的country类，它实现了Comparable接口并实现了CompareTo方法并根据id对该集合进行排序。
-
+``` java
 	package org.arpit.javapostsforlearning;
 	//If this.cuntryId < country.countryId:then compare method will return -1
 	//If this.countryId > country.countryId:then compare method will return 1
@@ -376,9 +380,10 @@ java代码：
 	        this.countryName = countryName;
 	    }
 	}
-
+```
 
 2.ComparatorMain.java
+``` java
 
 	package org.arpit.javapostsforlearning;
 	import java.util.ArrayList;
@@ -414,7 +419,7 @@ java代码：
 				}
 		}
 	}
-
+```
 Output：
 
 	Before Sort  :
@@ -431,6 +436,7 @@ Output：
 Comparator：我们创建了有id和name属性的Country类，并且，我们将创建另一个实现了Comparator接口和compare方法来根据country对象的id进行排序的CountrySortByIdComparator类，我们也将回看见如何使用匿名的compator来进行排序。
 
 1.Country.java
+``` java
 
 	package org.arpit.javapostsforlearning;
 
@@ -461,8 +467,9 @@ Comparator：我们创建了有id和name属性的Country类，并且，我们将
 	    }
 
 	}
-
+```
 2.CountrySortbyIdComparator.java
+``` java
 
 	package org.arpit.javapostsforlearning;
 
@@ -479,8 +486,9 @@ Comparator：我们创建了有id和name属性的Country类，并且，我们将
 	    }
 
 	}
-
+```
 3.ComparatorMain.java
+``` java
 
 	package org.arpit.javapostsforlearning;
 
@@ -536,7 +544,7 @@ Comparator：我们创建了有id和name属性的Country类，并且，我们将
 		}
 
 	}
-
+```
 Output:
 
 	Before Sort by id :

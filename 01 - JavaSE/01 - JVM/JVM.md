@@ -49,7 +49,7 @@ Java语言在JDK1.5之后引入的泛型实际上只在程序源码中存在，�
 
 下面是一段简单的Java泛型代码：
 
-```
+``` java
 Map<Integer,String> map = new HashMap<Integer,String>();  
 map.put(1,"No.1");  
 map.put(2,"No.2");  
@@ -59,7 +59,7 @@ System.out.println(map.get(2));
 
 将这段Java代码编译成Class文件，然后再用字节码反编译工具进行反编译后，将会发现泛型都变回了原生类型，如下面的代码所示：
 
-```
+``` java
 Map map = new HashMap();  
 map.put(1,"No.1");  
 map.put(2,"No.2");  
@@ -69,7 +69,7 @@ System.out.println((String)map.get(2));
 
 为了更详细地说明类型擦除，再看如下代码：
 
-```
+``` java
 import java.util.List;  
 public class FanxingTest{  
     public void method(List<String> list){  
@@ -84,14 +84,13 @@ public class FanxingTest{
 当我用Javac编译器编译这段代码时，报出了如下错误：
 
 
-```
+``` java
 FanxingTest.java:3: 名称冲突：method(java.util.List<java.lang.String>) 和 method
 
 (java.util.List<java.lang.Integer>) 具有相同疑符
 
 public void method(List<String> list){
 
-^
 
 FanxingTest.java:6: 名称冲突：method(java.util.List<java.lang.Integer>) 和 metho
 
@@ -99,7 +98,6 @@ d(java.util.List<java.lang.String>) 具有相同疑符
 
 public void method(List<Integer> list){
 
-^
 ```
 
 2 错误
@@ -109,7 +107,7 @@ public void method(List<Integer> list){
 
 把以上代码修改如下：
 
-```
+``` java
 import java.util.List;  
 public class FanxingTest{  
     public int method(List<String> list){  
@@ -135,7 +133,7 @@ public class FanxingTest{
 
 对内存分配情况分析最常见的示例便是对象实例化:
 
-```
+``` java
 Object obj = new Object();
 ```
 
@@ -180,7 +178,7 @@ jstack（linux下特有）可以观察到jvm中当前所有线程的运行情况
 jconsole一个图形化界面，可以观察到java进程的gc，class，内存等信息
 jstat最后要重点介绍下这个命令。这是jdk命令中比较重要，也是相当实用的一个命令，可以观察到classloader，compiler，gc相关信息
 具体参数如下：
--class：统计class loader行为信息
+-class：统计classloader行为信息
 -compile：统计编译行为信息
 -gc：统计jdk gc时heap信息
 -gccapacity：统计不同的generations（不知道怎么翻译好，包括新生区，老年区，permanent区）相应的heap容量情况
