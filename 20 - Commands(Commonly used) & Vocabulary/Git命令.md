@@ -29,6 +29,14 @@ ssh-keygen -t rsa -C "huonefl@163.com"
   查看已缓存的与未缓存的所有改动：git diff HEAD
   显示摘要而非整个 diff：git diff --stat
 
+误删回退
+
+git status
+
+git reset HEAD 文件PATH
+
+git checkout 文件PATH
+
 ## git commit
 
   git commit -m
