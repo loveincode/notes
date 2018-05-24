@@ -1,6 +1,8 @@
 ## 1. Java语言的优点
 面向对象,平台无关,内存管理,安全性,多线程,Java是解释型的
 
+能被java.exe成功运行的java class文件必须有main()方法
+
 ## 2.Java 和 C++的区别
 1. **多重继承**(java接口多重,类不支持,C++支持)
 2. **自动内存管理**
@@ -9,10 +11,159 @@
 5. **引用与指针**。在Java中不可能直接操作对象本身，所有的对象都由一个引用指向，必须通过这个引用才能访问对象本身，包括获取成员变量的值，改变对象的成员变量，调用对象的方法等。而在C++中存在引用，对象和指针三个东西，这三个东西都可以访问对象。其实，Java中的引用和C++中的指针在概念上是相似的，他们都是存放的对象在内存中的地址值，只是在Java中，引用丧失了部分灵活性，比如Java中的引用不能像C++中的指针那样进行**加减运算**。
 
 ## 3.值传递和引用传递
-变量被值传递，意味着传递了**变量的一个副本**。因此，就算是改变了变量副本，也不会影响源对象的值。
-对象被引用传递，意味着传递的并不是实际的对象，而是**对象的引用**。因此，外部对引用对象所做的改变会反映到所有的对象上。
+变量被值传递，意味着传递了 **变量的一个副本**。因此，就算是改变了变量副本，也不会影响源对象的值。
+对象被引用传递，意味着传递的并不是实际的对象，而是 **对象的引用**。因此，外部对引用对象所做的改变会反映到所有的对象上。
 java本质上还是值传递，如方法调用的时候传入一个对象引用进去，在方法栈中会构建一个副本和该引用变量值相同指向同一个地址。如果改变引用的值不会对改变传入的引用的值。
 
+``` java
+class Value{
+    public int i=15;
+}
+public class Test{
+    public static void main(String argv[]){
+        Test t=new Test( );
+        t.first( );
+    }
+
+public void first( ){
+    int i=5;
+    Value v=new Value( );
+    v.i=25;
+    second(v,i);
+    System.out.println(v.i);
+}
+
+public void second(Value v,int i){
+    i = 0;
+    v.i = 20;
+    Value val = new Value( );
+    v = val;
+    System.out.println(v.i+" "+i);
+   }
+}
+```
+``` output
+15 0 20
+考察的是值传递与引用传递，
+Java中原始数据类型都是值传递，传递的是值得副本，形参的改变不会影响实际参数的值，
+引用传递传递的是引用类型数据，包括String,数组，列表, map,类对象等类型，形参与实参指向的是同一内存地址，因此形参改变会影响实参的值。
+
+把second（）换一下
+publicvoidsecond(Value tmp,inti){
+    i = 0;
+    tmp.i = 20;
+    Value val = newValue( );
+    tmp = val;
+    System.out.println(tmp.i+" "+i);
+   }
+这个tmp其实相当于是一个指向原来first中的V这个对象的指针，也就是对v对象的引用而已。但是引用是会改变所指的地址的值的。
+
+所以在second中当tmp.i= 20的时候，就把原来first中的v的i值改为20了。接下来，又把tmp指向了新建的一个对象，所以在second中的tmp
+现在指的是新的对象val，i值为15.
+当执行完毕second后，在first中在此输出v.i的时候，应为前面second中已经把该位置的i的值改为了20，所以输出的是20.
+至于疑惑v指向了val，其实只是名字的问题，在second中的v实践也是另外的一个变量，名字相同了而已，这个估计也是纠结的重点。
+```
+
+``` java
+public class foo {
+    public static void main(String sgf[]) {
+        StringBuffer a=new StringBuffer(“A”);
+        StringBuffer b=new StringBuffer(“B”);
+        operate(a,b);
+        System.out.println(a+”.”+b);
+    }
+    static void operate(StringBuffer x,StringBuffer y) {
+        x.append(y);
+        y=x;
+    }
+}
+```
+``` output
+  AB.B
+  引用a指向对象A
+  引用b指向对象B
+  引用x指向对象A
+  引用y指向对象B
+  在operate方法中，引用x指向的对象A被连接了B，对象A也就被改变为AB
+  然后又把引用y指向了x所指向的对象地址，也就是此时引用a,x,y指向同一个对象AB
+  而引用b没有发生任何变化，依旧指向对象B。
+```
+
+``` java
+public class ClassTest{
+     String str = new String("hello");
+     char[] ch = {'a','b','c'};
+     public void fun(String str, char ch[]){
+         str="world";
+         ch[0]='d';
+     }
+     public static void main(String[] args) {
+         ClassTest test1 = new ClassTest();
+         test1.fun(test1.str,test1.ch);
+         System.out.print(test1.str + " and ");
+         System.out.print(test1.ch);
+     }
+ }
+```
+``` output
+    hello and dbc
+    java中都是按栈中的值传递，基本数据类型栈中的值就是实际存储的值，引用类型栈中的值就是指向堆中的地址
+    1）String和char[ ]都是引用类型，所以在方法中传递的都是指向真实数据的地址
+    2）假设String str指向的hello的地址为d1，str传递到fun函数中的也是地址d1，成员变量str和fun的形参str不是同一个变量，把fun型中的str赋值为world只是修改了该str指向的地址，该地址由d1更改成了world的地址，并没有改变成员变量str指向的地址及堆中的数据，所以str还是hello。
+    3）假设char[ ] ch指向的abc的地址是d2，传递到fun函数中的地址也是d2，同上成员变量ch和fun的形参ch不是同一个变量，
+      (1)如果把fun中的ch[0]='d'更改为ch = new ch[3]；ch[0]='d',那么成员变量ch的值是没有变化的，还是abc,原理同上String，只是改变了引用ch指向的堆数据的地址，并没有改变成员变量ch指向的地址以及堆中的数据。
+     （2）改变了堆中的数据，所以最终结果编程dbc，此ch只是形参而不是成成员变量ch，如果对ch变化对成员变量ch没有影响，但是ch[i]指向了堆数据的地址，直接修改堆数据，所以成员变量变了。
+
+```
+
+```java
+public class Test2
+{
+    public void add(Byte b)
+    {
+        b = b++;
+    }
+    public void test()
+    {
+        Byte a = 127;
+        Byte b = 127;
+        add(++a);
+        System.out.print(a + " ");
+        add(b);
+        System.out.print(b + "");
+    }
+}
+
+```
+``` output
+调用test方法
+-128 127
+public void add(Byte b){ b=b++; }
+这里涉及java的自动装包/自动拆包(AutoBoxing/UnBoxing) Byte的首字母为大写，是类，看似是引用传递，但是在add函数内实现++操作，会自动拆包成byte值传递类型，所以add函数还是不能实现自增功能。
+也就是说add函数只是个摆设，没有任何作用。
+Byte类型值大小为-128~127之间。
+add(++a);这里++a会越界，a的值变为-128 add(b); 前面说了，add不起任何作用，b还是127
+```
+
+```java
+public class Tester{
+    public static void main(String[] args){
+         Integer var1=new Integer(1);
+         Integer var2=var1;
+         doSomething(var2);
+         System.out.print(var1.intValue());
+         System.out.print(var1==var2);
+    }
+    public static void doSomething(Integer integer){
+        integer=new Integer(2);
+    }
+}
+```
+```
+1true
+
+
+```
 ## 4.静态变量和实例变量的区别
 **在语法定义上的区别**：静态变量前要加 static 关键字，而实例变量前则不加。
 **在程序运行时的区别**：实例变量属于某个对象的属性，必须创建了实例对象，其中的实例变量才会被分配空间，才能使用这个实例变量。静态变量不属于某个实例对象，而是属于类，所以也称为类变量，只要程序加载了类的字节码，不用创建任何实例对象，静态变量就会被分配空间，静态变量就可以被使用了。总之，实例变量必须创建对象后才可以通过这个对象来使用，静态变量则可以直接使用类名来引用。
