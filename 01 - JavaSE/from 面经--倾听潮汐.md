@@ -2,9 +2,37 @@
 final定义的常量，一旦初始化，不能被修改，对基本类型来说是其值不可变，对引用来说是其引用不可变。
 其初始化智能在两个地方 1 其定义处 2 构造函数中 二者只能选其一，不能再定义时给了值，又在构造函数中赋值。
 一个类不能既被声明为abstract，也被声明为final
+
+final用于声明属性、方法、类。分别表示属性不可更改、方法不能被覆盖、类不能被继承。
 ## finally
 不管有无异常发生，finally总会执行，若catch中有return语句，也执行，在return语句之前执行。
 Finally除了try块调用了System.exit(0),finally都会执行，有return，也会先执行finally中的内容，再执行return。
+```java
+public class Demo{
+  　public static void main(String args[]){
+    　　　int num = 10;
+    　　　System.out.println(test(num));
+    }
+    public static int test(int b){
+    　　　try{
+        　　　　b += 10;
+        　　　　return b;
+    　　　}
+    　　　catch(RuntimeException e){
+    　　　}
+    　　　catch(Exception e2){
+    　　　}
+    　　　finally{
+        　　　　b += 10;
+        　　　　return b;
+    　　　}
+    }
+}
+```
+```
+30
+```
+
 ## finalize
 finalize方法定义在object中
 ## 多态
@@ -47,7 +75,7 @@ Integer i1=59
 Int i2=59;
 Integer i3=Integer.valueOf(59);
 Integer i4=new Integer(59);
-i1==i2 true
-i1==i3 true
-i3==i4 false  
-i4==i2 true   i2 是int类型，和i4比较，i4会自动拆箱
+i1==i2 true   i2 是int类型(基本类型)，和i1(包装类型)比较，i1会自动拆箱为基本类型 再比较值是否相等
+i1==i3 true   都指向IntegerCache[59-(-128)]对象
+i3==i4 false  引用指向的对象地址不同
+i4==i2 true   i2 是int类型(基本类型)，和i4(包装类型)比较，i4会自动拆箱为基本类型 再比较值是否相等

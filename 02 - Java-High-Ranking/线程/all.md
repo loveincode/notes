@@ -82,3 +82,11 @@ AtomicLong
 同步容器对于并发读访问的支持不好
 由于内部多采用synchronized关键字实现,所以性能不如并发容器
 对于同步容器进行迭代的同时修改它的内容，会报ConcurrentModificationException异常
+
+
+##### InterruptedException
+抛InterruptedException的代表方法有：
+
+java.lang.Object 类的 wait 方法
+java.lang.Thread 类的 sleep 方法
+java.lang.Thread 类的 join 方法

@@ -1,11 +1,8 @@
 http://www.cnblogs.com/dolphin0520/p/3920407.html
 
-看源码 
-
+看源码
 
 例子
-
-
 
 总结：
 
@@ -15,24 +12,23 @@ http://www.cnblogs.com/dolphin0520/p/3920407.html
 
 3）在进行get之前，必须先set，否则会报空指针异常；
 
-
 应用场景
 
  用来解决 数据库连接、Session管理等。
- 
+``` java
 private static ThreadLocal<Connection> connectionHolder = new ThreadLocal<Connection>() {
 	public Connection initialValue() {
 		return DriverManager.getConnection(DB_URL);
 	}
 };
- 
+
 public static Connection getConnection() {
 	return connectionHolder.get();
 }
 
 
 private static final ThreadLocal threadSession = new ThreadLocal();
- 
+
 public static Session getSession() throws InfrastructureException {
     Session s = (Session) threadSession.get();
     try {
@@ -45,3 +41,4 @@ public static Session getSession() throws InfrastructureException {
     }
     return s;
 }
+```
