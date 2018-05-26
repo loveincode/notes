@@ -1,3 +1,5 @@
+职业相关 面试 面经 经典笔记库
+
 # LearningNotes
   ---
 
@@ -61,7 +63,7 @@
 * [JavaConcurrent(Java并发)](https://github.com/GeniusVJR/LearningNotes/blob/master/Part2/JavaConcurrent/Java并发.md)
   * [Java并发基础知识](https://github.com/GeniusVJR/LearningNotes/blob/master/Part2/JavaConcurrent/Java并发基础知识.md)
   * [生产者和消费者问题](https://github.com/GeniusVJR/LearningNotes/blob/master/Part2/JavaConcurrent/生产者和消费者问题.md)
-    * [Thread和Runnable实现多线程的区别](https://github.com/GeniusVJR/LearningNotes/blob/master/Part2/JavaConcurrent/Thread和Runnable实现多线程的区别.md) 
+    * [Thread和Runnable实现多线程的区别](https://github.com/GeniusVJR/LearningNotes/blob/master/Part2/JavaConcurrent/Thread和Runnable实现多线程的区别.md)
   * [线程中断](https://github.com/GeniusVJR/LearningNotes/blob/master/Part2/JavaConcurrent/线程中断.md)
   * [守护线程与阻塞线程](https://github.com/GeniusVJR/LearningNotes/blob/master/Part2/JavaConcurrent/守护线程与阻塞线程.md)
   * [synchronized](https://github.com/GeniusVJR/LearningNotes/blob/master/Part2/JavaConcurrent/Synchronized.md)
@@ -127,12 +129,10 @@
 ## 第五部分
 
 * [ReadingNotes(读书笔记)](https://github.com/GeniusVJR/LearningNotes/tree/master/Part5/ReadingNotes)
- 
+
    * [《深入理解Java虚拟机》第12章](https://github.com/GeniusVJR/LearningNotes/blob/master/Part5/ReadingNotes/《深入理解java虚拟机》第12章.md)
    * [《Java编程思想》第一章读书笔记](https://github.com/GeniusVJR/LearningNotes/blob/master/Part5/ReadingNotes/《Java编程思想》第一章读书笔记.md)
    * [《Java编程思想》第二章读书笔记](https://github.com/GeniusVJR/LearningNotes/blob/master/Part5/ReadingNotes/《Java编程思想》第二章读书笔记.md)
 
 * [Project(项目)](https://github.com/GeniusVJR/LearningNotes/tree/master/Part5/Project)
    * [项目难点](https://github.com/GeniusVJR/LearningNotes/blob/master/Part5/Project/项目.md)
-
-
