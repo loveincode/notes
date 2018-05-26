@@ -25,9 +25,9 @@ for i in range(10000):
   print name1
   print suuid1 +" "+ suuid2
   cur2 = conn.cursor()
-  cur2.execute("insert into GroupStdTree (`GroupID`, `ParentGroupID`, `GroupTreeID`, `PlatGroupID`, `PlatParentGroupID`, `GroupName`, `SyncRoundNum`) SELECT %s, %s, 'defaultcbaa5c3d2394438db3c3480fc', %s, %s, %s, 1 ;",(suuid1,suuid2,suuid1,suuid2,name1))
+  cur2.execute("insert into GroupStdTree (`GroupID`, `ParentGroupID`, `GroupTreeID`, `PlatGroupID`, `PlatParentGroupID`, `GroupName`, `SyncRoundNum`) SELECT %s, %s, 'defaultcbaa5c3d2394438db3c3480fc', %s, %s, %s,3 ;",(suuid1,suuid2,suuid1,suuid2,name1))
   conn.commit()
-  cur2.callproc('VAS_PROC_GROUP_PLAT_BIN_GROUP_AddNode',(suuid1,suuid2,1,'defaultcbaa5c3d2394438db3c3480fc','cbaa5c3d2394438db3c3480fc2da3d2c'))
+  cur2.callproc('VAS_PROC_GROUP_PLAT_BIN_GROUP_AddNode',(suuid1,suuid2,3,'defaultcbaa5c3d2394438db3c3480fc','cbaa5c3d2394438db3c3480fc2da3d2c'))
   cur2.close()
 
 conn.close()
