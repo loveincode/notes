@@ -12,6 +12,8 @@ JVM内存模型
 处理数据时，线程会把值从主存load到本地栈，完成之后在save回去。
 每次针对该关键字修饰的变量的操作都会引起一次load and save,保存可见性
 ### 6. 基本实现
+1.继承Thread类，重载run方法；
+2.实现Runnable接口，实现run方法 
 1. Thread
   yield()
   sleep()
