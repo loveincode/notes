@@ -1,32 +1,43 @@
 
 centos7 mysql5.7安装
 
-mysql https://dev.mysql.com/downloads/repo/yum/
-	https://www.cnblogs.com/wishwzp/p/7113403.html
+mysql 8.0 安装配置方法教程 http://www.jb51.net/article/98270.htm
 
+mysql https://dev.mysql.com/downloads/repo/yum/  https://www.cnblogs.com/wishwzp/p/7113403.html
 
-检查已安装的MYSQL
+mysql http://www.jianshu.com/p/4a41a6df19a6
+
+### 检查已安装的MYSQL
 	yum list installed | grep mysql
 
-删除
+### 删除
 	yum -y remove mysql-libs.x86_64
 
-去官网 下载 rpm 的mysql安装
+### 去官网 下载 rpm 的mysql安装
 		执行 wget http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm
 		执行 rpm -ivh mysql-community-release-el7-5.noarch.rpm
 		执行 yum install mysql-community-server
 
-安装成功后重启mysql 服务
+### 安装成功后重启mysql 服务
 		service mysqld restart  systemctl start mysqld.service  systemctl daemon-reload
 
-初次安装mysql，root账户没有密码。
+### 初次安装mysql，root账户没有密码。
 		[root@yl-web yl]# mysql -u root
 		mysql> set password for 'root'@'localhost' =password('password');
 		不需要重启数据库即可生效。
 
-配置mysql
+		grep "password" /var/log/mysqld.log 命令获取MySQL的临时密码
+
+		set global validate_password_policy=0;
+		mysql8以后 set global validate_password.policy=0;
+		set global validate_password_length=1;
+
+		ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '111111';
+
+
+### 配置mysql
 	编码：
-		mysql配置文件为/etc/my.cnf
+		mysql配置文件为 vi /etc/my.cnf
 		最后加上编码配置
 			[mysql]
 			#default-character-set =utf8
@@ -38,8 +49,13 @@ mysql https://dev.mysql.com/downloads/repo/yum/
 			mysql> grant all privileges on *.* to root@'%'identified by 'password';（填写root 的密码即可）
 
 					flush privileges;
+		如果是新用户而不是root，则要先新建用户
+						mysql>create user 'username'@'%' identified by 'password';
 
-防火墙原因
+			查看端口
+				netstat -tnlp | grep （过滤）
+
+## 防火墙原因
 1、打开防火墙配置文件
 vi  /etc/sysconfig/iptables
 2、增加下面一行
@@ -47,11 +63,16 @@ vi  /etc/sysconfig/iptables
 3、重启防火墙
 service  iptables restart
 
-		如果是新用户而不是root，则要先新建用户
-			mysql>create user 'username'@'%' identified by 'password';
+1、安装iptable iptable-service
 
-查看端口
-	netstat -tnlp | grep （过滤）
+#先检查是否安装了iptables
+service iptables status
+#安装iptables
+yum install -y iptables
+#升级iptables（安装的最新版本则不需要）
+yum update iptables
+#安装iptables-services
+yum install iptables-services
 
 
 mysql 的配置文件 /etc/my.cnf
@@ -95,45 +116,3 @@ get_mysql_option mysqld_safe pid-file "/var/lib/mysql/mysqld.pid"
 执行文件 /usr/bin/my*
 
 mysql http://www.jianshu.com/p/4a41a6df19a6
-
-
-
-java http://blog.csdn.net/qq_24956515/article/details/77479680
-
-tar -zxvf jdk1.8.0_144-linux-x64.tar.gz
-
-vim /etc/profile
-
-#set java environment
-JAVA_HOME=/home/centos/java/jdk1.8.0_144
-
-JRE_HOME=/home/centos/java/jdk1.8.0_144/jre
-
-CLASS_PATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib
-
-PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
-
-export JAVA_HOME JRE_HOME CLASS_PATH PATH
-
-source /etc/profile
-
-java -version
-
-javac
-
-将java 打包jar linux运行
-
-https://www.cnblogs.com/neillee/p/6063808.html
-
-
-
-
-
-
-tomcat：
-
-第五步：配置防火墙，开放80端口
-
-firewall-cmd --zone=public --add-port=80/tcp --permanent
-
-firewall-cmd --reload
