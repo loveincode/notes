@@ -10,3 +10,11 @@ checked exception：指的是编译时异常，该类异常需要本函数必须
 runtime exception：指的是运行时异常，该类异常不必须本函数必须处理，当然也可以处理。
 
 Thread.sleep()抛出的InterruptException属于checked exception；IllegalArgumentException属于Runtime exception;
+
+Throwable 可以用来表示任何可以作为异常抛出的类，分为两种： Error 和 Exception。其中 Error 用来表示 JVM 无法处理的错误，Exception 分为两种：
+
+受检异常 ：需要用 try...catch... 语句捕获并进行处理，并且可以从异常中恢复；
+非受检异常 ：是程序运行时错误，例如除 0 会引发 Arithmetic Exception，此时程序奔溃并且无法恢复。
+
+Java 入门之异常处理  https://www.tianmaying.com/tutorial/Java-Exception
+Java 异常的面试问题及答案 -Part 1 http://www.importnew.com/7383.html
