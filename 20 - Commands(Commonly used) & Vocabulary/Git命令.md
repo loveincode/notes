@@ -1,4 +1,5 @@
 https://git-scm.com/book/zh/v1/%E8%B5%B7%E6%AD%A5
+https://git-scm.com/book/zh/v2
 403问题https://blog.csdn.net/happyteafriends/article/details/11554043
 https://blog.csdn.net/qq_33528613/article/details/72579427
 
@@ -44,6 +45,9 @@ git checkout 文件PATH
   git commit -a
 
   git commit -am
+
+## git commit --amend
+修改最后一次提交 git commit --amend
 
 ## git reset HEAD
 
