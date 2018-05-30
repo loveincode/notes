@@ -55,7 +55,7 @@ java -Xss=512M HackTheJava
 
 与 Java 虚拟机栈类似，它们之间的区别只不过是本地方法栈为本地方法服务。
 
-<div align="center"> <img src="/image/01/jvm/JNIFigure1.gif" width="350"/> </div><br>
+<div align="center"> <img src="/image/01/jvm/JNIFigure1.png" width="350"/> </div><br>
 
 ## 堆
 
@@ -73,7 +73,7 @@ java -Xss=512M HackTheJava
 - From Survivor
 - To Survivor
 
-<div align="center"> <img src="/image/01/jvm/ppt_img.gif" width=""/> </div><br>
+<div align="center"> <img src="/image/01/jvm/ppt_img.png" width=""/> </div><br>
 
 Java 堆不需要连续内存，并且可以动态增加其内存，增加失败会抛出 OutOfMemoryError 异常。
 
