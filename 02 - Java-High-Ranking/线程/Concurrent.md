@@ -69,11 +69,11 @@
 
 可能正在运行，也可能正在等待 CPU 时间片。
 
-包含了操作系统线程状态中的 Running 和 Ready。
+包含了操作系统线程状态中的 `Running` 和 `Ready`。
 
 ## 阻塞（Blocking）
 
-等待获取一个排它锁，如果其线程释放了锁就会结束此状态。
+等待获取一个`排它锁`，如果其线程释放了锁就会结束此状态。
 
 ## 无限期等待（Waiting）
 
@@ -113,11 +113,11 @@
 
 有三种使用线程的方法：
 
-- 实现 Runnable 接口；
-- 实现 Callable 接口；
-- 继承 Thread 类。
+* 实现 `Runnable` 接口；
+* 实现 `Callable` 接口；
+* 继承 `Thread` 类。
 
-实现 Runnable 和 Callable 接口的类只能当做一个可以在线程中运行的任务，不是真正意义上的线程，因此最后还需要通过 Thread 来调用。可以说任务是通过线程驱动从而执行的。
+实现 `Runnable` 和 `Callable` 接口的类只能当做一个可以在线程中运行的任务，不是真正意义上的线程，因此最后还需要通过 Thread 来调用。可以说任务是通过线程驱动从而执行的。
 
 ## 实现 Runnable 接口
 
@@ -143,7 +143,7 @@ public static void main(String[] args) {
 
 ## 实现 Callable 接口
 
-与 Runnable 相比，Callable 可以有返回值，返回值通过 FutureTask 进行封装。
+与 Runnable 相比，Callable 可以有返回值，返回值通过 `FutureTask` 进行封装。
 
 ```java
 public class MyCallable implements Callable<Integer> {
@@ -213,7 +213,7 @@ public static void main(String[] args) {
 
 ## Daemon
 
-守护线程是程序运行时在后台提供服务的线程，不属于程序中不可或缺的部分。
+守护线程是 **程序运行时在后台提供服务的线程**，不属于程序中不可或缺的部分。
 
 当所有非守护线程结束时，程序也就终止，同时会杀死所有守护线程。
 
@@ -232,7 +232,7 @@ public static void main(String[] args) {
 
 Thread.sleep(millisec) 方法会休眠当前正在执行的线程，millisec 单位为毫秒。
 
-sleep() 可能会抛出 InterruptedException，因为异常不能跨线程传播回 main() 中，因此必须在本地进行处理。线程中抛出的其它异常也同样需要在本地进行处理。
+sleep() 可能会抛出 `InterruptedException`，因为异常不能跨线程传播回 main() 中，因此必须在本地进行处理。线程中抛出的其它异常也同样需要在本地进行处理。
 
 ```java
 public void run() {
@@ -246,7 +246,7 @@ public void run() {
 
 ## yield()
 
-对静态方法 Thread.yield() 的调用声明了当前线程已经完成了生命周期中最重要的部分，可以切换给其它线程来执行。该方法只是对线程调度器的一个建议，而且也只是建议具有相同优先级的其它线程可以运行。
+对静态方法 Thread.yield() 的调用声明了 **当前线程已经完成了生命周期中最重要的部分，可以切换给其它线程来执行**。该方法只是对线程调度器的一个建议，而且也只是建议具有 **相同优先级** 的其它线程可以运行。
 
 ```java
 public void run() {
@@ -260,7 +260,7 @@ public void run() {
 
 ## InterruptedException
 
-通过调用一个线程的 interrupt() 来中断该线程，如果该线程处于阻塞、限期等待或者无限期等待状态，那么就会抛出 InterruptedException，从而提前结束该线程。但是不能中断 I/O 阻塞和 synchronized 锁阻塞。
+通过调用一个线程的 `interrupt()` 来中断该线程，如果该线程处于`阻塞`、`限期等待`或者`无限期等待`状态，那么就会抛出 `InterruptedException`，从而提前结束该线程。但是不能中断 I/O 阻塞和 synchronized 锁阻塞。
 
 对于以下代码，在 main() 中启动一个线程之后再中断它，由于线程中调用了 Thread.sleep() 方法，因此会抛出一个 InterruptedException，从而提前结束线程，不执行之后的语句。
 
@@ -301,7 +301,7 @@ java.lang.InterruptedException: sleep interrupted
 
 ## interrupted()
 
-如果一个线程的 run() 方法执行一个无限循环，并且没有执行 sleep() 等会抛出 InterruptedException 的操作，那么调用线程的 interrupt() 方法就无法使线程提前结束。
+如果一个线程的 run() 方法执行一个无限循环，并且没有执行 sleep() 等会抛出 `InterruptedException` 的操作，那么调用线程的 interrupt() 方法就无法使线程提前结束。
 
 但是调用 interrupt() 方法会设置线程的中断标记，此时调用 interrupted() 方法会返回 true。因此可以在循环体中使用 interrupted() 方法来判断线程是否处于中断状态，从而提前结束线程。
 
@@ -334,7 +334,7 @@ Thread end
 
 ## Executor 的中断操作
 
-调用 Executor 的 shutdown() 方法会等待线程都执行完毕之后再关闭，但是如果调用的是 shutdownNow() 方法，则相当于调用每个线程的 interrupt() 方法。
+调用 Executor 的 `shutdown()` 方法会等待线程都执行完毕之后再关闭，但是如果调用的是 `shutdownNow()` 方法，则相当于调用每个线程的 `interrupt()` 方法。
 
 以下使用 Lambda 创建线程，相当于创建了一个匿名内部线程。
 
@@ -365,7 +365,7 @@ java.lang.InterruptedException: sleep interrupted
     at java.lang.Thread.run(Thread.java:745)
 ```
 
-如果只想中断 Executor 中的一个线程，可以通过使用 submit() 方法来提交一个线程，它会返回一个 Future<?> 对象，通过调用该对象的 cancel(true) 方法就可以中断线程。
+如果只想中断 Executor 中的一个线程，可以通过使用 `submit()` 方法来提交一个线程，它会返回一个 `Future<?>` 对象，通过调用该对象的 `cancel(true)` 方法就可以中断线程。
 
 ```java
 Future<?> future = executorService.submit(() -> {
