@@ -1046,19 +1046,19 @@ public static void main(String[] args) throws InterruptedException {
 
 # 十、Java 内存模型
 
-Java 内存模型试图屏蔽各种硬件和操作系统的内存访问差异，以实现让 Java 程序在各种平台下都能达到一致的内存访问效果。
+Java 内存模型试图 **屏蔽各种硬件和操作系统的内存访问差异**，以实现让 Java 程序在各种平台下都能达到一致的内存访问效果。
 
 ## 主内存与工作内存
 
-处理器上的寄存器的读写的速度比内存快几个数量级，为了解决这种速度矛盾，在它们之间加入了高速缓存。
+处理器上的寄存器的读写的速度比内存快几个数量级，为了解决这种速度矛盾，在它们之间加入了 **高速缓存**。
 
-加入高速缓存带来了一个新的问题：缓存一致性。如果多个缓存共享同一块主内存区域，那么多个缓存的数据可能会不一致，需要一些协议来解决这个问题。
+加入高速缓存带来了一个新的问题：**缓存一致性**。如果多个缓存共享同一块主内存区域，那么多个缓存的数据可能会不一致，需要一些协议来解决这个问题。
 
 <div align="center"> <img src="/image/02/Concurrent/68778c1b-15ab-4826-99c0-3b4fd38cb9e9.png" width=""/> </div><br>
 
-所有的变量都存储在主内存中，每个线程还有自己的工作内存，工作内存存储在高速缓存或者寄存器中，保存了该线程使用的变量的主内存副本拷贝。
+所有的变量都存储在`主内存`中，每个线程还有自己的`工作内存`，`工作内存`存储在高速缓存或者寄存器中，保存了该线程使用的变量的`主内存`副本拷贝。
 
-线程只能直接操作工作内存中的变量，不同线程之间的变量值传递需要通过主内存来完成。
+线程只能直接操作`工作内存`中的变量，不同线程之间的变量值传递需要通过`主内存`来完成。
 
 <div align="center"> <img src="/image/02/Concurrent/47358f87-bc4c-496f-9a90-8d696de94cee.png" width=""/> </div><br>
 
@@ -1068,26 +1068,26 @@ Java 内存模型定义了 8 个操作来完成主内存和工作内存的交互
 
 <div align="center"> <img src="/image/02/Concurrent/536c6dfd-305a-4b95-b12c-28ca5e8aa043.png" width=""/> </div><br>
 
-- read：把一个变量的值从主内存传输到工作内存中
-- load：在 read 之后执行，把 read 得到的值放入工作内存的变量副本中
-- use：把工作内存中一个变量的值传递给执行引擎
-- assign：把一个从执行引擎接收到的值赋给工作内存的变量
-- store：把工作内存的一个变量的值传送到主内存中
-- write：在 store 之后执行，把 store 得到的值放入主内存的变量中
-- lock：作用于主内存的变量
-- unlock
+- `read`：把一个变量的值从`主内存`传输到`工作内存`中
+- `load`：在 read 之后执行，把 read 得到的值放入`工作内存`的变量副本中
+- `use`：把`工作内存`中一个变量的值传递给`执行引擎`
+- `assign`：把一个从`执行引擎`接收到的值赋给`工作内存`的变量
+- `store`：把`工作内存`的一个变量的值传送到`主内存`中
+- `write`：在 store 之后执行，把 store 得到的值放入`主内存`的变量中
+- `lock`：作用于`主内存`的变量
+- `unlock`
 
 ## 内存模型三大特性
 
 ### 1. 原子性
 
-Java 内存模型保证了 read、load、use、assign、store、write、lock 和 unlock 操作具有原子性，例如对一个 int 类型的变量执行 assign 赋值操作，这个操作就是原子性的。但是 Java 内存模型允许虚拟机将没有被 volatile 修饰的 64 位数据（long，double）的读写操作划分为两次 32 位的操作来进行，即 load、store、read 和 write 操作可以不具备原子性。
+Java 内存模型保证了 `read`、`load`、`use`、`assign`、`store`、`write`、`lock` 和 `unlock` 操作具有原子性，例如对一个 int 类型的变量执行 assign 赋值操作，这个操作就是原子性的。但是 Java 内存模型允许虚拟机将没有被 volatile 修饰的 64 位数据（long，double）的读写操作划分为两次 32 位的操作来进行，即 load、store、read 和 write 操作可以不具备原子性。
 
 有一个错误认识就是，int 等原子性的变量在多线程环境中不会出现线程安全问题。前面的线程不安全示例代码中，cnt 变量属于 int 类型变量，1000 个线程对它进行自增操作之后，得到的值为 997 而不是 1000。
 
-为了方便讨论，将内存间的交互操作简化为 3 个：load、assign、store。
+为了方便讨论，将内存间的交互操作简化为 3 个：`load`、`assign`、`store`。
 
-下图演示了两个线程同时对 cnt 变量进行操作，load、assign、store 这一系列操作整体上看不具备原子性，那么在 T1 修改 cnt 并且还没有将修改后的值写入主内存，T2 依然可以读入该变量的值。可以看出，这两个线程虽然执行了两次自增运算，但是主内存中 cnt 的值最后为 1 而不是 2。因此对 int 类型读写操作满足原子性只是说明 load、assign、store 这些单个操作具备原子性。
+下图演示了两个线程同时对 cnt 变量进行操作，load、assign、store 这一系列操作整体上看不具备原子性，那么在 T1 修改 cnt 并且还没有将修改后的值写入主内存，T2 依然可以读入该变量的值。可以看出，这两个线程虽然执行了两次自增运算，但是主内存中 cnt 的值最后为 1 而不是 2。因此对 int 类型读写操作满足 `原子性`只是说明 load、assign、store 这些单个操作具备原子性。
 
 <div align="center"> <img src="/image/02/Concurrent/ef8eab00-1d5e-4d99-a7c2-d6d68ea7fe92.png" width=""/> </div><br>
 
@@ -1095,7 +1095,7 @@ AtomicInteger 能保证多个线程修改的原子性。
 
 <div align="center"> <img src="/image/02/Concurrent/952afa9a-458b-44ce-bba9-463e60162945.png" width=""/> </div><br>
 
-使用 AtomicInteger 重写之前线程不安全的代码之后得到以下线程安全实现：
+使用 **AtomicInteger** 重写之前线程不安全的代码之后得到以下线程安全实现：
 
 ```java
 public class AtomicExample {
@@ -1133,7 +1133,7 @@ public static void main(String[] args) throws InterruptedException {
 1000
 ```
 
-除了使用原子类之外，也可以使用 synchronized 互斥锁来保证操作的完整性，它对应的内存间交互操作为：lock 和 unlock，在虚拟机实现上对应的字节码指令为 monitorenter 和 monitorexit。
+除了使用原子类之外，也可以使用 `synchronized` 互斥锁来保证操作的完整性，它对应的内存间交互操作为：`lock` 和 `unlock`，在虚拟机实现上对应的字节码指令为 monitorenter 和 monitorexit。
 
 ```java
 public class AtomicSynchronizedExample {
@@ -1173,21 +1173,21 @@ public static void main(String[] args) throws InterruptedException {
 
 ### 2. 可见性
 
-可见性指当一个线程修改了共享变量的值，其它线程能够立即得知这个修改。Java 内存模型是通过在变量修改后将新值同步回主内存，在变量读取前从主内存刷新变量值来实现可见性的。
+可见性指当一个线程修改了共享变量的值，其它线程能够立即得知这个修改。Java 内存模型是通过在变量`修改后`将新值`同步`回`主内存`，在变量读取前从主内存刷新变量值来实现`可见性`的。
 
-volatile 可保证可见性。synchronized 也能够保证可见性，对一个变量执行 unlock 操作之前，必须把变量值同步回主内存。final 关键字也能保证可见性：被 final 关键字修饰的字段在构造器中一旦初始化完成，并且没有发生 this 逃逸（其它线程可以通过 this 引用访问到初始化了一半的对象），那么其它线程就能看见 final 字段的值。
+`volatile` 可保证可见性。`synchronized` 也能够保证可见性，对一个变量执行 `unlock` 操作之前，必须把变量值同步回`主内存`。`final` 关键字也能保证可见性：被 final 关键字修饰的字段在构造器中一旦初始化完成，并且没有发生 this 逃逸（其它线程可以通过 this 引用访问到初始化了一半的对象），那么其它线程就能看见 final 字段的值。
 
-对前面的线程不安全示例中的 cnt 变量用 volatile 修饰，不能解决线程不安全问题，因为 volatile 并不能保证操作的原子性。
+对前面的线程不安全示例中的 cnt 变量用 volatile 修饰，不能解决线程不安全问题，因为 `volatile` 并`不能`保证操作的 `原子性`。
 
 ### 3. 有序性
 
-有序性是指：在本线程内观察，所有操作都是有序的。在一个线程观察另一个线程，所有操作都是无序的，无序是因为发生了指令重排序。
+有序性是指：在本线程内观察，所有操作都是有序的。在一个线程观察另一个线程，所有操作都是无序的，无序是因为发生了`指令重排序`。
 
-在 Java 内存模型中，允许编译器和处理器对指令进行重排序，重排序过程不会影响到单线程程序的执行，却会影响到多线程并发执行的正确性。
+在 Java 内存模型中，允许编译器和处理器对指令进行重排序，重排序过程`不会影响`到`单线程`程序的执行，却会`影响`到`多线程并发执行`的正确性。
 
-volatile 关键字通过添加内存屏障的方式来禁止指令重排，即重排序时不能把后面的指令放到内存屏障之前。
+`volatile` 关键字通过添加内存屏障的方式来 `禁止指令重排`，即重排序时不能把后面的指令放到内存屏障之前。
 
-也可以通过 synchronized 来保证有序性，它保证每个时刻只有一个线程执行同步代码，相当于是让线程顺序执行同步代码。
+也可以通过 `synchronized` 来保证有序性，它保证每个时刻只有一个线程执行同步代码，相当于是让`线程顺序执行同步代码`。
 
 ## 先行发生原则
 
@@ -1199,7 +1199,7 @@ volatile 关键字通过添加内存屏障的方式来禁止指令重排，即�
 
 > Single Thread rule
 
-在一个线程内，在程序前面的操作先行发生于后面的操作。
+在一个线程内，在程序 **前面的操作** **先行发生于后面的操作**。
 
 <div align="center"> <img src="/image/02/Concurrent/single-thread-rule.png" width=""/> </div><br>
 
@@ -1207,7 +1207,7 @@ volatile 关键字通过添加内存屏障的方式来禁止指令重排，即�
 
 > Monitor Lock Rule
 
-一个 unlock 操作先行发生于后面对同一个锁的 lock 操作。
+一个 unlock 操作 **先行发生于后面对同一个锁的 lock 操作**。
 
 <div align="center"> <img src="/image/02/Concurrent/monitor-lock-rule.png" width=""/> </div><br>
 
@@ -1215,7 +1215,7 @@ volatile 关键字通过添加内存屏障的方式来禁止指令重排，即�
 
 > Volatile Variable Rule
 
-对一个 volatile 变量的写操作先行发生于后面对这个变量的读操作。
+对一个 volatile 变量的 **写操作**  **先行发生于后面对这个变量的读操作**。
 
 <div align="center"> <img src="/image/02/Concurrent/volatile-variable-rule.png" width=""/> </div><br>
 
@@ -1223,7 +1223,7 @@ volatile 关键字通过添加内存屏障的方式来禁止指令重排，即�
 
 > Thread Start Rule
 
-Thread 对象的 start() 方法调用先行发生于此线程的每一个动作。
+Thread 对象的 start() 方法调用 **先行发生于此线程的每一个动作**。
 
 <div align="center"> <img src="/image/02/Concurrent/thread-start-rule.png" width=""/> </div><br>
 
@@ -1231,7 +1231,7 @@ Thread 对象的 start() 方法调用先行发生于此线程的每一个动作�
 
 > Thread Join Rule
 
-join() 方法返回先行发生于 Thread 对象的结束。
+join() 方法返回 **先行发生于 Thread 对象的结束**。
 
 <div align="center"> <img src="/image/02/Concurrent/thread-join-rule.png" width=""/> </div><br>
 
@@ -1239,13 +1239,13 @@ join() 方法返回先行发生于 Thread 对象的结束。
 
 > Thread Interruption Rule
 
-对线程 interrupt() 方法的调用先行发生于被中断线程的代码检测到中断事件的发生，可以通过 Thread.interrupted() 方法检测到是否有中断发生。
+对线程 interrupt() 方法的调用先行发生于被中断线程的代码检测到中断事件的发生，可以通过 `Thread.interrupted()` 方法检测到是否有中断发生。
 
 ### 7. 对象终结规则
 
 > Finalizer Rule
 
-一个对象的初始化完成（构造函数执行结束）先行发生于它的 finalize() 方法的开始。
+一个对象的初始化完成（构造函数执行结束）先行发生于它的 `finalize()` 方法的开始。
 
 ### 8. 传递性
 
@@ -1257,24 +1257,24 @@ join() 方法返回先行发生于 Thread 对象的结束。
 
 ## 线程安全定义
 
-一个类在可以被多个线程安全调用时就是线程安全的。
+`一个类`在可以被`多个线程`安全调用时就是线程安全的。
 
 ## 线程安全分类
 
-线程安全不是一个非真即假的命题，可以将共享数据按照安全程度的强弱顺序分成以下五类：不可变、绝对线程安全、相对线程安全、线程兼容和线程对立。
+线程安全不是一个非真即假的命题，可以将共享数据按照安全程度的强弱顺序分成以下五类：`不可变`、`绝对线程安全`、`相对线程安全`、`线程兼容`和`线程对立`。
 
 ### 1. 不可变
 
-不可变（Immutable）的对象一定是线程安全的，无论是对象的方法实现还是方法的调用者，都不需要再采取任何的线程安全保障措施，只要一个不可变的对象被正确地构建出来，那其外部的可见状态永远也不会改变，永远也不会看到它在多个线程之中处于不一致的状态。
+`不可变（Immutable）`的对象一定是线程安全的，无论是对象的方法实现还是方法的调用者，都不需要再采取任何的线程安全保障措施，只要一个不可变的对象被正确地构建出来，那其外部的可见状态永远也不会改变，永远也不会看到它在多个线程之中处于不一致的状态。
 
 不可变的类型：
 
-- final 关键字修饰的基本数据类型；
-- String
-- 枚举类型
-- Number 部分子类，如 Long 和 Double 等数值包装类型，BigInteger 和 BigDecimal 等大数据类型。但同为 Number 的子类型的原子类 AtomicInteger 和 AtomicLong 则并非不可变的。
+- `final` 关键字修饰的基本数据类型；
+- `String`
+- `枚举类型`
+- `Number` 部分子类，如 `Long` 和 `Double` 等数值包装类型，`BigInteger` 和 `BigDecimal` 等大数据类型。但同为 Number 的子类型的原子类 `AtomicInteger` 和 `AtomicLong` 则并非不可变的。
 
-对于集合类型，可以使用 Collections.unmodifiableXXX() 方法来获取一个不可变的集合。
+对于 `集合类型`，可以使用 `Collections.unmodifiableXXX()` 方法来获取一个不可变的集合。
 
 ```java
 public class ImmutableExample {
@@ -1286,13 +1286,13 @@ public class ImmutableExample {
 }
 ```
 
-```html
+```
 Exception in thread "main" java.lang.UnsupportedOperationException
     at java.util.Collections$UnmodifiableMap.put(Collections.java:1457)
     at ImmutableExample.main(ImmutableExample.java:9)
 ```
 
-Collections.unmodifiableXXX() 先对原始的集合进行拷贝，需要对集合进行修改的方法都直接抛出异常。
+Collections.unmodifiableXXX() 先对原始的集合进行拷贝，需要对集合进行修改的方法都`直接抛出异常`。
 
 ```java
 public V put(K key, V value) {
@@ -1310,9 +1310,9 @@ public V put(K key, V value) {
 
 相对的线程安全需要保证对这个对象单独的操作是线程安全的，在调用的时候不需要做额外的保障措施，但是对于一些特定顺序的连续调用，就可能需要在调用端使用额外的同步手段来保证调用的正确性。
 
-在 Java 语言中，大部分的线程安全类都属于这种类型，例如 Vector、HashTable、Collections 的 synchronizedCollection() 方法包装的集合等。
+在 Java 语言中，大部分的线程安全类都属于这种类型，例如 `Vector`、`HashTable`、Collections 的 `synchronizedCollection()` 方法包装的集合等。
 
-对于下面的代码，如果删除元素的线程删除了一个元素，而获取元素的线程试图访问一个已经被删除的元素，那么就会抛出 ArrayIndexOutOfBoundsException。
+对于下面的代码，如果删除元素的线程删除了一个元素，而获取元素的线程试图访问一个已经被删除的元素，那么就会抛出 `ArrayIndexOutOfBoundsException`。
 
 ```java
 public class VectorUnsafeExample {
@@ -1380,21 +1380,24 @@ executorService.execute(() -> {
 
 ### 1. 互斥同步
 
-synchronized 和 ReentrantLock。
+`synchronized` 和 `ReentrantLock`。
 
 ### 2. 非阻塞同步
 
-互斥同步最主要的问题就是进行线程阻塞和唤醒所带来的性能问题，因此这种同步也称为阻塞同步（Blocking Synchronization）。
+互斥同步最主要的问题就是进行线程阻塞和唤醒所带来的性能问题，因此这种同步也称为`阻塞同步`（Blocking Synchronization）。
 
-从处理问题的方式上说，互斥同步属于一种悲观的并发策略，总是认为只要不去做正确的同步措施（例如加锁），那就肯定会出现问题，无论共享数据是否真的会出现竞争，它都要进行加锁（这里讨论的是概念模型，实际上虚拟机会优化掉很大一部分不必要的加锁）、用户态核心态转换、维护锁计数器和检查是否有被阻塞的线程需要唤醒等操作。随着硬件指令集的发展，我们有了另外一个选择：基于冲突检测的乐观并发策略，通俗地说，就是先进行操作，如果没有其他线程争用共享数据，那操作就成功了；如果共享数据有争用，产生了冲突，那就再采取其他的补偿措施（最常见的补偿措施就是不断地重试，直到成功为止），这种乐观的并发策略的许多实现都不需要把线程挂起，因此这种同步操作称为非阻塞同步（Non-Blocking Synchronization）。
+从处理问题的方式上说，互斥同步属于一种`悲观`的并发策略，总是认为只要不去做正确的同步措施（例如加锁），那就肯定会出现问题，无论共享数据是否真的会出现竞争，它都要进行加锁（这里讨论的是概念模型，实际上虚拟机会优化掉很大一部分不必要的加锁）、用户态核心态转换、维护锁计数器和检查是否有被阻塞的线程需要唤醒等操作。
 
-乐观锁需要操作和冲突检测这两个步骤具备原子性，这里就不能再使用互斥同步来保证了，只能靠硬件来完成。硬件支持的原子性操作最典型的是：比较并交换（Compare-and-Swap，CAS）。
+随着硬件指令集的发展，我们有了另外一个选择：基于冲突检测的`乐观并发策略`，通俗地说，就是先进行操作，如果没有其他线程争用共享数据，那操作就成功了；如果共享数据有争用，产生了冲突，那就再采取其他的补偿措施（最常见的补偿措施就是不断地重试，直到成功为止），这种乐观的并发策略的许多实现都不需要把线程挂起，因此这种同步操作称为`非阻塞同步`（Non-Blocking Synchronization）。
 
-CAS 指令需要有 3 个操作数，分别是内存位置（在 Java 中可以简单理解为变量的内存地址，用 V 表示）、旧的预期值（用 A 表示）和新值（用 B 表示）。CAS 指令执行时，当且仅当 V 符合旧预期值 A 时，处理器用新值 B 更新 V 的值，否则它就不执行更新。但是无论是否更新了 V 的值，都会返回 V 的旧值，上述的处理过程是一个原子操作。
+乐观锁需要操作和冲突检测这两个步骤具备`原子性`，这里就不能再使用互斥同步来保证了，只能靠硬件来完成。硬件支持的原子性操作最典型的是：`比较并交换（Compare-and-Swap，CAS）`。
 
-J.U.C 包里面的整数原子类 AtomicInteger，其中的 compareAndSet() 和 getAndIncrement() 等方法都使用了 Unsafe 类的 CAS 操作。
+CAS 指令需要有 3 个操作数，分别是`内存位置`（在 Java 中可以简单理解为变量的内存地址，用 `V` 表示）、`旧的预期值`（用 `A` 表示）和`新值`（用 `B` 表示）。CAS 指令执行时，当且仅当 V 符合旧预期值 A 时，处理器用新值 B 更新 V 的值，否则它就不执行更新。但是无论是否更新了 V 的值，都会返回 V 的旧值，上述的处理过程是一个原子操作。
 
-在下面的代码 1 中，使用了 AtomicInteger 执行了自增的操作。代码 2 是 incrementAndGet() 的源码，它调用了 unsafe 的 getAndAddInt() 。代码 3 是 getAndAddInt() 源码，var1 指示内存位置，var2 指示新值，var4 指示操作需要加的数值，这里为 1。在代码 3 的实现中，通过 getIntVolatile(var1, var2) 得到旧的预期值。通过调用 compareAndSwapInt() 来进行 CAS 比较，如果 var2=var5，那么就更新内存地址为 var1 的变量为 var5+var4。可以看到代码 3 是在一个循环中进行，发生冲突的做法是不断的进行重试。
+J.U.C 包里面的整数原子类 `AtomicInteger`，其中的 `compareAndSet()` 和 `getAndIncrement()` 等方法都使用了 Unsafe 类的 CAS 操作。
+
+在下面的代码 1 中，使用了 `AtomicInteger` 执行了自增的操作。代码 2 是 `incrementAndGet()` 的源码，它调用了 unsafe 的 `getAndAddInt()` 。代码 3 是 `getAndAddInt()` 源码，var1 指示内存位置，var2 指示新值，var4 指示操作需要加的数值，这里为 1。
+在代码 3 的实现中，通过 `getIntVolatile(var1, var2)` 得到旧的预期值。通过调用 compareAndSwapInt() 来进行 CAS 比较，如果 var2=var5，那么就更新内存地址为 var1 的变量为 var5+var4。可以看到代码 3 是在一个循环中进行，发生冲突的做法是不断的进行重试。
 
 ```java
 // 代码 1
@@ -1424,7 +1427,7 @@ public final int getAndAddInt(Object var1, long var2, int var4) {
 }
 ```
 
-ABA ：如果一个变量初次读取的时候是 A 值，它的值被改成了 B，后来又被改回为 A，那 CAS 操作就会误认为它从来没有被改变过。J.U.C 包提供了一个带有标记的原子引用类“AtomicStampedReference”来解决这个问题，它可以通过控制变量值的版本来保证 CAS 的正确性。大部分情况下 ABA 问题不会影响程序并发的正确性，如果需要解决 ABA 问题，改用传统的互斥同步可能会比原子类更高效。
+ABA ：如果一个变量初次读取的时候是 A 值，它的值被改成了 B，后来又被改回为 A，那 CAS 操作就会误认为它从来没有被改变过。J.U.C 包提供了一个带有标记的原子引用类“`AtomicStampedReference`”来解决这个问题，它可以通过控制变量值的版本来保证 CAS 的正确性。大部分情况下 ABA 问题不会影响程序并发的正确性，如果需要解决 ABA 问题，改用传统的互斥同步可能会比原子类更高效。
 
 ### 3. 无同步方案
 
@@ -1432,13 +1435,13 @@ ABA ：如果一个变量初次读取的时候是 A 值，它的值被改成了 
 
 **（一）可重入代码（Reentrant Code）**
 
-这种代码也叫做纯代码（Pure Code），可以在代码执行的任何时刻中断它，转而去执行另外一段代码（包括递归调用它本身），而在控制权返回后，原来的程序不会出现任何错误。相对线程安全来说，可重入性是更基本的特性，它可以保证线程安全，即所有的可重入的代码都是线程安全的，但是并非所有的线程安全的代码都是可重入的。
+这种代码也叫做`纯代码（Pure Code）`，可以在代码执行的任何时刻中断它，转而去执行另外一段代码（包括递归调用它本身），而在控制权返回后，原来的程序不会出现任何错误。相对线程安全来说，可重入性是更基本的特性，它可以保证线程安全，即所有的可重入的代码都是线程安全的，但是并非所有的线程安全的代码都是可重入的。
 
 可重入代码有一些共同的特征，例如不依赖存储在堆上的数据和公用的系统资源、用到的状态量都由参数中传入、不调用非可重入的方法等。我们可以通过一个简单的原则来判断代码是否具备可重入性：如果一个方法，它的返回结果是可以预测的，只要输入了相同的数据，就都能返回相同的结果，那它就满足可重入性的要求，当然也就是线程安全的。
 
 **（二）栈封闭**
 
-多个线程访问同一个方法的局部变量时，不会出现线程安全问题，因为局部变量存储在栈中，属于线程私有的。
+多个线程访问同一个方法的`局部变量时`，不会出现线程安全问题，因为局部变量存储在栈中，属于`线程私有的`。
 
 ```java
 import java.util.concurrent.ExecutorService;
@@ -1472,7 +1475,7 @@ public static void main(String[] args) {
 
 **（三）线程本地存储（Thread Local Storage）**
 
-如果一段代码中所需要的数据必须与其他代码共享，那就看看这些共享数据的代码是否能保证在同一个线程中执行。如果能保证，我们就可以把共享数据的可见范围限制在同一个线程之内，这样，无须同步也能保证线程之间不出现数据争用的问题。
+如果一段代码中所需要的`数据`必须与其他`代码共享`，那就看看这些共享数据的代码是否能保证在`同一个线程中`执行。如果能保证，我们就可以把共享数据的可见范围限制在`同一个线程`之内，这样，无须同步也能保证线程之间不出现数据争用的问题。
 
 符合这种特点的应用并不少见，大部分使用消费队列的架构模式（如“生产者-消费者”模式）都会将产品的消费过程尽量在一个线程中消费完，其中最重要的一个应用实例就是经典 Web 交互模型中的“一个请求对应一个服务器线程”（Thread-per-Request）的处理方式，这种处理方式的广泛应用使得很多 Web 服务端应用都可以使用线程本地存储来解决线程安全问题。
 
@@ -1533,7 +1536,7 @@ public class ThreadLocalExample1 {
 
 <div align="center"> <img src="/image/02/Concurrent/3646544a-cb57-451d-9e03-d3c4f5e4434a.png" width=""/> </div><br>
 
-每个 Thread 都有一个 ThreadLocal.ThreadLocalMap 对象，Thread 类中就定义了 ThreadLocal.ThreadLocalMap 成员。
+每个 Thread 都有一个 `ThreadLocal.ThreadLocalMap` 对象，Thread 类中就定义了 `ThreadLocal.ThreadLocalMap` 成员。
 
 ```java
 /* ThreadLocal values pertaining to this thread. This map is maintained
@@ -1541,7 +1544,7 @@ public class ThreadLocalExample1 {
 ThreadLocal.ThreadLocalMap threadLocals = null;
 ```
 
-当调用一个 ThreadLocal 的 set(T value) 方法时，先得到当前线程的 ThreadLocalMap 对象，然后将 ThreadLocal->value 键值对插入到该 Map 中。
+当调用一个 ThreadLocal 的 set(T value) 方法时，先得到当前线程的 `ThreadLocalMap` 对象，然后将 ThreadLocal->value 键值对插入到该 Map 中。
 
 ```java
 public void set(T value) {
@@ -1572,19 +1575,19 @@ public T get() {
 }
 ```
 
-ThreadLocal 从理论上讲并不是用来解决多线程并发问题的，因为根本不存在多线程竞争。在一些场景 (尤其是使用线程池) 下，由于 ThreadLocal.ThreadLocalMap 的底层数据结构导致 ThreadLocal 有内存泄漏的情况，尽可能在每次使用 ThreadLocal 后手动调用 remove()，以避免出现 ThreadLocal 经典的内存泄漏甚至是造成自身业务混乱的风险。
+ThreadLocal 从理论上讲并不是用来解决多线程并发问题的，因为根本不存在多线程竞争。在一些场景 (尤其是使用线程池) 下，由于 ThreadLocal.ThreadLocalMap 的底层数据结构导致 ThreadLocal 有内存泄漏的情况，尽可能在每次使用 ThreadLocal 后手动调用 `remove()`，以避免出现 ThreadLocal 经典的内存泄漏甚至是造成自身业务混乱的风险。
 
 # 十二、锁优化
 
-这里的锁优化主要是指虚拟机对 synchronized 的优化。
+这里的锁优化主要是指虚拟机对 `synchronized` 的优化。
 
 ## 自旋锁
 
-互斥同步的进入阻塞状态的开销都很大，应该尽量避免。在许多应用中，共享数据的锁定状态只会持续很短的一段时间。自旋锁的思想是让一个线程在请求一个共享数据的锁时执行忙循环（自旋）一段时间，如果在这段时间内能获得锁，就可以避免进入阻塞状态。
+互斥同步的进入阻塞状态的开销都很大，应该尽量避免。在许多应用中，共享数据的锁定状态只会持续很短的一段时间。`自旋锁的思想`是让一个线程在请求一个共享数据的锁时执行忙循环（自旋）一段时间，如果在这段时间内能获得锁，就可以避免进入阻塞状态。
 
-自选锁虽然能避免进入阻塞状态从而减少开销，但是它需要进行忙循环操作占用 CPU 时间，它只适用于共享数据的锁定状态很短的场景。自旋次数的默认值是 10 次，用户可以使用虚拟机参数 -XX:PreBlockSpin 来更改。
+自选锁虽然能避免进入阻塞状态从而减少开销，但是它需要进行忙循环操作占用 CPU 时间，它只适用于共享数据的锁定状态很短的场景。自旋次数的默认值是 10 次，用户可以使用虚拟机参数 `-XX:PreBlockSpin` 来更改。
 
-在 JDK 1.6 中引入了自适应的自旋锁。自适应意味着自旋的次数不再固定了，而是由前一次在同一个锁上的自旋次数及锁的拥有者的状态来决定。
+在 JDK 1.6 中引入了`自适应`的自旋锁。自适应意味着自旋的次数不再固定了，而是由前一次在同一个锁上的自旋次数及锁的拥有者的状态来决定。
 
 ## 锁消除
 
@@ -1612,7 +1615,7 @@ public static String concatString(String s1, String s2, String s3) {
 }
 ```
 
-每个 StringBuffer.append() 方法中都有一个同步块，锁就是 sb 对象。虚拟机观察变量 sb，很快就会发现它的动态作用域被限制在 concatString() 方法内部。也就是说，sb 的所有引用永远不会“逃逸”到 concatString() 方法之外，其他线程无法访问到它。因此，虽然这里有锁，但是可以被安全地消除掉。
+每个 StringBuffer.append() 方法中都有一个同步块，锁就是 `sb` 对象。虚拟机观察变量 sb，很快就会发现它的动态作用域被限制在 `concatString()` 方法内部。也就是说，sb 的所有引用永远不会“逃逸”到 `concatString()` 方法之外，其他线程无法访问到它。因此，虽然这里有锁，但是可以被安全地消除掉。
 
 ## 锁粗化
 
@@ -1622,7 +1625,7 @@ public static String concatString(String s1, String s2, String s3) {
 
 ## 轻量级锁
 
-JDK 1.6 引入了偏向锁和轻量级锁，从而让锁拥有了四个状态：无锁状态（unlocked）、偏向锁状态（biasble）、轻量级锁状态（lightweight locked）和重量级锁状态（inflated）。
+JDK 1.6 引入了`偏向锁`和`轻量级锁`，从而让锁拥有了四个状态：`无锁状态（unlocked）`、`偏向锁状态（biasble）`、`轻量级锁状态（lightweight locked）`和`重量级锁状态（inflated）`。
 
 以下是 HotSpot 虚拟机对象头的内存布局，这些数据被称为 mark word。其中 tag bits 对应了五个状态，这些状态在右侧的 state 表格中给出，应该注意的是 state 表格不是存储在对象头中的。除了 marked for gc 状态，其它四个状态已经在前面介绍过了。
 
@@ -1644,7 +1647,7 @@ JDK 1.6 引入了偏向锁和轻量级锁，从而让锁拥有了四个状态：
 
 偏向锁的思想是偏向于让第一个获取锁对象的线程，这个线程在之后获取该锁就不再需要进行同步操作，甚至连 CAS 操作也不再需要。
 
-可以使用 -XX:+UseBiasedLocking=true 开启偏向锁，不过在 JDK 1.6 中它是默认开启的。
+可以使用 `-XX:+UseBiasedLocking=true` 开启偏向锁，不过在 JDK 1.6 中它是默认开启的。
 
 当锁对象第一次被线程获得的时候，进入偏向状态，标记为 1 01。同时使用 CAS 操作将线程 ID 记录到 Mark Word 中，如果 CAS 操作成功，这个线程以后每次进入这个锁相关的同步块就不需要再进行任何同步操作。
 
@@ -1658,15 +1661,15 @@ JDK 1.6 引入了偏向锁和轻量级锁，从而让锁拥有了四个状态：
 
 - 缩小同步范围，例如对于 synchronized，应该尽量使用同步块而不是同步方法。
 
-- 多用同步类少用 wait() 和 notify()。首先，CountDownLatch, Semaphore, CyclicBarrier 和 Exchanger 这些同步类简化了编码操作，而用 wait() 和 notify() 很难实现对复杂控制流的控制。其次，这些类是由最好的企业编写和维护，在后续的 JDK 中它们还会不断优化和完善，使用这些更高等级的同步工具你的程序可以不费吹灰之力获得优化。
+- 多用同步类少用 `wait()` 和 `notify()`。首先，CountDownLatch, Semaphore, CyclicBarrier 和 Exchanger 这些同步类简化了编码操作，而用 wait() 和 notify() 很难实现对复杂控制流的控制。其次，这些类是由最好的企业编写和维护，在后续的 JDK 中它们还会不断优化和完善，使用这些更高等级的同步工具你的程序可以不费吹灰之力获得优化。
 
-- 多用并发集合少用同步集合。并发集合比同步集合的可扩展性更好，例如应该使用 ConcurrentHashMap 而不是 Hashtable。
+- 多用并发集合少用同步集合。并发集合比同步集合的可扩展性更好，例如应该使用 `ConcurrentHashMap` 而不是 `Hashtable。`
 
 - 使用本地变量和不可变类来保证线程安全。
 
-- 使用线程池而不是直接创建 Thread 对象，这是因为创建线程代价很高，线程池可以有效地利用有限的线程来启动任务。
+- `使用线程池`而不是直接创建 Thread 对象，这是因为创建线程代价很高，线程池可以有效地利用有限的线程来启动任务。
 
-- 使用 BlockingQueue 实现生产者消费者问题。
+- 使用 `BlockingQueue` 实现生产者消费者问题。
 
 # 参考资料
 
