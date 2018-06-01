@@ -457,7 +457,7 @@ public void func() {
 }
 ```
 
-作用于整个类，也就是说两个线程调用同一个类的不同对象上的这种同步语句，也需要进行同步。
+**作用于整个类，也就是说两个线程调用同一个类的不同对象上的这种同步语句，也需要进行同步。**
 
 ```java
 public class SynchronizedExample {
@@ -529,7 +529,8 @@ public static void main(String[] args) {
 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9
 ```
 
-ReentrantLock 是 java.util.concurrent（J.U.C）包中的锁，相比于 synchronized，它多了以下高级功能：
+ReentrantLock 是 java.util.concurrent（J.U.C）包中的锁，
+**ReentrantLock 相比于 synchronized**，它多了以下高级功能：
 
 **1. 等待可中断**
 
@@ -567,7 +568,7 @@ ReentrantLock 多了一些高级功能。
 
 ## join()
 
-在线程中调用另一个线程的 join() 方法，会将当前线程挂起，而不是忙等待， 直到目标线程结束。
+在线程中调用另一个线程的 `join()` 方法，会将当前线程挂起，而不是忙等待， 直到目标线程结束。
 
 对于以下代码，虽然 b 线程先启动，但是因为在 b 线程中调用了 a 线程的 join() 方法，因此 b 线程会等待 a 线程结束才继续执行，因此最后能够保证 a 线程的输出先与 b 线程的输出。
 
@@ -627,9 +628,9 @@ B
 
 它们都属于 Object 的一部分，而不属于 Thread。
 
-只能用在同步方法或者同步控制块中使用，否则会在运行时抛出 IllegalMonitorStateExeception。
+只能用在同步方法或者同步控制块中使用，否则会在运行时抛出 **IllegalMonitorStateExeception**。
 
-使用 wait() 挂起期间，线程会释放锁。这是因为，如果没有释放锁，那么其它线程就无法进入对象的同步方法或者同步控制块中，那么就无法执行 notify() 或者 notifyAll() 来唤醒挂起的线程，造成死锁。
+使用 wait() 挂起期间，线程会 **释放锁**。这是 **因为**，如果 **没有释放锁**，那么其它线程就无法进入对象的同步方法或者同步控制块中，那么就 **无法执行** **notify()** 或者 **notifyAll()** 来唤醒挂起的线程，造成死锁。
 
 ```java
 public class WaitNotifyExample {
@@ -665,7 +666,7 @@ after
 
 **wait() 和 sleep() 的区别**
 
-1. wait() 是 Object 的方法，而 sleep() 是 Thread 的静态方法；
+1. wait() 是 Object 的方法，而 sleep() 是 Thread 的 **静态方法**；
 2. wait() 会释放锁，sleep() 不会。
 
 ## await() signal() signalAll()
@@ -723,9 +724,9 @@ java.util.concurrent（J.U.C）大大提高了并发性能，AQS 被认为是 J.
 
 ## CountdownLatch
 
-用来控制一个线程等待多个线程。
+用来控制 **一个线程等待多个线程** 。
 
-维护了一个计数器 cnt，每次调用 countDown() 方法会让计数器的值减 1，减到 0 的时候，那些因为调用 await() 方法而在等待的线程就会被唤醒。
+维护了一个计数器 `cnt`，每次调用 `countDown()` 方法会让计数器的值减 1，减到 0 的时候，那些因为调用 `await()` 方法而在等待的线程就会被唤醒。
 
 <div align="center"> <img src="/image/02/Concurrent/CountdownLatch.png" width=""/> </div><br>
 
@@ -755,9 +756,9 @@ run..run..run..run..run..run..run..run..run..run..end
 
 ## CyclicBarrier
 
-用来控制多个线程互相等待，只有当多个线程都到达时，这些线程才会继续执行。
+用来控制 **多个线程互相等待**，只有当多个线程都到达时，这些线程才会继续执行。
 
-和 CountdownLatch 相似，都是通过维护计数器来实现的。但是它的计数器是递增的，每次执行 await() 方法之后，计数器会加 1，直到计数器的值和设置的值相等，等待的所有线程才会继续执行。和 CountdownLatch 的另一个区别是，CyclicBarrier 的计数器可以循环使用，所以它才叫做循环屏障。
+和 CountdownLatch 相似，都是通过维护计数器来实现的。但是它的计数器是递增的，每次执行 `await()` 方法之后，计数器会加 1，直到计数器的值和设置的值相等，等待的所有线程才会继续执行。和 CountdownLatch 的另一个区别是，CyclicBarrier 的计数器可以`循环使用`，所以它才叫做循环屏障。
 
 下图应该从下往上看才正确。
 
@@ -793,7 +794,7 @@ before..before..before..before..before..before..before..before..before..before..
 
 ## Semaphore
 
-Semaphore 就是操作系统中的信号量，可以控制对互斥资源的访问线程数。
+Semaphore 就是操作系统中的信号量，可以 **控制对互斥资源的访问线程数**。
 
 <div align="center"> <img src="/image/02/Concurrent/Semaphore.png" width=""/> </div><br>
 
@@ -831,17 +832,17 @@ public class SemaphoreExample {
 
 ## FutureTask
 
-在介绍 Callable 时我们知道它可以有返回值，返回值通过 Future<V> 进行封装。FutureTask 实现了 RunnableFuture 接口，该接口继承自 Runnable 和 Future<V> 接口，这使得 FutureTask 既可以当做一个任务执行，也可以有返回值。
+在介绍 Callable 时我们知道它可以有返回值，返回值通过 Future<V> 进行封装。FutureTask 实现了 `RunnableFuture` 接口，该接口继承自 `Runnable` 和 `Future<V>` 接口，这使得 `FutureTask` 既可以当做一个任务执行，也可以有返回值。
 
-```java
+```
 public class FutureTask<V> implements RunnableFuture<V>
 ```
 
-```java
+```
 public interface RunnableFuture<V> extends Runnable, Future<V>
 ```
 
-当一个计算任务需要执行很长时间，那么就可以用 FutureTask 来封装这个任务，用一个线程去执行该任务，然后其它线程继续执行其它任务。当需要该任务的计算结果时，再通过 FutureTask 的 get() 方法获取。
+**当一个计算任务需要执行很长时间**，那么就可以用 FutureTask 来封装这个任务，用一个线程去执行该任务，然后其它线程继续执行其它任务。当需要该任务的计算结果时，再通过 FutureTask 的 get() 方法获取。
 
 ```java
 public class FutureTaskExample {
@@ -884,10 +885,10 @@ other task is running...
 
 java.util.concurrent.BlockingQueue 接口有以下阻塞队列的实现：
 
--  **FIFO 队列** ：LinkedBlockingQueue、ArrayListBlockingQueue（固定长度）
--  **优先级队列** ：PriorityBlockingQueue
+-  **FIFO 队列** ：`LinkedBlockingQueue`、`ArrayListBlockingQueue`（固定长度）
+-  **优先级队列** ：`PriorityBlockingQueue`
 
-提供了阻塞的 take() 和 put() 方法：如果队列为空 take() 将阻塞，直到队列中有内容；如果队列为满 put() 将阻塞，指到队列有空闲位置。
+提供了阻塞的 `take()` 和 `put()` 方法：如果队列为空 `take()` 将阻塞，直到队列中有内容；如果队列为满 `put()` 将阻塞，指到队列有空闲位置。
 
 **使用 BlockingQueue 实现生产者消费者问题**
 
@@ -946,7 +947,7 @@ produce..produce..consume..consume..produce..consume..produce..consume..produce.
 
 ## ForkJoin
 
-主要用于并行计算中，和 MapReduce 原理类似，都是把大的计算任务拆分成多个小任务并行计算。
+主要用于并行计算中，和 MapReduce 原理类似，都是 把 **大的计算任务** **拆分** 成 **多个小任务** **并行计算**。
 
 ```java
 public class ForkJoinExample extends RecursiveTask<Integer> {
@@ -990,9 +991,9 @@ public static void main(String[] args) throws ExecutionException, InterruptedExc
 }
 ```
 
-ForkJoin 使用 ForkJoinPool 来启动，它是一个特殊的线程池，线程数量取决于 CPU 核数。
+ForkJoin 使用 `ForkJoinPool` 来启动，它是一个特殊的线程池，`线程数量取决于 CPU 核数`。
 
-```java
+```
 public class ForkJoinPool extends AbstractExecutorService
 ```
 
@@ -1002,7 +1003,7 @@ ForkJoinPool 实现了工作窃取算法来提高 CPU 的利用率。每个线�
 
 # 九、线程不安全示例
 
-如果多个线程对同一个共享数据进行访问而不采取同步操作的话，那么操作的结果是不一致的。
+如果 **多个线程对同一个共享数据进行访问而不采取同步操作** 的话，那么操作的结果是不一致的。
 
 以下代码演示了 1000 个线程同时对 cnt 执行自增操作，操作结束之后它的值为 997 而不是 1000。
 
