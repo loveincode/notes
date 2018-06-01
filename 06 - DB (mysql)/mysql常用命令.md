@@ -1,5 +1,6 @@
 mysql
 	mysql -u root -h 127.0.0.1 -p
+	mysql -u`root` -p`password` `databasename`
 
 	create [database]
 
@@ -336,6 +337,7 @@ mysql
 	如果完整备份数据库，则无需使用特定的表名称。
 
 	如果你需要将备份的数据库导入到MySQL服务器中，可以使用以下命令，使用以下命令你需要确认数据库已经创建：
+
 
 	$ mysql -u root -p database_name < dump.txt
 	password *****
