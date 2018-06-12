@@ -34,6 +34,9 @@ mysql
 
 	`SHOW INDEX FROM table_name;` 显示索引信息
 
+	执行sql文件
+	`source` /var/xxxx.sql;
+
 	ALTER
 	删除，添加表字段
 		**ALTER** TABLE testalter_tbl **DROP** i;			```使用了 ALTER 命令及 DROP 子句来删除以上创建表的 i 字段```
