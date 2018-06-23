@@ -22,7 +22,7 @@ JVM内存模型
   Thread.interrupted()
   setPriority(int newPriority)
 2. Runnable
-3. Callback
+3. Callable Callback
   带返回值的Runnable,返回值Future
   Future
     判断任务是否完成
