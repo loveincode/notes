@@ -1,7 +1,16 @@
 ### HashMap And HashTable
 HashMap和Hashtable两个类都实现了Map接口，二者保存K-V对（key-value对）；HashSet则实现了Set接口，性质类似于集合。Hashtable的应用非常广泛，HashMap是新框架中用来代替Hashtable的类，也就是说建议使用HashMap，不要使用Hashtable。可能你觉得Hashtable很好用，为什么不用呢？这里简单分析他们的区别。
 
-一、继承的父类不同
+
+1）.HashTable的方法前面都有synchronized来同步，是线程安全的；HashMap未经同步，是非线程安全的。
+2）.HashTable不允许null值(key和value都不可以) ；HashMap允许null值(key和value都可以)。
+3）.HashTable有一个contains(Objectvalue)功能和containsValue(Objectvalue)功能一样。
+4）.HashTable使用Enumeration进行遍历；HashMap使用Iterator进行遍历。
+5）.HashTable中hash数组默认大小是11，增加的方式是old*2+1；HashMap中hash数组的默认大小是16，而且一定是2的指数。
+6）.哈希值的使用不同，HashTable直接使用对象的hashCode； HashMap重新计算hash值，而且用与代替求模。
+
+
+### 一、继承的父类不同
 
 Hashtable继承自Dictionary类，而HashMap继承自AbstractMap类，HashMap是Java1.2引进的Map
 interface 的一个实现。但二者都实现了Map接口。
@@ -13,7 +22,7 @@ interface 的一个实现。但二者都实现了Map接口。
 	public class HashMap<K,V> extends AbstractMap<K,V>
     	implements Map<K,V>, Cloneable, Serializable {
 
-二、线程安全性不同
+### 二、线程安全性不同
 
 Hashtable 中的方法是Synchronize的，而HashMap中的方法在缺省情况下是非Synchronize的。在多线程并发的环境下，可以直接使用Hashtable，不需要自己为它的方法实现同步，但使用HashMap时就必须要自己增加同步处理。
 
@@ -22,18 +31,18 @@ HashTable
 	public synchronized boolean isEmpty() {
         return count == 0;
     }
-	
+
 HashMap
 
 	public boolean isEmpty() {
         return size == 0;
     }
 
-三、是否提供contains方法
+### 三、是否提供contains方法
 
 HashMap把Hashtable的contains方法去掉了，改成containsValue和containsKey，因为contains方法容易让人引起误解。
 Hashtable则保留了contains，containsValue和containsKey三个方法，其中contains和containsValue功能相同，实际上containsValue调用的是contains方法。
-	
+
 	public synchronized boolean contains(Object value) {
         if (value == null) {
             throw new NullPointerException();
@@ -55,13 +64,13 @@ Hashtable则保留了contains，containsValue和containsKey三个方法，其中
     }
 
 
-四、key和value是否允许null值
+### 四、key和value是否允许null值
 
 其中key和value都是对象，并且不能包含重复key，但可以包含重复的value。
 Hashtable中，key和value都不允许出现null值。HashMap中，null可以作为键，这样的键只有一个；可以有一个或多个键所对应的值为null。当get()方法返回null值时，可能是 HashMap中没有该键，也可能使该键所对应的值为null。因此，在HashMap中不能由get()方法来判断HashMap中是否存在某个键， 而应该用containsKey()方法来判断。
 
 HashTable
-	  
+
 	  public synchronized V put(K key, V value) {
         // Make sure the value is not null
         if (value == null) {
@@ -136,15 +145,15 @@ HashMap
     }
 
 
-五、两个遍历方式的内部实现上不同
+### 五、两个遍历方式的内部实现上不同
 
 Hashtable、HashMap都使用了 Iterator。而由于历史原因，Hashtable还使用了Enumeration的方式 。
 
-六、hash值不同
+### 六、hash值不同
 
 哈希值的使用不同，HashTable直接使用对象的hashCode。而HashMap重新计算hash值。
 
-七、内部实现使用的数组初始化和扩容方式不同
+### 七、内部实现使用的数组初始化和扩容方式不同
 
 Hashtable和HashMap它们两个内部实现方式的数组的初始大小和扩容的方式。HashTable中hash数组默认大小是11，增加的方式是 old*2+1。HashMap中hash数组的默认大小是16，而且一定是2的指数。
 
@@ -161,4 +170,3 @@ HashMap可以通过下面的语句进行同步：
 	    implements ConcurrentMap<K,V>, Serializable {
 
 Hashtable和HashMap有几个主要的不同：线程安全以及速度。仅在你需要完全的线程安全的时候使用Hashtable，而如果你使用Java 5或以上的话，请使用ConcurrentHashMap吧。
-
