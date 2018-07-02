@@ -10,57 +10,57 @@ LinkedHashMap同样是非线程安全的，只在单线程环境下使用。
 
 LinkedHashMap源码如下（加入了详细的注释）：
 
-```
+``` java
 package java.util;  
 import java.io.*;  
-  
-  
+
+
 public class LinkedHashMap<K,V>  
     extends HashMap<K,V>  
     implements Map<K,V>  
 {  
-  
+
     private static final long serialVersionUID = 3801124242820219131L;  
-  
+
     //双向循环链表的头结点，整个LinkedHashMap中只有一个header，  
     //它将哈希表中所有的Entry贯穿起来，header中不保存key-value对，只保存前后节点的引用  
     private transient Entry<K,V> header;  
-  
+
     //双向链表中元素排序规则的标志位。  
     //accessOrder为false，表示按插入顺序排序  
     //accessOrder为true，表示按访问顺序排序  
     private final boolean accessOrder;  
-  
+
     //调用HashMap的构造方法来构造底层的数组  
     public LinkedHashMap(int initialCapacity, float loadFactor) {  
         super(initialCapacity, loadFactor);  
         accessOrder = false;    //链表中的元素默认按照插入顺序排序  
     }  
-  
+
     //加载因子取默认的0.75f  
     public LinkedHashMap(int initialCapacity) {  
         super(initialCapacity);  
         accessOrder = false;  
     }  
-  
+
     //加载因子取默认的0.75f，容量取默认的16  
     public LinkedHashMap() {  
         super();  
         accessOrder = false;  
     }  
-  
+
     //含有子Map的构造方法，同样调用HashMap的对应的构造方法  
     public LinkedHashMap(Map<? extends K, ? extends V> m) {  
         super(m);  
         accessOrder = false;  
     }  
-  
+
     //该构造方法可以指定链表中的元素排序的规则  
     public LinkedHashMap(int initialCapacity,float loadFactor,boolean accessOrder) {  
         super(initialCapacity, loadFactor);  
         this.accessOrder = accessOrder;  
     }  
-  
+
     //覆写父类的init()方法（HashMap中的init方法为空），  
     //该方法在父类的构造方法和Clone、readObject中在插入元素前被调用，  
     //初始化一个空的双向循环链表，头结点中不保存数据，头结点的下一个节点才开始保存数据。  
@@ -68,8 +68,8 @@ public class LinkedHashMap<K,V>
         header = new Entry<K,V>(-1, null, null, null);  
         header.before = header.after = header;  
     }  
-  
-  
+
+
     //覆写HashMap中的transfer方法，它在父类的resize方法中被调用，  
     //扩容后，将key-value对重新映射到新的newTable中  
     //覆写该方法的目的是为了提高复制的效率，  
@@ -82,8 +82,8 @@ public class LinkedHashMap<K,V>
             newTable[index] = e;  
         }  
     }  
-  
-  
+
+
     //覆写HashMap中的containsValue方法，  
     //覆写该方法的目的同样是为了提高查询的效率，  
     //利用双向循环链表的特点进行查询，少了对数组的外层for循环  
@@ -100,8 +100,8 @@ public class LinkedHashMap<K,V>
         }  
         return false;  
     }  
-  
-  
+
+
     //覆写HashMap中的get方法，通过getEntry方法获取Entry对象。  
     //注意这里的recordAccess方法，  
     //如果链表中元素的排序规则是按照插入的先后顺序排序的话，该方法什么也不做，  
@@ -113,29 +113,29 @@ public class LinkedHashMap<K,V>
         e.recordAccess(this);  
         return e.value;  
     }  
-  
+
     //清空HashMap，并将双向链表还原为只有头结点的空链表  
     public void clear() {  
         super.clear();  
         header.before = header.after = header;  
     }  
-  
+
     //Enty的数据结构，多了两个指向前后节点的引用  
     private static class Entry<K,V> extends HashMap.Entry<K,V> {  
         // These fields comprise the doubly linked list used for iteration.  
         Entry<K,V> before, after;  
-  
+
         //调用父类的构造方法  
         Entry(int hash, K key, V value, HashMap.Entry<K,V> next) {  
             super(hash, key, value, next);  
         }  
-  
+
         //双向循环链表中，删除当前的Entry  
         private void remove() {  
             before.after = after;  
             after.before = before;  
         }  
-  
+
         //双向循环立链表中，将当前的Entry插入到existingEntry的前面  
         private void addBefore(Entry<K,V> existingEntry) {  
             after  = existingEntry;  
@@ -143,8 +143,8 @@ public class LinkedHashMap<K,V>
             before.after = this;  
             after.before = this;  
         }  
-  
-  
+
+
         //覆写HashMap中的recordAccess方法（HashMap中该方法为空），  
         //当调用父类的put方法，在发现插入的key已经存在时，会调用该方法，  
         //调用LinkedHashmap覆写的get方法时，也会调用到该方法，  
@@ -164,73 +164,73 @@ public class LinkedHashMap<K,V>
                 addBefore(lm.header);  
             }  
         }  
-  
+
         void recordRemoval(HashMap<K,V> m) {  
             remove();  
         }  
     }  
-  
+
     //迭代器  
     private abstract class LinkedHashIterator<T> implements Iterator<T> {  
     Entry<K,V> nextEntry    = header.after;  
     Entry<K,V> lastReturned = null;  
-  
-    /** 
-     * The modCount value that the iterator believes that the backing 
-     * List should have.  If this expectation is violated, the iterator 
-     * has detected concurrent modification. 
+
+    /**
+     * The modCount value that the iterator believes that the backing
+     * List should have.  If this expectation is violated, the iterator
+     * has detected concurrent modification.
      */  
     int expectedModCount = modCount;  
-  
+
     public boolean hasNext() {  
             return nextEntry != header;  
     }  
-  
+
     public void remove() {  
         if (lastReturned == null)  
         throw new IllegalStateException();  
         if (modCount != expectedModCount)  
         throw new ConcurrentModificationException();  
-  
+
             LinkedHashMap.this.remove(lastReturned.key);  
             lastReturned = null;  
             expectedModCount = modCount;  
     }  
-  
+
     //从head的下一个节点开始迭代  
     Entry<K,V> nextEntry() {  
         if (modCount != expectedModCount)  
         throw new ConcurrentModificationException();  
             if (nextEntry == header)  
                 throw new NoSuchElementException();  
-  
+
             Entry<K,V> e = lastReturned = nextEntry;  
             nextEntry = e.after;  
             return e;  
     }  
     }  
-  
+
     //key迭代器  
     private class KeyIterator extends LinkedHashIterator<K> {  
     public K next() { return nextEntry().getKey(); }  
     }  
-  
+
     //value迭代器  
     private class ValueIterator extends LinkedHashIterator<V> {  
     public V next() { return nextEntry().value; }  
     }  
-  
+
     //Entry迭代器  
     private class EntryIterator extends LinkedHashIterator<Map.Entry<K,V>> {  
     public Map.Entry<K,V> next() { return nextEntry(); }  
     }  
-  
+
     // These Overrides alter the behavior of superclass view iterator() methods  
     Iterator<K> newKeyIterator()   { return new KeyIterator();   }  
     Iterator<V> newValueIterator() { return new ValueIterator(); }  
     Iterator<Map.Entry<K,V>> newEntryIterator() { return new EntryIterator(); }  
-  
-  
+
+
     //覆写HashMap中的addEntry方法，LinkedHashmap并没有覆写HashMap中的put方法，  
     //而是覆写了put方法所调用的addEntry方法和recordAccess方法，  
     //put方法在插入的key已存在的情况下，会调用recordAccess方法，  
@@ -238,7 +238,7 @@ public class LinkedHashMap<K,V>
     void addEntry(int hash, K key, V value, int bucketIndex) {  
         //创建新的Entry，并插入到LinkedHashMap中  
         createEntry(hash, key, value, bucketIndex);  
-  
+
         //双向链表的第一个有效节点（header后的那个节点）为近期最少使用的节点  
         Entry<K,V> eldest = header.after;  
         //如果有必要，则删除掉该近期最少使用的节点，  
@@ -251,7 +251,7 @@ public class LinkedHashMap<K,V>
                 resize(2 * table.length);  
         }  
     }  
-  
+
     void createEntry(int hash, K key, V value, int bucketIndex) {  
         //创建新的Entry，并将其插入到数组对应槽的单链表的头结点处，这点与HashMap中相同  
         HashMap.Entry<K,V> old = table[bucketIndex];  
@@ -263,7 +263,7 @@ public class LinkedHashMap<K,V>
         e.addBefore(header);  
         size++;  
     }  
-  
+
     //该方法是用来被覆写的，一般如果用LinkedHashmap实现LRU算法，就要覆写该方法，  
     //比如可以将该方法覆写为如果设定的内存已满，则返回true，这样当再次向LinkedHashMap中put  
     //Entry时，在调用的addEntry方法中便会将近期最少使用的节点删除掉（header后的那个节点）。  
@@ -290,7 +290,7 @@ public class LinkedHashMap<K,V>
 
 5、LinkedHashMap并没有覆写HashMap中的put方法，而是覆写了put方法中调用的addEntry方法和recordAccess方法，我们回过头来再看下HashMap的put方法：
 
-```
+``` java
 // 将“key-value”添加到HashMap中      
 public V put(K key, V value) {      
     // 若“key为null”，则将该键值对添加到table[0]中。      
@@ -309,7 +309,7 @@ public V put(K key, V value) {
             return oldValue;      
         }      
     }      
-  
+
     // 若“该key”对应的键值对不存在，则将“key-value”添加到table中      
     modCount++;    
     //将key-value添加到table[i]处    
@@ -322,7 +322,7 @@ public V put(K key, V value) {
 
 我们先来看recordAccess方法：
 
-```
+``` java
 //覆写HashMap中的recordAccess方法（HashMap中该方法为空），  
 //当调用父类的put方法，在发现插入的key已经存在时，会调用该方法，  
 //调用LinkedHashmap覆写的get方法时，也会调用到该方法，  
@@ -348,7 +348,7 @@ public V put(K key, V value) {
 
 再来看addEntry方法：
 
-```
+``` java
 //覆写HashMap中的addEntry方法，LinkedHashmap并没有覆写HashMap中的put方法，  
 //而是覆写了put方法所调用的addEntry方法和recordAccess方法，  
 //put方法在插入的key已存在的情况下，会调用recordAccess方法，  
@@ -356,7 +356,7 @@ public V put(K key, V value) {
    void addEntry(int hash, K key, V value, int bucketIndex) {  
     //创建新的Entry，并插入到LinkedHashMap中  
        createEntry(hash, key, value, bucketIndex);  
-  
+
        //双向链表的第一个有效节点（header后的那个节点）为近期最少使用的节点  
        Entry<K,V> eldest = header.after;  
     //如果有必要，则删除掉该近期最少使用的节点，  
@@ -369,7 +369,7 @@ public V put(K key, V value) {
                resize(2 * table.length);  
        }  
    }  
-  
+
    void createEntry(int hash, K key, V value, int bucketIndex) {  
     //创建新的Entry，并将其插入到数组对应槽的单链表的头结点处，这点与HashMap中相同  
        HashMap.Entry<K,V> old = table[bucketIndex];  
@@ -387,7 +387,7 @@ public V put(K key, V value) {
 
 上面还有个removeEldestEntry方法，该方法如下：
 
-```
+``` java
     //该方法是用来被覆写的，一般如果用LinkedHashmap实现LRU算法，就要覆写该方法，  
     //比如可以将该方法覆写为如果设定的内存已满，则返回true，这样当再次向LinkedHashMap中put  
     //Entry时，在调用的addEntry方法中便会将近期最少使用的节点删除掉（header后的那个节点）。  
@@ -401,7 +401,7 @@ public V put(K key, V value) {
 
 6、LinkedHashMap覆写了HashMap的get方法：
 
-```
+``` java
 //覆写HashMap中的get方法，通过getEntry方法获取Entry对象。  
 //注意这里的recordAccess方法，  
 //如果链表中元素的排序规则是按照插入的先后顺序排序的话，该方法什么也不做，  

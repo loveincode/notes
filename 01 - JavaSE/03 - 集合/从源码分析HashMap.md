@@ -18,7 +18,7 @@
 
 如何保证hash算法高效,hash算法有关的代码如下：
 
-```
+```java
 int hash = hash(key.hashCode());
 public native int hashCode();
 static int hash(int h){
@@ -31,7 +31,7 @@ static int hash(int h){
 
 当取得key的hash值后，需要通过hash值得到内存地址：
 
-```
+```java
 int i = indexFor(hash, table.length);
 static int indexFor(int h, int length){
 	return h & (length - 1);
@@ -51,7 +51,7 @@ indexFor()函数通过将hash值和数组长度按位与直接得到数组索引
 
 可以看到，HashMap的内部维护着一个Entry数组，每一个Entry表项包括key、value、next和hash几项。next部分指向另外一个Entry。进一步阅读HashMap的put()方法源码，可以看到当put()操作有冲突时，新的Entry依然会被安放在对应的索引下标内，并替换原有的值。同时为了保证旧值不丢失，会将新的Entry的next指向旧值。这便实现了在一个数组索引空间内存放多个值项。因此，如图3.12所示，HashMap实际上是一个链表的数组。
 
-```
+```java
 public V put(K key, V value){
 	if(key == null)
 		return putForNullKey(value);
@@ -76,7 +76,7 @@ public V put(K key, V value){
 
 addEntry()方法的实现如下：
 
-```
+```java
 void addEntry(int hash, K key, V value, int bucketIndex){
 	Entry<K,V> e = table[bucketIndex];
 	//将新增元素放到i的位置，并让它的next指向旧的元素
@@ -95,7 +95,7 @@ void addEntry(int hash, K key, V value, int bucketIndex){
 
 HashMap提供了两个可以指定初始化大小的构造函数：
 
-```
+```java
 public HashMap(int initialCapacity)
 public HashMap(int initialCapacity, float loadFactor)
 ```
@@ -110,7 +110,7 @@ public HashMap(int initialCapacity, float loadFactor)
 
 HashMap扩容的代码如下：
 
-```
+```java
 void resize(int newCapacity){
 	Entry[] oldTable = table;
 	int oldCapacity= oldTable.length;
@@ -130,7 +130,7 @@ void resize(int newCapacity){
 
 其中，数组迁移逻辑主要在transfer()函数中实现，该函数实现和注释如下：
 
-```
+```java
 void transfer(Entry[] newTable){
 	Entry[] src = table;
 	int newCapacity = newTable.length;
