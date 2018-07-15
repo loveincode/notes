@@ -7,16 +7,18 @@ Spring框架中，一旦把一个Bean纳入Spring IOC容器之中，这个Bean�
 
 包括BeanFactoryPostProcessor、BeanPostProcessor、InstantiationAwareBeanPostProcessor、BeanNameAware、BeanFactoryAware，InitializingBean等
 
-1. Bean的建立， 由BeanFactory读取Bean定义文件，并生成各个实例
-2. Setter注入，执行Bean的属性依赖注入
+1. Bean的建立， 由BeanFactory读取Bean定义文件，并生成各个`实例化`
+2. Setter注入，执行Bean的`属性`依赖注入
 3. `BeanNameAware`的setBeanName(), 如果实现该接口，则执行其setBeanName方法
 4. `BeanFactoryAware`的setBeanFactory()，如果实现该接口，则执行其setBeanFactory方法
-5. `BeanPostProcessor`的processBeforeInitialization()，如果有关联的processor，则在Bean初始化之前都会执行这个实例的processBeforeInitialization()方法
-6. `InitializingBean`的afterPropertiesSet()，如果实现了该接口，则执行其afterPropertiesSet()方法
-7. Bean定义文件中定义`init-method`
-8. `BeanPostProcessors`的processAfterInitialization()，如果有关联的processor，则在Bean初始化之前都会执行这个实例的processAfterInitialization()方法
-9. DisposableBean的destroy()，在容器关闭时，如果Bean类实现了该接口，则执行它的`destroy()`方法
-10. Bean定义文件中定义destroy-method，在容器关闭时，可以在Bean定义文件中使用“`destory-method`”定义的方法
+5. `ApplicationContextAware`的setApplicationContext()方法，将bean所在的应用上下文的引用传入进来
+6. `BeanPostProcessor`的processBeforeInitialization()，如果有关联的processor，则在Bean初始化之前都会执行这个实例的processBeforeInitialization()方法
+7. `InitializingBean`的afterPropertiesSet()，如果实现了该接口，则执行其afterPropertiesSet()方法
+8. Bean定义文件中定义`init-method`
+9. `BeanPostProcessors`的processAfterInitialization()，如果有关联的processor，则在Bean初始化之前都会执行这个实例的processAfterInitialization()方法
+10. 此时，bean已经准备就绪了，可以被应用程序使用了，将一直驻留在应用上下文中，直到该应用上下文被销毁
+11. DisposableBean的destroy()，在容器关闭时，如果Bean类实现了该接口，则执行它的`destroy()`方法
+12. Bean定义文件中定义destroy-method，在容器关闭时，可以在Bean定义文件中使用“`destory-method`”定义的方法
 
 
 如果使用ApplicationContext来维护一个Bean的生命周期，则基本上与上边的流程相同，只不过在执行BeanNameAware的setBeanName()后，若有Bean类实现了org.springframework.context.ApplicationContextAware接口，则执行其setApplicationContext()方法，然后再进行BeanPostProcessors的processBeforeInitialization()
