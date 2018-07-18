@@ -2,7 +2,7 @@
 Spring架构图
 组成Spring 框架的每个模块（或组件）都可以单独存在，或者与其他一个或多个模块联合实现。每个模块的功能如下：
 核心容器：核心容器提供Spring 框架的基本功能。核心容器的主要组件是BeanFactory ，它是工厂模式的实现。BeanFactory 使用控制反转（IOC ） 模式将应用程序的配置和依赖性规范与实际的应用程序代码分开。
-Spring 上下文：Spring 上下文是一个配置文件，向Spring 框架提供上下文信息。Spring 上下文包括企业服务，例如JNDI 、EJB、电子邮件、国际化、校验和调度功能。
+`Spring 上下文`：Spring 上下文是一个配置文件，向Spring 框架提供上下文信息。Spring 上下文包括企业服务，例如JNDI 、EJB、电子邮件、国际化、校验和调度功能。
 Spring AOP ： 通过配置管理特性，Spring AOP 模块直接将面向方面的编程功能集成到了Spring 框架中。所以，可以很容易地使Spring 框架管理的任何对象支持AOP 。Spring AOP 模块为基于Spring 的应用程序中的对象提供了事务管理服务。通过使用Spring AOP ，不用依赖EJB 组件，就可以将声明性事务管理集成到应用程序中。
 Spring DAO ：JDBC DAO 抽象层提供了有意义的异常层次结构，可用该结构来管理异常处理和不同数据库供应商抛出的错误消息。异常层次结构简化了错误处理，并且极大地降低了需要编写的异常代码数量（例如打开和关闭连接）。Spring DAO 的面向JDBC 的异常遵从通用的DAO 异常层次结构。
 Spring ORM ：Spring 框架插入了若干个ORM 框架，从而提供了ORM 的对象关系工具，其中包括JDO 、Hibernate 和iBatisSQLMap 。所有这些都遵从Spring 的通用事务和DAO 异常层次结构。
@@ -30,22 +30,26 @@ TransactionDefinition //事务属性定义
 TranscationStatus //代表了当前的事务，可以提交，回滚。
 PlatformTransactionManager这个是spring提供的用于管理事务的基础接口，其下有一个实现的抽象类AbstractPlatformTransactionManager,我们使用的事务管理类例如DataSourceTransactionManager等都是这个类的子类。
 一般事务定义步骤：
+```java
 TransactionDefinition td = new TransactionDefinition();
 TransactionStatus ts = transactionManager.getTransaction(td);
-try
-{ //do sth
-transactionManager.commit(ts);
+try{ //do sth
+  transactionManager.commit(ts);
 }
-catch(Exception e){transactionManager.rollback(ts);}
+catch(Exception e){
+  transactionManager.rollback(ts);
+}
+```
 spring提供的事务管理可以分为两类：编程式的和声明式的。编程式的，比较灵活，但是代码量大，存在重复的代码比较多；声明式的比编程式的更灵活。
 编程式主要使用transactionTemplate。省略了部分的提交，回滚，一系列的事务对象定义，需注入事务管理对象.
-void add()
-{
-transactionTemplate.execute( new TransactionCallback(){
-pulic Object doInTransaction(TransactionStatus ts)
-{ //do sth}
+```java
+void add(){
+  transactionTemplate.execute( new TransactionCallback(){
+    pulic Object doInTransaction(TransactionStatus ts){ //do sth}
+    }
+  })
 }
-}
+```
 声明式：
 使用TransactionProxyFactoryBean:
 
@@ -61,13 +65,16 @@ PROPAGATION_NEVER–以非事务方式执行，如果当前存在事务，则抛
 PROPAGATION_NESTED–如果当前存在事务，则在嵌套事务内执行。如果当前没有事务，则进行与PROPAGATION_REQUIRED类似的操作。
 *  如何在spring的applicationContext.xml使用JNDI而不是DataSource
 可以使用”org.springframework.jndi.JndiObjectFactoryBean”来实现。示例如下：
+```xml
 <bean id=”dataSource”>
    <property name=”jndiName”>
        <value>java:comp/env/jdbc/appfuse</value>
    </property>
 </bean>
+```
 *  在spring中是如何配置数据库驱动的
 org.springframework.jdbc.datasource.DriverManagerDataSource”数据源来配置数据库驱动。示例如下：
+```xml
 <bean id=”dataSource”>
    <property name=”driverClassName”>
        <value>org.hsqldb.jdbcDriver</value>
@@ -78,8 +85,10 @@ org.springframework.jdbc.datasource.DriverManagerDataSource”数据源来配置
    <property name=”username”><value>sa</value></property>
    <property name=”password”><value></value></property>
 </bean>
+```
 *  spring中的applicationContext.xml能不能改为其他名字
 ContextLoaderListener是一个ServletContextListener, 它在你的web应用启动的时候初始化。缺省情况下， 它会在WEB-INF/applicationContext.xml文件找Spring的配置。 你可以通过定义一个<context-param>元素名字为”contextConfigLocation”来改变Spring配置文件的位置。示例如下：
+```
 <listener>
    <listener-class>org.springframework.web.context.ContextLoaderListener
 
@@ -90,21 +99,27 @@ ContextLoaderListener是一个ServletContextListener, 它在你的web应用启�
 
    </listener-class>
 </listener>
+```
 *  在web中如何配置spring
 在J2EE的web应用里面配置spring非常简单，最简单的只需要把spring得ContextLoaderListener添加到你的web.xml文件里面就可以了，示例如下：
+```
 <listener>
    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 </listener>
+```
 *  在spring中如何定义hibernate Mapping？
 添加hibernate mapping 文件到web/WEB-INF目录下的applicationContext.xml文件里面。示例如下：
+```
 <property name=”mappingResources”>
    <list>
        <value>org/appfuse/model/User.hbm.xml</value>
    </list>
 </property>
+```
 *  两种依赖注入的类型是什么?
 两种依赖注入的类型分别是setter注入和构造方法注入。
 setter注入： 一般情况下所有的java bean, 我们都会使用setter方法和getter方法去设置和获取属性的值，示例如下：
+```
 public class namebean {
     String      name;  
     public void setName(String a) {
@@ -112,26 +127,33 @@ public class namebean {
     public String getName() {
        return name; }
    }
+```
 我们会创建一个bean的实例然后设置属性的值，spring的配置文件如下：
+```
 <bean id=”bean1″  >
   <property   name=”name” >
       <value>tom</value>
   </property>
 </bean>
+```
 Spring会调用setName方法来只是name熟悉为tom
 构造方法注入：构造方法注入中，我们使用带参数的构造方法如下：
+```
 public class namebean {
     String name;
     public namebean(String a) {
        name = a;
     }   
 }
+```
 我们会在创建bean实例的时候以new namebean(”tom”)的方式来设置name属性, Spring配置文件如下：
+```
 <bean id=”bean1″ >
    <constructor-arg>
       <value>My Bean Value</value>
   </constructor-arg>
 </bean>
+```
 使用constructor-arg标签来设置构造方法的参数。
 *  解释一下Dependency Injection(DI)和IOC（inversion of control）?
 参考答案：依赖注入DI是一个程序设计模式和架构模型， 一些时候也称作控制反转，尽管在技术上来讲，依赖注入是一个IOC的特殊实现，依赖注入是指一个对象应用另外一个对象来提供一个特殊的能力，例如：把一个数据库连接已参数的形式传到一个对象的结构方法里面而不是在那个对象内部自行创建一个连接。控制反转和依赖注入的基本思想就是把类的依赖从类内部转化到外部以减少依赖
@@ -140,13 +162,14 @@ public class namebean {
 作用：
 1. BeanFactory负责读取bean配置文档，管理bean的加载，实例化，维护bean之间的依赖关系，负责bean的声明周期。
 2. ApplicationContext除了提供上述BeanFactory所能提供的功能之外，还提供了更完整的框架功能：
-a. 国际化支持
-b. 资源访问：Resource rs = ctx. getResource(”classpath:config.properties”), “file:c:/config.properties”
-c. 事件传递：通过实现ApplicationContextAware接口
+  a. 国际化支持
+  b. 资源访问：Resource rs = ctx. getResource(”classpath:config.properties”), “file:c:/config.properties”
+  c. 事件传递：通过实现ApplicationContextAware接口
 3. 常用的获取ApplicationContext的方法：
 FileSystemXmlApplicationContext：从文件系统或者url指定的xml配置文件创建，参数为配置文件名或文件名数组
 ClassPathXmlApplicationContext：从classpath的xml配置文件创建，可以从jar包中读取配置文件
 WebApplicationContextUtils：从web应用的根目录读取配置文件，需要先在web.xml中配置，可以配置监听器或者servlet来实现
+```
 <listener>
 <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 </listener>
@@ -155,11 +178,14 @@ WebApplicationContextUtils：从web应用的根目录读取配置文件，需要
 <servlet-class>org.springframework.web.context.ContextLoaderServlet</servlet-class>
 <load-on-startup>1</load-on-startup>
 </servlet>
+```
 这两种方式都默认配置文件为web-inf/applicationContext.xml，也可使用context-param指定配置文件
+```
 <context-param>
 <param-name>contextConfigLocation</param-name>
 <param-value>/WEB-INF/myApplicationContext.xml</param-value>
 </context-param>
+```
 *  spring的核心是什么，各有什么作用？
 BeanFactory：产生一个新的实例，可以实现单例模式
 BeanWrapper：提供统一的get及set方法
@@ -178,6 +204,7 @@ Spring的jdbc:节省代码，不管连接(Connection)，不管事务、不管异
  JdbcTemplate(dataSource):增、删、改、查
  TransactionTemplate(transactionManager):进行事务处理
 *  Spring配置的主要标签有什么?有什么作用?
+```
 <beans>
   <bean id=”” class=”” init=”” destroy=”” singleton=””>
    <property name=””>
@@ -188,13 +215,16 @@ Spring的jdbc:节省代码，不管连接(Connection)，不管事务、不管异
    </property>
   </bean>
 </beans>
+```
 *  如何在spring中实现国际化?
 在applicationContext.xml加载一个bean
+```
 <bean id=”messageSource” class=”org.springframework.context.support.ResourceBundleMessageSource”>
  <property name=”basename”>
   <value>message</value>
  </property>
 </bean>
+```
 在src目录下建多个properties文件
 对于非英文的要用native2ascii -encoding gb2312 源  目转化文件相关内容
 其命名格式是message_语言_国家。
@@ -225,6 +255,7 @@ beanFactory
 使用Spring框架提供的模板类JdbcTemplete可以是JDBC更加高效
 代码如下：JdbcTemplate template = new JdbcTemplate(myDataSource);
 DAO类的例子：
+```
 public class StudentDaoJdbc implements StudentDao {
 private JdbcTemplate jdbcTemplate;
 public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
@@ -232,7 +263,9 @@ this.jdbcTemplate = jdbcTemplate;
 }
 more..
 }
+```
 配置文件：
+```
 <bean id=”jdbcTemplate” class=”org.springframework.jdbc.core.JdbcTemplate”>
 <property name=”dataSource”>
 <ref bean=”dataSource”/>
@@ -248,91 +281,97 @@ more..
 <ref bean=”jdbcTemplate”/>
 </property>
 </bean>
+```
 *  请介绍下spring中bean的作用域
-在spring2.0之前bean只有2种作用域即：singleton(单例)、non-singleton（也称 prototype），Spring2.0以后，增加了session、request、global session三种专用于Web应用程序上下文的Bean。因此，默认情况下Spring2.0现在有五种类型的Bean。
-<bean id=”role” class=”spring.chapter2.maryGame.Role” scope=”singleton”/>
-这里的scope就是用来配置spring bean的作用域，它标识bean的作用域。
-在spring2.0之前bean只有2种作用域即：singleton(单例)、non-singleton（也称 prototype），Spring2.0以后，增加了session、request、global session三种专用于Web应用程序上下文的Bean。因此，默认情况下Spring2.0现在有五种类型的Bean。当然，Spring2.0对 Bean的类型的设计进行了重构，并设计出灵活的Bean类型支持，理论上可以有无数多种类型的Bean，用户可以根据自己的需要，增加新的Bean类型，满足实际应用需求。
-1、singleton作用域
-当一个bean的作用域设置为singleton，那么Spring IOC容器中只会存在一个共享的bean实例，并且所有对bean的请求，只要id与该bean定义相匹配，则只会返回bean的同一实例。换言之，当把一个bean定义设置为singleton作用域时，Spring IOC容器只会创建该bean定义的唯一实例。这个单一实例会被存储到单例缓存（singleton cache）中，并且所有针对该bean的后续请求和引用都将返回被缓存的对象实例，这里要注意的是singleton作用域和GOF设计模式中的单例是完全不同的，单例设计模式表示一个ClassLoader中只有一个class存在，而这里的singleton则表示一个容器对应一个bean，也就是说当一个bean被标识为singleton时候，spring的IOC容器中只会存在一个该bean。
-配置实例：
-<bean id=”role” class=”spring.chapter2.maryGame.Role” scope=”singleton”/>
-或者
-<bean id=”role” class=”spring.chapter2.maryGame.Role” singleton=”true”/>
-2、prototype
-prototype作用域部署的bean，每一次请求（将其注入到另一个bean中，或者以程序的方式调用容器的getBean()方法）都会产生一个新的bean实例，相当于一个new的操作，对于prototype作用域的bean，有一点非常重要，那就是Spring不能对一个 prototype bean的整个生命周期负责，容器在初始化、配置、装饰或者是装配完一个prototype实例后，将它交给客户端，随后就对该prototype实例不闻不问了。不管何种作用域，容器都会调用所有对象的初始化生命周期回调方法，而对prototype而言，任何配置好的析构生命周期回调方法都将不会被调用。清除prototype作用域的对象并释放任何prototype bean所持有的昂贵资源，都是客户端代码的职责。（让Spring容器释放被singleton作用域bean占用资源的一种可行方式是，通过使用 bean的后置处理器，该处理器持有要被清除的bean的引用。）
-配置实例：
-<bean id=”role” class=”spring.chapter2.maryGame.Role” scope=”prototype”/>
-或者
-<beanid=”role” class=”spring.chapter2.maryGame.Role” singleton=”false”/>
-3、request
-request表示该针对每一次HTTP请求都会产生一个新的bean，同时该bean仅在当前HTTP request内有效，配置实例：
-request、session、global session使用的时候，首先要在初始化web的web.xml中做如下配置：
-如果你使用的是Servlet 2.4及以上的web容器，那么你仅需要在web应用的XML声明文件web.xml中增加下述ContextListener即可：
-<web-app>
-…
-<listener>
-<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
-</listener>
-…
-</web-app>
-如果是Servlet2.4以前的web容器,那么你要使用一个javax.servlet.Filter的实现：
-<web-app>
-..
-<filter>
-<filter-name>requestContextFilter</filter-name>
-<filter-class>org.springframework.web.filter.RequestContextFilter</filter-class>
-</filter>
-<filter-mapping>
-<filter-name>requestContextFilter</filter-name>
-<url-pattern>/*</url-pattern>
-</filter-mapping>
-…
-</web-app>
-接着既可以配置bean的作用域了：
-<bean id=”role” class=”spring.chapter2.maryGame.Role” scope=”request”/>
-4、session
-session作用域表示该针对每一次HTTP请求都会产生一个新的bean，同时该bean仅在当前HTTP session内有效，配置实例：
-配置实例：
-和request配置实例的前提一样，配置好web启动文件就可以如下配置：
-<bean id=”role” class=”spring.chapter2.maryGame.Role” scope=”session”/>
-5、global session
-global session作用域类似于标准的HTTP Session作用域，不过它仅仅在基于portlet的web应用中才有意义。Portlet规范定义了全局Session的概念，它被所有构成某个 portlet web应用的各种不同的portlet所共享。在global session作用域中定义的bean被限定于全局portlet Session的生命周期范围内。如果你在web中使用global session作用域来标识bean，那么，web会自动当成session类型来使用。
-配置实例：
-和request配置实例的前提一样，配置好web启动文件就可以如下配置：
-<bean id=”role” class=”spring.chapter2.maryGame.Role” scope=”global session”/>
-6、自定义bean装配作用域
-在spring 2.0中作用域是可以任意扩展的，你可以自定义作用域，甚至你也可以重新定义已有的作用域（但是你不能覆盖singleton和 prototype），spring的作用域由接口org.springframework.beans.factory.config.Scope来定义，自定义自己的作用域只要实现该接口即可，下面给个实例：
-我们建立一个线程的scope，该scope在表示一个线程中有效，代码如下：
-publicclass MyScope implements Scope …{
-privatefinal ThreadLocal threadScope = new ThreadLocal() …{
-protected Object initialValue() …{
-returnnew HashMap();
-}
-};
-public Object get(String name, ObjectFactory objectFactory) …{
-Map scope = (Map) threadScope.get();
-Object object = scope.get(name);
-if(object==null) …{
-object = objectFactory.getObject();
-scope.put(name, object);
-}
-return object;
-}
-public Object remove(String name) …{
-Map scope = (Map) threadScope.get();
-return scope.remove(name);
-}
-publicvoid registerDestructionCallback(String name, Runnable callback) …{
-}
-public String getConversationId() …{
-// TODO Auto-generated method stub
-returnnull;
-}
-}
-*  请介绍 一下spring的bean的生命周期
+  在spring2.0之前bean只有2种作用域即：singleton(单例)、non-singleton（也称 prototype），Spring2.0以后，增加了session、request、global session三种专用于Web应用程序上下文的Bean。因此，默认情况下Spring2.0现在有五种类型的Bean。
+  <bean id=”role” class=”spring.chapter2.maryGame.Role” scope=”singleton”/>
+  这里的scope就是用来配置spring bean的作用域，它标识bean的作用域。
+  在spring2.0之前bean只有2种作用域即：singleton(单例)、non-singleton（也称 prototype），Spring2.0以后，增加了session、request、global session三种专用于Web应用程序上下文的Bean。因此，默认情况下Spring2.0现在有五种类型的Bean。当然，Spring2.0对 Bean的类型的设计进行了重构，并设计出灵活的Bean类型支持，理论上可以有无数多种类型的Bean，用户可以根据自己的需要，增加新的Bean类型，满足实际应用需求。
+  1、singleton作用域
+  当一个bean的作用域设置为singleton，那么Spring IOC容器中只会存在一个共享的bean实例，并且所有对bean的请求，只要id与该bean定义相匹配，则只会返回bean的同一实例。换言之，当把一个bean定义设置为singleton作用域时，Spring IOC容器只会创建该bean定义的唯一实例。这个单一实例会被存储到单例缓存（singleton cache）中，并且所有针对该bean的后续请求和引用都将返回被缓存的对象实例，这里要注意的是singleton作用域和GOF设计模式中的单例是完全不同的，单例设计模式表示一个ClassLoader中只有一个class存在，而这里的singleton则表示一个容器对应一个bean，也就是说当一个bean被标识为singleton时候，spring的IOC容器中只会存在一个该bean。
+  配置实例：
+  <bean id=”role” class=”spring.chapter2.maryGame.Role” scope=”singleton”/>
+  或者
+  <bean id=”role” class=”spring.chapter2.maryGame.Role” singleton=”true”/>
+  2、prototype
+  prototype作用域部署的bean，每一次请求（将其注入到另一个bean中，或者以程序的方式调用容器的getBean()方法）都会产生一个新的bean实例，相当于一个new的操作，对于prototype作用域的bean，有一点非常重要，那就是Spring不能对一个 prototype bean的整个生命周期负责，容器在初始化、配置、装饰或者是装配完一个prototype实例后，将它交给客户端，随后就对该prototype实例不闻不问了。不管何种作用域，容器都会调用所有对象的初始化生命周期回调方法，而对prototype而言，任何配置好的析构生命周期回调方法都将不会被调用。清除prototype作用域的对象并释放任何prototype bean所持有的昂贵资源，都是客户端代码的职责。（让Spring容器释放被singleton作用域bean占用资源的一种可行方式是，通过使用 bean的后置处理器，该处理器持有要被清除的bean的引用。）
+  配置实例：
+  <bean id=”role” class=”spring.chapter2.maryGame.Role” scope=”prototype”/>
+  或者
+  <beanid=”role” class=”spring.chapter2.maryGame.Role” singleton=”false”/>
+  3、request
+  request表示该针对每一次HTTP请求都会产生一个新的bean，同时该bean仅在当前HTTP request内有效，配置实例：
+  request、session、global session使用的时候，首先要在初始化web的web.xml中做如下配置：
+  如果你使用的是Servlet 2.4及以上的web容器，那么你仅需要在web应用的XML声明文件web.xml中增加下述ContextListener即可：
+  ```
+  <web-app>
+  …
+  <listener>
+  <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+  </listener>
+  …
+  </web-app>
+  如果是Servlet2.4以前的web容器,那么你要使用一个javax.servlet.Filter的实现：
+  <web-app>
+  ..
+  <filter>
+  <filter-name>requestContextFilter</filter-name>
+  <filter-class>org.springframework.web.filter.RequestContextFilter</filter-class>
+  </filter>
+  <filter-mapping>
+  <filter-name>requestContextFilter</filter-name>
+  <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  …
+  </web-app>
+  ```
+  接着既可以配置bean的作用域了：
+  <bean id=”role” class=”spring.chapter2.maryGame.Role” scope=”request”/>
+  4、session
+  session作用域表示该针对每一次HTTP请求都会产生一个新的bean，同时该bean仅在当前HTTP session内有效，配置实例：
+  配置实例：
+  和request配置实例的前提一样，配置好web启动文件就可以如下配置：
+  <bean id=”role” class=”spring.chapter2.maryGame.Role” scope=”session”/>
+  5、global session
+  global session作用域类似于标准的HTTP Session作用域，不过它仅仅在基于portlet的web应用中才有意义。Portlet规范定义了全局Session的概念，它被所有构成某个 portlet web应用的各种不同的portlet所共享。在global session作用域中定义的bean被限定于全局portlet Session的生命周期范围内。如果你在web中使用global session作用域来标识bean，那么，web会自动当成session类型来使用。
+  配置实例：
+  和request配置实例的前提一样，配置好web启动文件就可以如下配置：
+  <bean id=”role” class=”spring.chapter2.maryGame.Role” scope=”global session”/>
+  6、自定义bean装配作用域
+  在spring 2.0中作用域是可以任意扩展的，你可以自定义作用域，甚至你也可以重新定义已有的作用域（但是你不能覆盖singleton和 prototype），spring的作用域由接口org.springframework.beans.factory.config.Scope来定义，自定义自己的作用域只要实现该接口即可，下面给个实例：
+  我们建立一个线程的scope，该scope在表示一个线程中有效，代码如下：
+  ```
+  publicclass MyScope implements Scope …{
+  privatefinal ThreadLocal threadScope = new ThreadLocal() …{
+  protected Object initialValue() …{
+  returnnew HashMap();
+  }
+  };
+  public Object get(String name, ObjectFactory objectFactory) …{
+  Map scope = (Map) threadScope.get();
+  Object object = scope.get(name);
+  if(object==null) …{
+  object = objectFactory.getObject();
+  scope.put(name, object);
+  }
+  return object;
+  }
+  public Object remove(String name) …{
+  Map scope = (Map) threadScope.get();
+  return scope.remove(name);
+  }
+  publicvoid registerDestructionCallback(String name, Runnable callback) …{
+  }
+  public String getConversationId() …{
+  // TODO Auto-generated method stub
+  returnnull;
+  }
+  }
+  ```
+*  请介绍一下spring的bean的生命周期
 一、Bean的定义
 Spring通常通过配置文件定义Bean。如：
+```
 <?xml version=”1.0″ encoding=”UTF-8″?>
 <beans xmlns=”http://www.springframework.org/schema/beans”
 xmlns:xsi=”http://www.w3.org/2001/XMLSchema-instance”
@@ -343,11 +382,13 @@ xsi:schemaLocation=”http://www.springframework.org/schema/beans http://www.spr
 </property>
 </bean>
 </beans>
+```
 这个配置文件就定义了一个标识为 HelloWorld 的Bean。在一个配置文档中可以定义多个Bean。
 二、Bean的初始化
 有两种方式初始化Bean。
 1、在配置文档中通过指定init-method 属性来完成
 在Bean的类中实现一个初始化Bean属性的方法，如init()，如：
+```
 public class HelloWorld{
 public String msg=null;
 public Date date=null;
@@ -357,11 +398,15 @@ date=new Date();
 }
 ……
 }
+```
 然后，在配置文件中设置init-mothod属性：
+```
 <bean id=”HelloWorld” class=”com.pqf.beans.HelloWorld” init-mothod=”init” >
 </bean>
+```
 2、实现 org.springframwork.beans.factory.InitializingBean接口
 Bean实现InitializingBean接口，并且增加 afterPropertiesSet() 方法：
+```
 public class HelloWorld implement InitializingBean {
 public String msg=null;
 public Date date=null;
@@ -371,28 +416,36 @@ date=new Date();
 }
 ……
 }
+```
 那么，当这个Bean的所有属性被Spring的BeanFactory设置完后，会自动调用afterPropertiesSet()方法对Bean进行初始化，于是，配置文件就不用指定 init-method属性了。
 三、Bean的调用
 有三种方式可以得到Bean并进行调用：
 1、使用BeanWrapper
+```
 HelloWorld hw=new HelloWorld();
 BeanWrapper bw=new BeanWrapperImpl(hw);
 bw.setPropertyvalue(”msg”,”HelloWorld”);
 system.out.println(bw.getPropertyCalue(”msg”));
+```
 2、使用BeanFactory
+```
 InputStream is=new FileInputStream(”config.xml”);
 XmlBeanFactory factory=new XmlBeanFactory(is);
 HelloWorld hw=(HelloWorld) factory.getBean(”HelloWorld”);
 system.out.println(hw.getMsg());
+```
 3、使用ApplicationConttext
+```
 ApplicationContext actx=new FleSystemXmlApplicationContext(”config.xml”);
 HelloWorld hw=(HelloWorld) actx.getBean(”HelloWorld”);
 System.out.println(hw.getMsg());
+```
 四、Bean的销毁
 1、使用配置文件中的 destory-method 属性
 与初始化属性 init-methods类似，在Bean的类中实现一个撤销Bean的方法，然后在配置文件中通过 destory-method指定，那么当bean销毁时，Spring将自动调用指定的销毁方法。
 2、实现 org.springframwork.bean.factory.DisposebleBean接口
 如果实现了DisposebleBean接口，那么Spring将自动调用bean中的Destory方法进行销毁，所以，Bean中必须提供Destory方法。
+
 *  Spring中如何获取bean
 通过xml配置文件
 bean配置在xml里面，spring提供多种方式读取配置文件得到ApplicationContext.

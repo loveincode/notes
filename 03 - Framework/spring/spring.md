@@ -364,7 +364,7 @@ PROPAGATION_MANDATORY–支持当前事务，如果当前没有事务，就抛�
 PROPAGATION_REQUIRES_NEW–新建事务，如果当前存在事务，把当前事务挂起。
 PROPAGATION_NOT_SUPPORTED–以非事务方式执行操作，如果当前存在事务，就把当前事务挂起。
 PROPAGATION_NEVER–以非事务方式执行，如果当前存在事务，则抛出异常。
-PROPAGATION_NESTED–如果当前存在事务，则在嵌套事务内执行。如果当前没有事务，则进行与PROPAGATION_REQUIRED类似的操作。 
+PROPAGATION_NESTED–如果当前存在事务，则在嵌套事务内执行。如果当前没有事务，则进行与PROPAGATION_REQUIRED类似的操作。
 
 ## spring事务支持的隔离级别
 并发会导致以下问题：
@@ -409,7 +409,3 @@ WebApplicationContext继承了ApplicationContext，并添加了一些web应用�
 
 
 http://www.codeceo.com/article/spring-top-25-interview.html
-
-
-
-
