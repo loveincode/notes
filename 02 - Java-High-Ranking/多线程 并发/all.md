@@ -1,3 +1,4 @@
+http://images.cnblogs.com/cnblogs_com/loveincode/1037824/o_164d94300b13d901.png
 ### 1. 线程状态
 ### 2. 每个对象都有同步方法：
 synchronized
