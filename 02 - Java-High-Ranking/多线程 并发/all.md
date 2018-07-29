@@ -1,5 +1,42 @@
 http://images.cnblogs.com/cnblogs_com/loveincode/1037824/o_164d94300b13d901.png
+引入线程为了 **提高系统的执行效率**，减少处理机的空转时间和调度切换的时间，以及便于系统管理
+
+并行
+并发
+并发是针对进程的，并发是针对线程的
 ### 1. 线程状态
+  基本状态：执行 、 就绪 、阻塞
+
+### 线程问题
+  线程安全问题
+  性能问题
+
+  *对象的发布与逸出*
+    静态域逸出
+    public修饰的get方法
+    方法参数传值
+    隐式的this
+    逸出就是本不应该发布对象的地方，把对象发布了，导致我们的数据泄露出去了，这就造成了一个安全隐患。
+
+  *安全发布对象*
+    在静态域中直接初始化，静态初始化由JVM在类的初始化阶段就执行了，JVM内部存在着同步机制，致使这种方式我们可以安全发布对象
+    对应的引用保存到volatile或者AtomicReferance引用中，保证该对象的引用的可见性和原子性
+    由final修饰，不可变
+    由锁来保护
+
+  *解决线程安全性的方法*
+
+    无状态（没有共享变量） 只要我们保证不要在栈（方法）上发布对象（每个变量的作用域仅仅停留在此方法上），那么我们的线程就是安全的
+    使用final使该引用变量不可变
+    加锁（内置锁，显示lock锁）
+      原子性 atomic包下的类 count++这个操作就不是一个原子性操作
+      可见性
+        volatile 保证该变量对所有线程的可见性，但不保证原子性
+        1. 一旦你完成写入，任何访问这个字段的线程将会得到最新的值
+        2. 会保证所有之前发生的事已经发生，并且任何更新过的数据值也是可见的，内存屏障会把之前的写入值都刷新到缓存。
+        3. volatile可以防止重排序
+      JDK提供的 原子性（atomic） 容器（concurrenthashmap等等）
+
 ### 2. 每个对象都有同步方法：
 synchronized
 wait
@@ -67,11 +104,25 @@ AtomicLong
 
   *Lock*
   支持中断、超时不获取、是非阻塞的
+  提高 **语义话**，哪里加锁，哪里解锁都得写出来
+  允许多个线程同时访问共享资源（**读写锁**）
+
+  **底层原理 AQS AbstractQueuedSynchronizer**
+  AQS是一个实现锁的框架
+  内部实现的关键：先进先出的队列、state状态
+  定义了内部类ConditionObject
+  提供两种线程模式  独占模式 共享模式
+
+  修改state状态值时使用CAS算法来实现
+  等待列被称为：CLH队列，是一个双向队列
+  定义了框架，具体实现由子类来做（**模板模式**）
 
   三种实现
-    ReentrantLock
-    ReentrantReadWriteLock.ReadLock
-    ReentrantReadWriteLock.WriteLock
+    ReentrantLock **比synchronized更有伸缩性，使用时标准用法是在try之前调用lock方法，在finally代码释放锁**
+    ReentrantReadWriteLock state的变量高16位是读锁，低16位是写锁 读锁不能升级为写锁，写锁可以降级为读锁
+    ReentrantReadWriteLock.ReadLock 读时共享
+    ReentrantReadWriteLock.WriteLock 写时互斥
+
   加锁方式
     组塞式:lock
     非阻塞:trylock
@@ -91,26 +142,40 @@ AtomicLong
   在并发容器内部实现中尽量避免了synchronized关键字,从而增强了并发性
 #### 8.6 线程池
   ThreadPoolExecutor
-  Executors
-    newCachedThreadPool()
-    newSingleThreadExecutor()
-    newFixedThreadPool()
+  Executors 提供了一种将 **任务提交** **任务执行** 分离开来的机制
+  Executors接口 定义了执行任务的行为
+  ExecutorServices接口 提供了线程池管理生命周期的方法
+    newCachedThreadPool() 非常有弹性的线程池，对于新的任务，如果此时线程池里没有空闲线程，线程池会毫不犹豫的创建一条新的线程去处理这个任务
+    newSingleThreadExecutor() 单个worker线程的Executor
+    newFixedThreadPool() 返回一个corePoolSize和maximumPoolSize相等的线程池
   执行线程
     submit()
     execute()
   线程池关闭
-    shutdown()
-    shutdownnow()
+    shutdown() 线程池状态立刻变为Shutdown 等待任务执行完才中断线程
+    shutdownnow() 线程池状态立刻变为Stop 不等任务执行完就中断了线程
+
+  *策略*
+  线程数量策略
+    如果运行线程的数量少于核心线程数量，则创建新的线程处理请求
+
+  线程空间策略
+
+  排队策略
+
+  拒绝任务策略
+
 #### 8.7 同步器
-  CyclicBarrier
-  CountDownLatch
+  CountDownLatch 闭锁 某个线程等待其他线程执行完毕后，它才执行（其他线程等待某个线程执行完毕后，它才执行）
+  CyclicBarrier 栅栏 一旦线程互相等待至某个状态，这组线程再同时执行
+  Semphore 信号量 控制一组线程同时执行
   Exchanger
-  Semphore
   SynchronousQueue
 #### 8.8 并发容器与同步容器对比
 同步容器对于并发读访问的支持不好
 由于内部多采用synchronized关键字实现,所以性能不如并发容器
 对于同步容器进行迭代的同时修改它的内容，会报ConcurrentModificationException异常
+
 
 
 ##### InterruptedException
