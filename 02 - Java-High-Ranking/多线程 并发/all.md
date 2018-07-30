@@ -141,29 +141,61 @@ AtomicLong
   在迭代并发容器时修改其内容并不会抛出ConcurrentModificationException异常
   在并发容器内部实现中尽量避免了synchronized关键字,从而增强了并发性
 #### 8.6 线程池
+  状态
+  Running 线程池能够接受新任务
+  Shutdown 线程池不可以接受新任务
+  Stop 线程池不接受新任务，不处理已添加任务，并且中断正在处理的任务
+  Tidying 当所有的任务终止，ctl中的记录为0，会变成Tidying状态
+  Terminated 线程池彻底终止的状态
+
   ThreadPoolExecutor
+  参数
+  corePoolSize 核心线程的数量
+  maximumPoolSize 最大线程数
+  keepAliveTime 线程空闲的时间
+  unit 时间单位
+  workQueue 保存等待执行的任务的阻塞队列，等待的任务必须实现Runnable接口
+  threadFactory 设置创建线程的工厂
+  handler 线程池的拒绝策略
+
   Executors 提供了一种将 **任务提交** **任务执行** 分离开来的机制
   Executors接口 定义了执行任务的行为
   ExecutorServices接口 提供了线程池管理生命周期的方法
     newCachedThreadPool() 非常有弹性的线程池，对于新的任务，如果此时线程池里没有空闲线程，线程池会毫不犹豫的创建一条新的线程去处理这个任务
     newSingleThreadExecutor() 单个worker线程的Executor
     newFixedThreadPool() 返回一个corePoolSize和maximumPoolSize相等的线程池
-  执行线程
+
+  *执行线程*
     submit()
     execute()
-  线程池关闭
+
+  *线程池关闭*
     shutdown() 线程池状态立刻变为Shutdown 等待任务执行完才中断线程
     shutdownnow() 线程池状态立刻变为Stop 不等任务执行完就中断了线程
 
   *策略*
   线程数量策略
     如果运行线程的数量少于核心线程数量，则创建新的线程处理请求
-
+    如果运行线程的数量大于核心线程数量，小于最大线程数量，则当队列满的时候才创建新的线程
+    如果核心线程数量等于最大线程数量,那么将创建固定大小的线程池
+    如果设置了最大线程数量为无穷，那么允许线程池适合任意的并发数量
   线程空间策略
-
+    当前线程数大于核心线程数，如果空闲时间超过了，那该线程会销毁
   排队策略
+    同步移交：不会放到队列中，而是等待线程执行它。如果当前线程没执行，可能会新开一个线程执行。
+    无界限策略：如果核心线程都在工作，该线程会放到队列中。所以线程数不会超过核心线程数。
+    有界限策略：可以避免资源耗尽，但是一定程度降低了吞吐量。
 
-  拒绝任务策略
+  *拒绝任务策略*
+  1. AbortPolicy：直接抛出异常，默认策略；
+  2. CallerRunsPolicy：用调用者所在的线程来执行任务；
+  3. DiscardOldestPolicy：丢弃阻塞队列中靠最前的任务(最老的)，并执行当前任务；
+  4. DiscardPolicy：直接丢弃任务；
+
+  *excute执行方法*
+  如果线程池中运行的线程数量 > corePoolSize，则创建新线程来处理请求，即时其他辅助线程是空闲的
+  如果线程池中运行的线程数量 >= corePoolSize,且线程池处于Running状态，且把提交的任务成功放入阻塞队列中，就再次检查线程池的状态
+  如果以上两个case都不成立，即没能将任务成功放入阻塞队列，addWorker新建线程失败，则该任务由当前RejectedExecutionHandler处理
 
 #### 8.7 同步器
   CountDownLatch 闭锁 某个线程等待其他线程执行完毕后，它才执行（其他线程等待某个线程执行完毕后，它才执行）
