@@ -161,9 +161,9 @@ AtomicLong
   Executors 提供了一种将 **任务提交** **任务执行** 分离开来的机制
   Executors接口 定义了执行任务的行为
   ExecutorServices接口 提供了线程池管理生命周期的方法
-    newCachedThreadPool() 非常有弹性的线程池，对于新的任务，如果此时线程池里没有空闲线程，线程池会毫不犹豫的创建一条新的线程去处理这个任务
-    newSingleThreadExecutor() 单个worker线程的Executor
-    newFixedThreadPool() 返回一个corePoolSize和maximumPoolSize相等的线程池
+    newCachedThreadPool() 非常有弹性的线程池，对于新的任务，如果此时线程池里没有空闲线程，线程池会毫不犹豫的创建一条新的线程去处理这个任务.`无限线程池`
+    newSingleThreadExecutor() 单个worker线程的Executor  创建单个线程的线程池。
+    newFixedThreadPool() 返回一个corePoolSize和maximumPoolSize相等的线程池 创建固定大小的线程池。
 
   *执行线程*
     submit()
