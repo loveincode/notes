@@ -40,7 +40,7 @@ DCL，即Double Check Lock，双重检查锁定。是实现单例模式比较好
 
 ### 08 - J.U.C之AQS：AQS简介
 
-AQS，AbstractQueuedSynchronizer，即队列同步器。它是构建锁或者其他同步组件的基础框架（如ReentrantLock、ReentrantReadWriteLock、Semaphore等），为 JUC 并发包中的核心基础组件。
+AQS，`AbstractQueuedSynchronizer`，即队列同步器。它是构建锁或者其他同步组件的基础框架（如ReentrantLock、ReentrantReadWriteLock、Semaphore等），为 JUC 并发包中的核心基础组件。
 
 ### 09 - J.U.C之AQS：CLH同步队列
 
@@ -48,7 +48,7 @@ AQS，AbstractQueuedSynchronizer，即队列同步器。它是构建锁或者其
 
 ### 10 - J.U.C之AQS：同步状态的获取与释放
 
-AQS的设计模式采用的模板方法模式，子类通过继承的方式，实现它的抽象方法来管理同步状态，对于子类而言它并没有太多的活要做，AQS提供了大量的模板方法来实现同步，主要是分为三类：独占式获取和释放同步状态、共享式获取和释放同步状态、查询同步队列中的等待线程情况。
+AQS的设计模式采用的`模板方法模式`，子类通过继承的方式，实现它的抽象方法来管理同步状态，对于子类而言它并没有太多的活要做，AQS提供了大量的模板方法来实现同步，主要是分为三类：独占式获取和释放同步状态、共享式获取和释放同步状态、查询同步队列中的等待线程情况。
 
 ### 11 - J.U.C之AQS：阻塞和唤醒线程
 
@@ -99,11 +99,11 @@ Semaphore，信号量，是一个控制访问多个共享资源的计数器。�
 
 ### 20 - J.U.C之Java并发容器：ConcurrentHashMap
 
-ConcurrentHashMap 作为 Concurrent 一族，其有着高效地并发操作。在1.8 版本以前，ConcurrentHashMap 采用分段锁的概念，使锁更加细化，但是 1.8 已经改变了这种思路，而是利用 CAS + Synchronized 来保证并发更新的安全，当然底层采用数组+链表+红黑树的存储结构。这篇博客带你彻底理解 ConcurrentHashMap。
+ConcurrentHashMap 作为 Concurrent 一族，其有着高效地并发操作。在1.8 版本以前，ConcurrentHashMap 采用`分段锁`的概念，使`锁更加细化`，但是 1.8 已经改变了这种思路，而是利用 `CAS + Synchronized` 来保证并发更新的安全，当然底层采用`数组+链表+红黑树`的存储结构。这篇博客带你彻底理解 ConcurrentHashMap。
 
 ### 21 - J.U.C之ConcurrentHashMap红黑树转换分析
 
-在 1.8 ConcurrentHashMap 的put操作中，如果发现链表结构中的元素超过了TREEIFY_THRESHOLD（默认为8），则会把链表转换为红黑树，已便于提高查询效率。那么具体的转换过程是怎么样的？这篇博客给你答案。
+在 1.8 ConcurrentHashMap 的put操作中，如果发现链表结构中的元素超过了TREEIFY_THRESHOLD（默认为8），则会把链表转换为`红黑树`，已便于提高查询效率。那么具体的转换过程是怎么样的？这篇博客给你答案。
 
 ### 22 - J.U.C之Java并发容器：ConcurrentLinkedQueue
 
