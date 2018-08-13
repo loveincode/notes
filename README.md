@@ -1,6 +1,16 @@
 # notes
-[![GitHub stars](https://img.shields.io/github/stars/loveincode/notes.svg?style=social&label=Stars)](https://github.com/loveincode/notes)
-[![GitHub forks](https://img.shields.io/github/forks/loveincode/notes.svg?style=social&label=Forks)](https://github.com/loveincode/notes)
+
+<p align='center'>
+<img src="https://img.shields.io/badge/build-passing-brightgreen.svg">
+<a href="https://github.com/loveincode/notes"><img src="https://img.shields.io/github/stars/loveincode/notes.svg?style=social&label=Stars"></a>
+<a href="https://github.com/loveincode/notes"><img src="https://img.shields.io/github/forks/loveincode/notes.svg?style=social&label=Forks"></a>
+<br/>
+<img src="https://img.shields.io/badge/platform-Java-ff69b4.svg">
+<img src="https://img.shields.io/badge/language-Python-orange.svg">
+<img src="https://img.shields.io/badge/language-JavaScript-yellow.svg">
+<a href=""><img src="https://img.shields.io/badge/license-Apache--2.0-000000.svg"></a>
+<a href="https://loveincode.cnblogs.com/"><img src="https://img.shields.io/badge/Blog-loveincode-80d4f9.svg?style=flat"></a>
+</p>
 
     Java后端工程师的学习技术栈 有你想要的
 
