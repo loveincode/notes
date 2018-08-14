@@ -71,6 +71,7 @@ LockSupport是用来创建锁和其他同步类的基本线程阻塞原语。
 公平性：支持公平性和非公平性。
 重入性：支持重入。读写锁最多支持65535个递归写入锁和65535个递归读取锁。
 锁降级：遵循获取写锁、获取读锁在释放写锁的次序，写锁能够降级成为读锁
+
 ### 14 - J.U.C之Condition
 
 在没有Lock之前，我们使用synchronized来控制同步，配合Object的wait()、notify()系列方法可以实现等待/通知模式。在Java SE5后，Java提供了Lock接口，相对于Synchronized而言，Lock提供了条件Condition，对线程的等待、唤醒操作更加详细和灵活

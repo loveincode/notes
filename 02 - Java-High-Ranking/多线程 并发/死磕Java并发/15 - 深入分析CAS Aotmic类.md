@@ -201,8 +201,31 @@ CAS，**Compare And Swap**，即比较并交换。Doug lea大神在同步组件�
       }
 
   }
+  ```
   运行结果：
 
     <img src="img/201703090004_2_thumb.jpg">
 
   运行结果充分展示了AtomicInteger的ABA问题和AtomicStampedReference解决ABA问题。
+
+### Atomic
+
+基本类型 通过原子的方式更新基本类型
+ AtomicBoolean
+ AtomicInteger
+ AtomicLong
+
+数组 通过原子的方式更新数组里的某个元素
+  AtomicIntegerArray
+  AtomicLongArray
+  AtomicReferenceArray
+
+引用类型 如果要原子的更新多个变量，就需要使用这个原子更新引用类型提供的类
+  AtomicReference
+  AtomicReferenceFiledUpdater
+  AtomicMarkableReference
+
+字段类 我们只需要更新某个类里的某个字段，那么需要使用原子更新字段类
+  AtomicIntegerFiledUpdater
+  AtomicLongFiledUpdater
+  AtomicStampedReference
