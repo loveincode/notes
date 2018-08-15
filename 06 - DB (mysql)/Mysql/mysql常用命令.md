@@ -37,6 +37,7 @@ mysql
 	执行sql文件
 	`source` /var/xxxx.sql;
 
+### 字段修改
 	ALTER
 	删除，添加表字段
 		**ALTER** TABLE testalter_tbl **DROP** i;			```使用了 ALTER 命令及 DROP 子句来删除以上创建表的 i 字段```
@@ -66,6 +67,14 @@ mysql
 
 	修改表结构(添加索引)
 		**ALTER** table tableName **ADD** **INDEX** indexName(columnName)
+
+	**外键约束 取消**
+	SET `FOREIGN_KEY_CHECKS`=0;
+	来禁用外键约束.
+			然后这块执行我们的插入语句....
+	之后再用
+	SET `FOREIGN_KEY_CHECKS`=1;
+	来启动外键约束.
 
 	INSERT uuid()
 
