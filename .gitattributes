@@ -1,1 +1,2 @@
 *.js linguist-language=python
+*.lua linguist-language=java
