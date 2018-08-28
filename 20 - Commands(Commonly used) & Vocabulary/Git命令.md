@@ -74,3 +74,11 @@ git mv README  README.md
 ### git log --oneline --before={3.weeks.ago} --after={2010-04-18} --no-merges
   你要指定日期，可以执行几个选项：--since 和 --before，但是你也可以用 --until 和 --after。
   例如，如果我要看 Git 项目中三周前且在四月十八日之后的所有提交，我可以执行这个（我还用了 --no-merges 选项以隐藏合并提交）：
+
+
+
+git fetch origin
+
+git merge 分支名
+
+git push origin 本地分支:远程分支
