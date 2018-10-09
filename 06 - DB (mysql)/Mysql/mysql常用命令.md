@@ -399,3 +399,8 @@ mysql
 	$ mysqlimport -u root -p --local --columns=b,c,a \
 	    database_name dump.txt
 	password *****
+
+	CONCAT()函数 解决数字过长丢真，加字符使其变为字符串格式
+	```
+		CONCAT('`',【字段名】)
+	```
