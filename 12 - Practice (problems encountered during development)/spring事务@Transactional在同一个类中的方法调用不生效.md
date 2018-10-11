@@ -1,0 +1,7 @@
+https://www.jianshu.com/p/2e4e1007edf2
+
+通过对比两个调用堆栈可以看出，spring的@Transactional事务生效的一个前提是进行方法调用前经过拦截器TransactionInterceptor，也就是说只有通过TransactionInterceptor拦截器的方法才会被加入到spring事务管理中，查看spring源码可以看到，在AdvisedSupport.getInterceptorsAndDynamicInterceptionAdvice方法中会从调用方法中获取@Transactional注解，如果有该注解，则启用事务，否则不启用。
+
+这个方法是通过spring的AOP类CglibAopProxy的内部类DynamicAdvisedInterceptor调用的，而DynamicAdvisedInterceptor继承了MethodInterceptor，用于拦截方法调用，并从中获取调用链。
+
+如果是在同一个类中的方法调用，则不会被方法拦截器拦截到，因此事务不会起作用，必须将方法放入另一个类，并且该类通过spring注入。
