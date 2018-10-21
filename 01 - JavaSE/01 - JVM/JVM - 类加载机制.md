@@ -67,8 +67,8 @@ https://blog.csdn.net/ns_code/article/details/17881581
 另外一种就是所有其他的类加载器，这些类加载器都由Java语言实现，独立于虚拟机外部，并且全部继承自抽象类java.lang.ClassLoader。
 从Java开发人员的角度来看，类加载器还可以分得更细致一些，绝大部分Java程序都会使用到以下三种系统提供的类加载器：
 
-* 启动类加载器 Bootstrap ClassLoader
-* 扩展类加载器 Extension ClassLoader
+* 启动类加载器 Bootstrap ClassLoader  **<JAVA_HOME>/lib**
+* 扩展类加载器 Extension ClassLoader  **<JAVA_HOME>/lib/ext ,java.ext.dirs**
 * 应用程序类加载器 Application ClassLoader
 
 双亲委派模型中除了启动类加载器之外其余都需要有自己的 **父类加载器**
