@@ -7,14 +7,21 @@
 <br/>
 <img src="https://img.shields.io/badge/platform-Java-ff69b4.svg">
 <img src="https://img.shields.io/badge/language-Python-orange.svg">
-<img src="https://img.shields.io/badge/language-JavaScript-yellow.svg">
 <a href=""><img src="https://img.shields.io/badge/license-Apache--2.0-000000.svg"></a>
 <a href="https://loveincode.cnblogs.com/"><img src="https://img.shields.io/badge/Blog-loveincode-80d4f9.svg?style=flat"></a>
 </p>
 
+## 介绍
+### 项目介绍
    Java后端工程师的学习技术栈
 
-   [Java程序员的链接库](https://github.com/loveincode/Java-Notes/blob/master/%E6%94%B6%E8%97%8F/%E5%A5%BD%E9%93%BE%E6%8E%A5.md)
+### 学习交流
+微 信: 9088584 , 验证暗号：Java后端学习 loveincode
+EMAIL: huonevan@gmail.com
+
+
+
+   [人气很高的链接库](https://github.com/loveincode/Java-Notes/blob/master/%E6%94%B6%E8%97%8F/%E5%A5%BD%E9%93%BE%E6%8E%A5.md)
 
 * [计算机基础相关笔记](https://github.com/loveincode/Java-Notes/tree/master/000%20-%201%20Computer%20Basics)
 
