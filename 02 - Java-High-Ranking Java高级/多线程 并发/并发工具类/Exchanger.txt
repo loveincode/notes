@@ -1,0 +1,20 @@
+Exchanger是自jdk1.5起开始提供的工具套件，一般用于两个工作线程之间交换数据。
+
+在本文中我将采取由浅入深的方式来介绍分析这个工具类。首先我们来看看官方的api文档中的叙述：
+A synchronization point at which threads can pair and swap elements within pairs. Each thread presents some object on entry to the exchange method, matches with a partner thread, and receives its partner's object on return. An Exchanger may be viewed as a bidirectional form of a SynchronousQueue. Exchangers may be useful in applications such as genetic algorithms and pipeline designs.
+
+在以上的描述中，有几个要点：
+
+	此类提供对外的操作是同步的；
+	用于成对出现的线程之间交换数据；
+	可以视作双向的同步队列；
+	可应用于基因算法、流水线设计等场景。
+	
+
+从官方的javadoc可以知道，当一个线程到达exchange调用点时，如果它的伙伴线程此前已经调用了此方法，那么它的伙伴会被调度唤醒并与之进行对象交换，然后各自返回。
+          
+如果它的伙伴还没到达交换点，那么当前线程将会被挂起，
+直至伙伴线程到达 —— 完成交换正常返回；
+或者当前线程被中断 —— 抛出中断异常；
+又或者是等候超时-—— 抛出超时异常。
+

@@ -1,0 +1,14 @@
+SingleThreadExecutor 单个后台线程 (其缓冲队列是无界的)
+
+
+FixedThreadPool 只有核心线程的线程池,大小固定 (其缓冲队列是无界的) 。
+
+
+CachedThreadPool 无界线程池，可以进行自动线程回收。
+
+
+ScheduledThreadPool 核心线程池固定，大小无限的线程池。此线程池支持定时以及周期性执行任务的需求。
+
+
+
+ 

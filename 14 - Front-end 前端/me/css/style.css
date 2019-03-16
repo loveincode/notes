@@ -1,0 +1,28 @@
+body {
+	background: #060e1b;
+	overflow: hidden;
+	color: white;
+	font-family: "Comic Sans MS","Helvetica","Microsoft Yahei","Verdana","Arial","sans-serif";
+	font-size: 17px;
+}
+
+canvas {
+	//opacity: 0.5;
+}
+
+#aboutme {
+	width: 100%;
+	position: absolute;
+}
+
+a {
+	color: white;
+}
+
+a:hover {
+	color: gray;
+}
+
+#cnzz_stat_icon_1264360708 {
+	display: none;
+}

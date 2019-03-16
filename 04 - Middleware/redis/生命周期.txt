@@ -1,6 +1,0 @@
-
-设置一个键的存活时间，超过就销毁
-expire key seconde
-
-查看剩余存活时间
-TTL key

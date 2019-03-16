@@ -1,0 +1,26 @@
+本章节我们将讨论如何使用组件使得我们的应用更容易来管理。
+
+接下来我们封装一个输出 "Hello World！" 的组件，组件名为 HelloMessage：
+
+React 实例
+var HelloMessage = React.createClass({
+  render: function() {
+    return <h1>Hello World！</h1>;
+  }
+});
+ 
+ReactDOM.render(
+  <HelloMessage />,
+  document.getElementById('example')
+);
+
+实例解析：
+React.createClass 方法用于生成一个组件类 HelloMessage。
+
+<HelloMessage /> 实例组件类并输出信息。
+
+注意，原生 HTML 元素名以小写字母开头，
+而自定义的 React 类名以大写字母开头，
+比如 HelloMessage 不能写成 helloMessage。
+除此之外还需要注意组件类只能包含一个顶层标签，否则也会报错。
+
