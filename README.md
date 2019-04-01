@@ -5,11 +5,15 @@
 <a href="https://github.com/loveincode/notes"><img src="https://img.shields.io/github/stars/loveincode/notes.svg?style=social&label=Stars"></a>
 <a href="https://github.com/loveincode/notes"><img src="https://img.shields.io/github/forks/loveincode/notes.svg?style=social&label=Forks"></a>
 <br/>
-<img src="https://img.shields.io/badge/platform-Java-ff69b4.svg">
-<img src="https://img.shields.io/badge/language-Python-orange.svg">
-<a href=""><img src="https://img.shields.io/badge/license-Apache--2.0-000000.svg"></a>
+<img src="https://img.shields.io/badge/platform-Java-ff69b4.svg"/>
+<img src="https://img.shields.io/badge/language-Python-orange.svg"/>
 <a href="https://loveincode.cnblogs.com/"><img src="https://img.shields.io/badge/Blog-loveincode-80d4f9.svg?style=flat"></a>
+
+<br/>
 </p>
+
+[![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu)
+[![996ICU Licence](<https://img.shields.io/badge/license-NPL%20(The%20996%20Prohibited%20License)-blue.svg>)](https://github.com/996icu/996.ICU/blob/master/LICENSE)
 
 ## 介绍
 ### 项目介绍
