@@ -1,20 +1,17 @@
-### loveincode's notes
-<center>
+## loveincode's notes
 
-[![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE)
-[![Badge](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu/#/zh_CN)
+[![stars](https://img.shields.io/github/stars/loveincode/notes.svg?style=social&label=Stars)](https://github.com/loveincode/notes/stargazers)
+[![forks](https://img.shields.io/github/forks/loveincode/notes.svg?style=social&label=Forks)](https://github.com/loveincode/notes/network/members)
+[![issues](https://img.shields.io/github/issues/loveincode/notes.svg?style=social&label=Issues)](https://github.com/loveincode/notes/issues)
 </br>
 ![PLARFORM](https://img.shields.io/badge/platform-Java-ff69b4.svg)
 ![language](https://img.shields.io/badge/language-Python-orange.svg)
 [![BLOG](https://img.shields.io/badge/Blog-loveincode-80d4f9.svg?style=flat)](https://loveincode.cnblogs.com/)
 </br>
+[![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE)
+[![Badge](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu/#/zh_CN)
 [![](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
-[![stars](https://img.shields.io/github/stars/loveincode/notes.svg?style=social&label=Stars)](https://github.com/loveincode/notes/stargazers)
-[![forks](https://img.shields.io/github/forks/loveincode/notes.svg?style=social&label=Forks)](https://github.com/loveincode/notes/network/members)
-[![issues](https://img.shields.io/github/issues/loveincode/notes.svg?style=social&label=Issues)](https://github.com/loveincode/notes/issues)
 [![PRs Welcome](https://badgen.net/badge/PRs/welcome/green)](http://makeapullrequest.com)
-</br>
-</center>
 
 学习工作中的一些记录，收藏。
 
