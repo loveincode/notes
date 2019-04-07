@@ -29,3 +29,25 @@
 然后你在这个A2下工作，Commit，push等。然后你希望原始仓库Repo A合并你的工作，你可以在Github上发起一个Pull Request，意思是请求Repo A的所有者从你的A2合并分支。如果被审核通过并正式合并，这样你就为项目A做贡献了
 
 ##  Merge Pull Request
+
+
+<p align='center'>
+<a href="https://github.com/loveincode/notes"><img src="https://img.shields.io/github/stars/loveincode/notes.svg?style=social&label=Stars"></a>
+<a href="https://github.com/loveincode/notes"><img src="https://img.shields.io/github/forks/loveincode/notes.svg?style=social&label=Forks"></a>
+<a href="https://github.com/loveincode/notes"><img src="https://img.shields.io/github/issues/loveincode/notes.svg?style=social&label=Issues"></a>
+<br/>
+<img src="https://img.shields.io/badge/platform-Java-ff69b4.svg">
+<img src="https://img.shields.io/badge/language-Python-orange.svg">
+<a href="https://loveincode.cnblogs.com/"><img src="https://img.shields.io/badge/Blog-loveincode-80d4f9.svg?style=flat"></a>
+</p>
+
+[![stars](https://img.shields.io/github/stars/loveincode/notes.svg?style=social&label=Stars)](https://github.com/loveincode/notes/stargazers)
+[![forks](https://img.shields.io/github/forks/loveincode/notes.svg?style=social&label=Forks)](https://github.com/loveincode/notes/network/members)
+[![issues](https://img.shields.io/github/issues/loveincode/notes.svg?style=social&label=Issues)](https://github.com/loveincode/notes/issues)
+![PLARFORM](https://img.shields.io/badge/platform-Java-ff69b4.svg)
+![language](https://img.shields.io/badge/language-Python-orange.svg)
+[![BLOG](https://img.shields.io/badge/Blog-loveincode-80d4f9.svg?style=flat)](https://loveincode.cnblogs.com/)
+[![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE)
+[![Badge](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu/#/zh_CN)
+[![](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
+[![PRs Welcome](https://badgen.net/badge/PRs/welcome/green)](http://makeapullrequest.com)
