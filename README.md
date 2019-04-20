@@ -13,6 +13,8 @@
 <a href="https://github.com/996icu/996.ICU/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-Anti%20996-blue.svg"></a>
 <a href="https://996.icu/#/zh_CN"><img src="https://img.shields.io/badge/link-996.icu-red.svg"></a>
 <a href="http://makeapullrequest.com"><img src="https://badgen.net/badge/PRs/welcome/green"></a>
+</br>
+<a href="https://gitter.im/loveincode-notes/community"><img src="https://badgen.net/badge/gitter/join chat/green"></a>
 </p>
 
 学习工作中的一些记录，收藏。
