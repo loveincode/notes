@@ -16,3 +16,9 @@ private boolean useBase64Encoding = true;
 sessionId=aa853792-4214-474c-807f-f805fbcf17cf
 则
 cookie： SESSION=YWE4NTM3OTItNDIxNC00NzRjLTgwN2YtZjgwNWZiY2YxN2Nm
+
+
+``` session的有效期
+maxInactiveIntervalInSeconds = 60 * 60 * 24
+```
+session 有效期从最后一次访问算起
