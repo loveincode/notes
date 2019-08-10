@@ -1,4 +1,4 @@
-## 什么是Spring
+jdbc## 什么是Spring
 Spring是一个开源的Java EE开发框架。Spring框架的核心功能可以应用在任何Java应用程序中，但对Java EE平台上的Web应用程序有更好的扩展性。Spring框架的目标是使得Java EE应用程序的开发更加简捷，通过使用POJO为基础的编程模型促进良好的编程风格。
 
 ## Spring有哪些优点
@@ -12,7 +12,7 @@ Spring是一个开源的Java EE开发框架。Spring框架的核心功能可以�
 
 ## Spring框架有哪些模块
 Spring框架至今已集成了20多个模块。这些模块主要被分如下图所示的核心容器、数据访问/集成、Web、AOP（面向切面编程）、工具、消息和测试模块。
-**核心容器模块**：是spring中最核心的模块。负责Bean的创建，配置和管理。主要包括：beans,core,context,expression等模块。
+**核心jdbc容器模块**：是spring中最核心的模块。负责Bean的创建，配置和管理。主要包括：beans,core,context,expression等模块。
 **Spring的AOP模块**：主要负责对面向切面编程的支持，帮助应用对象解耦。
 **数据访问和集成模块**：包括JDBC，ORM，OXM，JMS和事务处理模块，其细节如下：
 JDBC模块提供了不再需要冗长的JDBC编码相关了JDBC的抽象层。
