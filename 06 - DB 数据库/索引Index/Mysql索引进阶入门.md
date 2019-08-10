@@ -1,3 +1,4 @@
+Mysql索引进阶入门
 ### 1. 索引操作
 [MySQL 索引 菜鸟](https://www.runoob.com/mysql/mysql-index.html)
 
@@ -94,13 +95,16 @@
   可以使用 EXPLAIN 来分析索引是否起效，慢sql做一些索引优化 [Explain优化查询检测](https://www.runoob.com/w3cnote/mysql-index.html)
 
 
-  索引字段为int类型时，条件可用' '包起来 也可以直接是数值比较
-  索引字段为varchar类型时，条件要使用' '包起来
+  * 索引字段为int类型时，条件可用' '包起来 也可以直接是数值比较
+  * 索引字段为varchar类型时，条件要使用' '包起来
 
-  能触发range范围索引  >,<, not in , in , != ,BETWEEN AND （5.5后版本 ）
+  * 能触发range范围索引  >,<, not in , in , != ,BETWEEN AND （5.5后版本 ）
 
 ### 9. 常用索引命名规范
   ```
   唯一 uk_[字段名]_[字段名]...
   普通 idx_[字段名]_[字段名]...
   ```
+
+  [github]([https://github.com/loveincode](https://github.com/loveincode/notes))
+  [blog](https://loveincode.cnblogs.com/)
