@@ -8,35 +8,35 @@
 
 创建
 
-```
+```java
 int c[] = {2,3,6,10,99};
 int[] d = new int[10];
 ```
 
 
 
-```
+```java
 	/**
 	 * 数组检索
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		String name[];
-		
+
 		name = new String[5];
 		name[0] = "egg";
 		name[1] = "erqing";
 		name[2] = "baby";
-		
+
 		for(int i = 0; i < name.length; i++){
 			System.out.println(name[i]);
 		}
 	}
 ```
-```
+```java
 /**
 	 * 插入
-	 * 
+	 *
 	 * @param old
 	 * @param value
 	 * @param index
@@ -51,7 +51,7 @@ int[] d = new int[10];
 
 	/**
 	 * 遍历
-	 * 
+	 *
 	 * @param data
 	 */
 	public static void traverse(int data[]) {
@@ -62,7 +62,7 @@ int[] d = new int[10];
 
 	/**
 	 * 删除
-	 * 
+	 *
 	 * @param old
 	 * @param index
 	 * @return
